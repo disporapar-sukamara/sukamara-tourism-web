@@ -1,0 +1,192 @@
+[
+  {
+    "id": "pantai-tanjung-nipah",
+    "slug": "pantai-tanjung-nipah",
+    "nama": "Pantai Tanjung Nipah",
+    "kategori": "Wisata Bahari",
+    "kecamatan": "Jelai",
+    "alamat": "Desa Sungai Raja, Kecamatan Jelai, Kabupaten Sukamara",
+    "koordinat": {
+      "lat": -2.715998,
+      "lng": 111.164736
+    },
+    "deskripsi": "Pantai berpasir putih dengan garis pantai sepanjang 3 km yang dinaungi deretan pohon cemara udang rindang. Dilengkapi fasilitas gazebo santai, menara pandang, area perkemahan, dan persewaan sepeda di akhir pekan.",
+    "jam_buka": "Setiap Hari (06.00 - 18.00 WIB)",
+    "tiket": "Rp10.000 / orang",
+    "fasilitas": ["Gazebo", "Toilet", "Musholla", "Menara Pandang", "Area Kemah", "Parkir Luas", "Sewa Sepeda"],
+    "gambar": "/images/destinasi/pantai-tanjung-nipah.jpg",
+    "unggulan": true,
+    "status": "terbit"
+  },
+  {
+    "id": "pantai-anugerah",
+    "slug": "pantai-anugerah",
+    "nama": "Pantai Anugerah",
+    "kategori": "Wisata Bahari",
+    "kecamatan": "Pantai Lunci",
+    "alamat": "Desa Sungai Tabuk, Kecamatan Pantai Lunci, Kabupaten Sukamara",
+    "koordinat": {
+      "lat": -2.67845,
+      "lng": 111.14212
+    },
+    "deskripsi": "Pantai berair laut biru jernih dengan suasana alami yang tenang dan deretan pohon pinus pesisir. Menjadi salah satu destinasi bahari favorit dengan pesona matahari terbenam (sunset) yang memukau.",
+    "jam_buka": "Setiap Hari (24 Jam)",
+    "tiket": "Rp10.000 / orang",
+    "fasilitas": ["Gazebo", "Toilet", "Spot Sunset", "Warung Kuliner", "Area Parkir"],
+    "gambar": "/images/destinasi/pantai-anugerah.jpg",
+    "unggulan": true,
+    "status": "terbit"
+  },
+  {
+    "id": "pantai-citra",
+    "slug": "pantai-citra",
+    "nama": "Pantai Citra",
+    "kategori": "Wisata Bahari",
+    "kecamatan": "Pantai Lunci",
+    "alamat": "Desa Sungai Cabang Barat (Jorong), Kecamatan Pantai Lunci, Kabupaten Sukamara",
+    "koordinat": {
+      "lat": -2.59313,
+      "lng": 111.11082
+    },
+    "deskripsi": "Destinasi wisata pesisir unggulan yang terkenal dengan jembatan ulin panjang menjorok ke laut sepanjang 300 meter. Pusat tradisi budaya tahunan Syukuran Laut masyarakat pesisir Sukamara.",
+    "jam_buka": "Setiap Hari (06.00 - 18.00 WIB)",
+    "tiket": "Rp5.000 / orang",
+    "fasilitas": ["Jembatan Dermaga 300m", "Gazebo", "Spot Foto", "Pentas Budaya", "Warung Ikan Bakar"],
+    "gambar": "/images/destinasi/pantai-citra.png",
+    "unggulan": true,
+    "status": "terbit"
+  },
+  {
+    "id": "tepian-sungai-jelai",
+    "slug": "tepian-sungai-jelai",
+    "nama": "Tepian Sungai Jelai",
+    "kategori": "Wisata Alam",
+    "kecamatan": "Sukamara",
+    "alamat": "Pusat Kota Sukamara, Kecamatan Sukamara",
+    "koordinat": {
+      "lat": -2.62888,
+      "lng": 111.23847
+    },
+    "deskripsi": "Kawasan waterfront dan rekreasi tepi Sungai Jelai yang membelah Sukamara. Menawarkan pemandangan sungai yang asri, wisata perahu susur sungai, memancing, dan panorama senja di pusat kota.",
+    "jam_buka": "Setiap Hari (Buka 24 Jam)",
+    "tiket": "Gratis",
+    "fasilitas": ["Jogging Track", "Dermaga Perahu", "Penyewaan Kapal Susur Sungai", "Bangku Taman", "Kios Kuliner"],
+    "gambar": "/images/destinasi/tepian-jelai.jpg",
+    "unggulan": true,
+    "status": "terbit"
+  },
+  {
+    "id": "ekowisata-mangrove-sungai-pasir",
+    "slug": "ekowisata-mangrove-sungai-pasir",
+    "nama": "Ekowisata Mangrove Sungai Pasir",
+    "kategori": "Wisata Alam",
+    "kecamatan": "Pantai Lunci",
+    "alamat": "Desa Sungai Pasir, Kecamatan Pantai Lunci, Kabupaten Sukamara",
+    "koordinat": {
+      "lat": -2.63412,
+      "lng": 111.12789
+    },
+    "deskripsi": "Kawasan konservasi hutan mangrove pesisir dengan jalur tracking kayu ulin di sela rimbunnya vegetasi bakau. Lokasi edukasi lingkungan, pembibitan kepiting, dan pengamatan burung liar.",
+    "jam_buka": "Setiap Hari (07.00 - 17.30 WIB)",
+    "tiket": "Rp5.000 / orang",
+    "fasilitas": ["Tracking Mangrove", "Pusat Edukasi Lingkungan", "Pondok Istirahat", "Spot Foto", "Toilet"],
+    "gambar": "/images/destinasi/ekowisata-mangrove.png",
+    "unggulan": false,
+    "status": "terbit"
+  },
+  {
+    "id": "wisata-alam-bukit-jalungga",
+    "slug": "wisata-alam-bukit-jalungga",
+    "nama": "Wisata Alam Bukit Jalungga",
+    "kategori": "Wisata Alam",
+    "kecamatan": "Balai Riam",
+    "alamat": "Desa Jihing, Kecamatan Balai Riam, Kabupaten Sukamara",
+    "koordinat": {
+      "lat": -2.31245,
+      "lng": 111.20567
+    },
+    "deskripsi": "Kawasan perbukitan dan agroforestri yang dikelola kelompok tani hutan dan karang taruna. Populer untuk rute olahraga gowes lintas alam (fun bike & adventure), berkemah, dan panorama alam perbukitan.",
+    "jam_buka": "Setiap Hari (06.00 - 18.00 WIB)",
+    "tiket": "Rp5.000 / orang",
+    "fasilitas": ["Jalur Gowes & Trail", "Camping Ground", "Gardu Pandang", "Kantin Desa", "Toilet"],
+    "gambar": "/images/destinasi/bukit-jalungga.jpg",
+    "unggulan": false,
+    "status": "terbit"
+  },
+  {
+    "id": "masjid-agung-sukamara",
+    "slug": "masjid-agung-sukamara",
+    "nama": "Masjid Agung Sukamara",
+    "kategori": "Wisata Religi",
+    "kecamatan": "Sukamara",
+    "alamat": "Jl. Tjilik Riwut, Mendawai, Kecamatan Sukamara",
+    "koordinat": {
+      "lat": -2.63124,
+      "lng": 111.23651
+    },
+    "deskripsi": "Masjid termegah di Kabupaten Sukamara dengan perpaduan arsitektur modern dan kubah emas yang megah. Menjadi ikon spiritual dan pusat kegiatan keagamaan masyarakat Kabupaten Sukamara.",
+    "jam_buka": "Setiap Hari (Waktu Shalat)",
+    "tiket": "Gratis",
+    "fasilitas": ["Ruang Shalat Luas", "Tempat Wudhu Nyaman", "Taman Masjid", "Area Parkir Luas"],
+    "gambar": "/images/destinasi/masjid-agung-sukamara.jpg",
+    "unggulan": false,
+    "status": "terbit"
+  },
+  {
+    "id": "makam-datuk-nakhoda-muhammad-thaib",
+    "slug": "makam-datuk-nakhoda-muhammad-thaib",
+    "nama": "Makam Datuk Nakhoda Muhammad Tha'ib",
+    "kategori": "Wisata Budaya",
+    "kecamatan": "Sukamara",
+    "alamat": "Kelurahan Mendawai, Kecamatan Sukamara",
+    "koordinat": {
+      "lat": -2.62534,
+      "lng": 111.23912
+    },
+    "deskripsi": "Situs cagar budaya dan ziarah sejarah tokoh perintis Sukamara sekitar tahun 1800 yang berasal dari Brunei Darussalam. Menyimpan memori historis awal berdirinya permukiman Jelai Kerta Jaya hingga dinamai Sukamara.",
+    "jam_buka": "Setiap Hari (08.00 - 17.00 WIB)",
+    "tiket": "Gratis",
+    "fasilitas": ["Cungkup Makam", "Papan Informasi Sejarah", "Area Duduk Peziarah"],
+    "gambar": "/images/destinasi/makam-datuk-nakhoda.jpg",
+    "unggulan": false,
+    "status": "terbit"
+  },
+  {
+    "id": "bundaran-tugu-sukamara",
+    "slug": "bundaran-tugu-sukamara",
+    "nama": "Bundaran Tugu Sukamara",
+    "kategori": "Wisata Budaya",
+    "kecamatan": "Sukamara",
+    "alamat": "Simpang Utama Kota Sukamara",
+    "koordinat": {
+      "lat": -2.62719,
+      "lng": 111.23588
+    },
+    "deskripsi": "Landmark ikonik di jantung ibu kota Kabupaten Sukamara dengan ornamen arsitektur khas daerah dan ruang terbuka publik yang asri di sekitarnya.",
+    "jam_buka": "Setiap Hari (24 Jam)",
+    "tiket": "Gratis",
+    "fasilitas": ["Taman Terbuka", "Lampu Penerangan Malam", "Spot Foto Landmark"],
+    "gambar": "/images/destinasi/bundaran-tugu-sukamara.jpg",
+    "unggulan": false,
+    "status": "terbit"
+  },
+  {
+    "id": "bundaran-burung-balai-riam",
+    "slug": "bundaran-burung-balai-riam",
+    "nama": "Bundaran Burung Balai Riam",
+    "kategori": "Wisata Budaya",
+    "kecamatan": "Balai Riam",
+    "alamat": "Simpang Balai Riam, Kecamatan Balai Riam",
+    "koordinat": {
+      "lat": -2.29841,
+      "lng": 111.19834
+    },
+    "deskripsi": "Monumen selamat datang dengan patung burung khas di persimpangan utama Kecamatan Balai Riam, menghubungkan wilayah utara Sukamara dengan sentra perkebunan dan alam perbukitan.",
+    "jam_buka": "Setiap Hari (24 Jam)",
+    "tiket": "Gratis",
+    "fasilitas": ["Spot Foto Landmark", "Taman Hijau"],
+    "gambar": "/images/destinasi/bundaran-burung-balai-riam.jpg",
+    "unggulan": false,
+    "status": "terbit"
+  }
+]

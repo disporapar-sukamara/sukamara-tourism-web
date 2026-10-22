@@ -1,0 +1,291 @@
+---
+import { getCollection } from 'astro:content';
+import { X, ChevronLeft, ChevronRight, Camera, Play } from 'lucide-astro';
+
+const allGallery = await getCollection('galeri');
+
+const items = allGallery.map((item, idx) => ({
+  id: item.id,
+  index: idx,
+  judul: item.data.judul,
+  gambar: item.data.gambar,
+  isVideo: item.data.isVideo,
+}));
+---
+
+<!-- 1. Lightbox Single Preview Modal -->
+<div 
+  id="gallery-lightbox-modal" 
+  class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-md flex flex-col justify-between p-3 sm:p-6"
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Preview Galeri"
+>
+  <!-- Top Bar: Title, Counter, and Close Button -->
+  <div class="flex items-center justify-between text-white z-10">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-blue-400">
+        <Camera class="w-4 h-4" />
+      </div>
+      <div>
+        <h4 id="lightbox-title" class="text-sm sm:text-base font-bold text-white leading-tight"></h4>
+        <span id="lightbox-counter" class="text-xs text-white/60"></span>
+      </div>
+    </div>
+
+    <button 
+      type="button" 
+      id="lightbox-close" 
+      class="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+      aria-label="Tutup preview galeri"
+    >
+      <X class="w-6 h-6" />
+    </button>
+  </div>
+
+  <!-- Center Media Area with Next/Prev Arrows -->
+  <div class="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
+    <!-- Prev Button -->
+    <button 
+      type="button" 
+      id="lightbox-prev" 
+      class="absolute left-2 sm:left-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20"
+      aria-label="Foto sebelumnya"
+    >
+      <ChevronLeft class="w-6 h-6" />
+    </button>
+
+    <!-- Main Image Display -->
+    <div class="max-w-5xl max-h-[75vh] w-full h-full flex items-center justify-center">
+      <img 
+        id="lightbox-img" 
+        src="" 
+        alt="" 
+        class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl select-none"
+      />
+    </div>
+
+    <!-- Next Button -->
+    <button 
+      type="button" 
+      id="lightbox-next" 
+      class="absolute right-2 sm:right-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20"
+      aria-label="Foto selanjutnya"
+    >
+      <ChevronRight class="w-6 h-6" />
+    </button>
+  </div>
+
+  <!-- Bottom Instructions -->
+  <div class="text-center text-xs text-white/50 pb-2">
+    <span>Gunakan tombol panah ◀ ▶ untuk navigasi atau ESC untuk menutup</span>
+  </div>
+</div>
+
+<!-- 2. Modal Katalog Galeri Lengkap -->
+<div 
+  id="gallery-all-modal" 
+  class="fixed inset-0 z-50 hidden bg-navy-900/60 backdrop-blur-md p-3 sm:p-6 md:p-8 overflow-y-auto"
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Koleksi Galeri Sukamara"
+>
+  <div class="min-h-full flex items-center justify-center py-4">
+    <div class="bg-white w-full max-w-5xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 max-h-[90vh]">
+      
+      <!-- Header -->
+      <div class="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between gap-4 bg-gray-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-[#1E5FD8]">
+            <Camera class="w-5 h-5" />
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-black text-[#0B2A5B]">Koleksi Foto & Video Sukamara</h3>
+            <p class="text-xs text-gray-500">Kumpulan dokumentasi panorama alam, kearifan lokal, dan agenda daerah</p>
+          </div>
+        </div>
+        <button 
+          type="button" 
+          id="gallery-all-close" 
+          class="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer"
+        >
+          <X class="w-5 h-5" />
+        </button>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="px-4 py-2.5 border-b border-gray-100 flex items-center gap-1.5 overflow-x-auto text-xs bg-white">
+        <span class="text-gray-400 text-[11px] font-medium mr-1 shrink-0">Tampilkan:</span>
+        <button type="button" class="gallery-filter-btn px-3 py-1 rounded-full font-bold bg-[#1E5FD8] text-white shadow-2xs" data-type="all">Semua</button>
+        <button type="button" class="gallery-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-type="photo">Foto</button>
+        <button type="button" class="gallery-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-type="video">Video</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="p-4 sm:p-6 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        {items.map((item, idx) => (
+          <div 
+            class="gallery-catalog-card relative aspect-square rounded-xl overflow-hidden bg-gray-100 shadow-xs hover:shadow-lg transition-all duration-300 group cursor-pointer border border-gray-100"
+            data-gallery-idx={idx}
+            data-is-video={item.isVideo ? 'true' : 'false'}
+          >
+            <img src={item.gambar} alt={item.judul} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
+              <span class="text-[11px] font-bold text-white line-clamp-1">{item.judul}</span>
+            </div>
+            {item.isVideo && (
+              <div class="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center">
+                <Play class="w-3 h-3 fill-current ml-0.5" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script id="gallery-data" type="application/json" set:html={JSON.stringify(items)} />
+
+<script>
+  function initGalleryLightbox() {
+    const lightboxModal = document.getElementById('gallery-lightbox-modal');
+    const allModal = document.getElementById('gallery-all-modal');
+    const dataTag = document.getElementById('gallery-data');
+
+    if (!lightboxModal || !allModal || !dataTag) return;
+
+    let galleryList: Array<{
+      id: string;
+      index: number;
+      judul: string;
+      gambar: string;
+      isVideo: boolean;
+    }> = [];
+
+    try {
+      galleryList = JSON.parse(dataTag.textContent || '[]');
+    } catch {
+      galleryList = [];
+    }
+
+    let currentIndex = 0;
+
+    const modalImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+    const modalTitle = document.getElementById('lightbox-title');
+    const modalCounter = document.getElementById('lightbox-counter');
+
+    function showItem(index: number) {
+      if (galleryList.length === 0) return;
+      currentIndex = (index + galleryList.length) % galleryList.length;
+      const current = galleryList[currentIndex];
+
+      if (modalImg) {
+        modalImg.src = current.gambar;
+        modalImg.alt = current.judul;
+      }
+      if (modalTitle) modalTitle.textContent = current.judul;
+      if (modalCounter) modalCounter.textContent = `${currentIndex + 1} dari ${galleryList.length}`;
+    }
+
+    function openLightbox(index = 0) {
+      showItem(index);
+      lightboxModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightboxModal?.classList.add('hidden');
+      if (allModal?.classList.contains('hidden')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    function openAll() {
+      allModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAll() {
+      allModal?.classList.add('hidden');
+      if (lightboxModal?.classList.contains('hidden')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
+    document.getElementById('gallery-all-close')?.addEventListener('click', closeAll);
+
+    document.getElementById('lightbox-prev')?.addEventListener('click', () => {
+      showItem(currentIndex - 1);
+    });
+
+    document.getElementById('lightbox-next')?.addEventListener('click', () => {
+      showItem(currentIndex + 1);
+    });
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (!lightboxModal.classList.contains('hidden')) {
+        if (e.key === 'ArrowLeft') showItem(currentIndex - 1);
+        else if (e.key === 'ArrowRight') showItem(currentIndex + 1);
+        else if (e.key === 'Escape') closeLightbox();
+      } else if (!allModal.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeAll();
+      }
+    });
+
+    allModal.addEventListener('click', (e) => {
+      if (e.target === allModal) closeAll();
+    });
+
+    // Filter in All Gallery Modal
+    const filterBtns = allModal.querySelectorAll<HTMLButtonElement>('.gallery-filter-btn');
+    const cards = allModal.querySelectorAll<HTMLElement>('.gallery-catalog-card');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        filterBtns.forEach((b) => {
+          if (b === btn) {
+            b.classList.add('bg-[#1E5FD8]', 'text-white', 'font-bold', 'shadow-2xs');
+            b.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+          } else {
+            b.classList.remove('bg-[#1E5FD8]', 'text-white', 'font-bold', 'shadow-2xs');
+            b.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+          }
+        });
+
+        cards.forEach((card) => {
+          const isVideo = card.dataset.isVideo === 'true';
+          if (type === 'all') {
+            card.classList.remove('hidden');
+          } else if (type === 'video') {
+            if (isVideo) card.classList.remove('hidden');
+            else card.classList.add('hidden');
+          } else if (type === 'photo') {
+            if (!isVideo) card.classList.remove('hidden');
+            else card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Click cards in catalog to open lightbox
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const idx = Number(card.dataset.galleryIdx);
+        if (!isNaN(idx)) {
+          openLightbox(idx);
+        }
+      });
+    });
+
+    (window as any).openGalleryLightbox = openLightbox;
+    (window as any).openAllGalleryModal = openAll;
+  }
+
+  initGalleryLightbox();
+  document.addEventListener('astro:after-swap', initGalleryLightbox);
+</script>

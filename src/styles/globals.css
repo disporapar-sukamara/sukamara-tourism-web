@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Sacramento&family=Caveat:wght@400..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy-900: #0B2A5B;
+  --blue-600: #1E5FD8;
+  --blue-100: #E6F0FF;
+  --magenta-600: #D6197A;
+  --teal-600: #0E9F8E;
+  --green-600: #2E9E4F;
+  --orange-500: #F59E0B;
+  --gray-700: #374151;
+  --gray-500: #6B7280;
+  --gray-100: #F3F6FA;
+  --white: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* 80px matches sticky navbar h-20 */
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--gray-700);
+  background-color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-script {
+  font-family: 'Sacramento', 'Caveat', cursive;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

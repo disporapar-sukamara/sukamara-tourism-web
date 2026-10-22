@@ -1,0 +1,126 @@
+---
+import { Camera, ArrowRight, Play, ChevronLeft, ChevronRight } from 'lucide-astro';
+import { getCollection } from 'astro:content';
+
+const rawGallery = await getCollection('galeri');
+const galleryItems = rawGallery.map((item) => ({
+  slug: item.id,
+  judul: item.data.judul,
+  gambar: item.data.gambar,
+  isVideo: item.data.isVideo,
+}));
+---
+
+<section id="galeri" class="w-full min-h-[calc(100vh-5rem)] flex flex-col justify-center py-10 lg:py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-[#1E5FD8]">
+            <Camera class="w-5 h-5" />
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0B2A5B] tracking-tight">
+            Galeri Foto & Video
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 max-w-2xl">
+          Nikmati keindahan Sukamara melalui koleksi foto dan video pilihan.
+        </p>
+      </div>
+
+      <!-- Controls & Action button -->
+      <div class="flex items-center gap-3 self-start md:self-auto shrink-0">
+        <div class="flex items-center gap-1.5">
+          <button 
+            type="button" 
+            id="btn-gallery-prev" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser galeri ke kiri"
+          >
+            <ChevronLeft class="w-4 h-4" />
+          </button>
+          <button 
+            type="button" 
+            id="btn-gallery-next" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser galeri ke kanan"
+          >
+            <ChevronRight class="w-4 h-4" />
+          </button>
+        </div>
+
+        <button 
+          type="button"
+          id="btn-all-gallery" 
+          class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1E5FD8] hover:text-blue-800 transition-colors shrink-0 cursor-pointer"
+        >
+          <span>Lihat Galeri Lengkap</span>
+          <ArrowRight class="w-3.5 h-3.5" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Thumbnails Scroll Container -->
+    <div 
+      id="gallery-strip-container"
+      class="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-4 pt-1 px-1 -mx-1"
+    >
+      {galleryItems.map((item, idx) => (
+        <div 
+          class="gallery-item-btn w-[160px] sm:w-[200px] lg:w-[calc(16.666%-14px)] shrink-0 snap-start relative aspect-square sm:aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 shadow-xs hover:shadow-lg transition-all duration-300 group cursor-pointer border border-gray-100"
+          data-gallery-idx={idx}
+        >
+          <img 
+            src={item.gambar} 
+            alt={item.judul} 
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            loading="lazy"
+          />
+          
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
+            <span class="text-[11px] font-bold text-white line-clamp-1">{item.judul}</span>
+          </div>
+
+          {item.isVideo && (
+            <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+              <div class="w-10 h-10 rounded-full bg-white/90 group-hover:bg-white text-[#0B2A5B] flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                <Play class="w-4 h-4 fill-current ml-0.5" />
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function initGallerySection() {
+    const container = document.getElementById('gallery-strip-container');
+    document.getElementById('btn-gallery-prev')?.addEventListener('click', () => {
+      container?.scrollBy({ left: -240, behavior: 'smooth' });
+    });
+    document.getElementById('btn-gallery-next')?.addEventListener('click', () => {
+      container?.scrollBy({ left: 240, behavior: 'smooth' });
+    });
+
+    document.getElementById('btn-all-gallery')?.addEventListener('click', () => {
+      (window as any).openAllGalleryModal?.();
+    });
+
+    document.querySelectorAll('.gallery-item-btn').forEach((item) => {
+      item.addEventListener('click', () => {
+        const idx = Number((item as HTMLElement).dataset.galleryIdx);
+        if (!isNaN(idx)) {
+          (window as any).openGalleryLightbox?.(idx);
+        }
+      });
+    });
+  }
+
+  initGallerySection();
+  document.addEventListener('astro:after-swap', initGallerySection);
+</script>

@@ -1,0 +1,148 @@
+---
+import { Activity, ArrowRight, ChevronRight, ChevronLeft, Users, Trophy, Calendar, Star } from 'lucide-astro';
+import { youthAndSportsCards } from '../../data/siteData';
+
+const badgeIcons = {
+  users: Users,
+  trophy: Trophy,
+  calendar: Calendar,
+  star: Star,
+};
+---
+
+<section id="kepemudaan-olahraga" class="w-full min-h-[calc(100vh-5rem)] flex flex-col justify-center py-8 lg:py-10 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto space-y-8 sm:space-y-10">
+  
+  <!-- 1. Kepemudaan & Olahraga -->
+  <div>
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-8 h-8 rounded-lg bg-pink-100 flex items-center justify-center text-[#D6197A]">
+            <Activity class="w-5 h-5" />
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0B2A5B] tracking-tight">
+            Kepemudaan & Olahraga
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 max-w-2xl">
+          Mendorong generasi muda yang aktif, kreatif, dan berprestasi untuk Sukamara yang lebih maju.
+        </p>
+      </div>
+
+      <!-- Controls & Action button -->
+      <div class="flex items-center gap-3 self-start md:self-auto shrink-0">
+        <div class="flex items-center gap-1.5">
+          <button 
+            type="button" 
+            id="btn-ys-prev" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser program ke kiri"
+          >
+            <ChevronLeft class="w-4 h-4" />
+          </button>
+          <button 
+            type="button" 
+            id="btn-ys-next" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser program ke kanan"
+          >
+            <ChevronRight class="w-4 h-4" />
+          </button>
+        </div>
+
+        <button 
+          type="button"
+          id="btn-all-programs" 
+          class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1E5FD8] hover:text-blue-800 transition-colors shrink-0 cursor-pointer"
+        >
+          <span>Lihat Semua Program</span>
+          <ArrowRight class="w-3.5 h-3.5" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards Scroll Container -->
+    <div 
+      id="ys-cards-container"
+      class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-4 pt-1 px-1 -mx-1"
+    >
+      {youthAndSportsCards.map((card) => {
+        const IconComponent = badgeIcons[card.badgeType];
+        return (
+          <div 
+            class="ys-card w-[280px] sm:w-[310px] lg:w-[calc(25%-18px)] shrink-0 snap-start bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col group cursor-pointer"
+            data-card-id={card.id}
+          >
+            
+            <!-- Image with round badge on bottom-left -->
+            <div class="relative aspect-[16/10] w-full bg-gray-100">
+              <div class="w-full h-full overflow-hidden">
+                <img 
+                  src={card.gambar} 
+                  alt={card.judul} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <div class={`absolute -bottom-4 left-4 w-9 h-9 rounded-full ${card.badgeBg} ${card.badgeColor} flex items-center justify-center shadow-md border-2 border-white z-10`}>
+                <IconComponent class="w-4 h-4" />
+              </div>
+            </div>
+
+            <!-- Card Content -->
+            <div class="p-5 pt-6 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-[#0B2A5B] text-base group-hover:text-[#1E5FD8] transition-colors mb-1.5 leading-snug">
+                  {card.judul}
+                </h3>
+                <p class="text-xs text-gray-500 leading-relaxed mb-4">
+                  {card.deskripsi}
+                </p>
+              </div>
+
+              <!-- Action button right aligned -->
+              <div class="flex justify-end pt-2 border-t border-gray-50">
+                <div 
+                  class="w-7 h-7 rounded-full border border-blue-200 text-[#1E5FD8] bg-white group-hover:bg-[#1E5FD8] group-hover:text-white transition-colors flex items-center justify-center shadow-xs"
+                  aria-label={`Lihat ${card.judul}`}
+                >
+                  <ChevronRight class="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        );
+      })}
+    </div>
+  </div>
+  </div>
+
+</section>
+
+<script>
+  function initYouthSportsSection() {
+    const container = document.getElementById('ys-cards-container');
+    document.getElementById('btn-ys-prev')?.addEventListener('click', () => {
+      container?.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+    document.getElementById('btn-ys-next')?.addEventListener('click', () => {
+      container?.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+
+    document.getElementById('btn-all-programs')?.addEventListener('click', () => {
+      (window as any).openYouthAllProgramsModal?.();
+    });
+
+    document.querySelectorAll('.ys-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const id = (card as HTMLElement).dataset.cardId || '1';
+        (window as any).openYouthProgramModal?.(id);
+      });
+    });
+  }
+  initYouthSportsSection();
+  document.addEventListener('astro:after-swap', initYouthSportsSection);
+</script>

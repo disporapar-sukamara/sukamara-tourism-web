@@ -1,0 +1,66 @@
+---
+import { Database, Palmtree, Calendar, Users, Trophy } from 'lucide-astro';
+---
+
+<section class="w-full py-10 lg:py-14 bg-gradient-to-b from-white to-[#F3F6FA]/60">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
+      
+      <!-- Background Image with Overlay -->
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="/images/destinasi/ekowisata-mangrove.png" 
+          alt="Potensi Wisata Sukamara" 
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-[#0B2A5B]/85 backdrop-blur-[2px]"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="relative z-10 p-6 sm:p-8 lg:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
+        
+        <div class="text-white space-y-2.5 max-w-md text-center lg:text-left">
+          <div class="flex items-center justify-center lg:justify-start gap-2 text-cyan-300">
+            <Database class="w-5 h-5" />
+            <h3 class="text-xl sm:text-2xl font-black tracking-tight text-white">
+              Data & Potensi Wisata Sukamara
+            </h3>
+          </div>
+          <p class="text-xs sm:text-sm text-white/80 leading-relaxed">
+            Keindahan alam, budaya, dan keramahan masyarakat dalam angka.
+          </p>
+        </div>
+
+        <!-- 4 Metric Cards -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-2xl grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 w-full lg:w-auto">
+          <div class="bg-gray-50/70 sm:bg-transparent rounded-xl p-3 sm:p-0 sm:border-r border-gray-100 flex flex-col items-center text-center">
+            <Palmtree class="w-6 h-6 text-[#2E9E4F] mb-1.5" />
+            <span class="text-2xl sm:text-3xl font-black text-[#0B2A5B] leading-tight">25+</span>
+            <span class="text-[10px] sm:text-[11px] font-semibold text-gray-500 mt-0.5">Destinasi Wisata</span>
+          </div>
+
+          <div class="bg-gray-50/70 sm:bg-transparent rounded-xl p-3 sm:p-0 sm:border-r border-gray-100 flex flex-col items-center text-center">
+            <Calendar class="w-6 h-6 text-[#2E9E4F] mb-1.5" />
+            <span class="text-2xl sm:text-3xl font-black text-[#0B2A5B] leading-tight">10+</span>
+            <span class="text-[10px] sm:text-[11px] font-semibold text-gray-500 mt-0.5">Event Tahunan</span>
+          </div>
+
+          <div class="bg-gray-50/70 sm:bg-transparent rounded-xl p-3 sm:p-0 sm:border-r border-gray-100 flex flex-col items-center text-center">
+            <Users class="w-6 h-6 text-[#D6197A] mb-1.5" />
+            <span class="text-2xl sm:text-3xl font-black text-[#0B2A5B] leading-tight">50+</span>
+            <span class="text-[10px] sm:text-[11px] font-semibold text-gray-500 mt-0.5">Komunitas Pemuda</span>
+          </div>
+
+          <div class="bg-gray-50/70 sm:bg-transparent rounded-xl p-3 sm:p-0 flex flex-col items-center text-center">
+            <Trophy class="w-6 h-6 text-[#F59E0B] mb-1.5" />
+            <span class="text-2xl sm:text-3xl font-black text-[#0B2A5B] leading-tight">30+</span>
+            <span class="text-[10px] sm:text-[11px] font-semibold text-gray-500 mt-0.5">Fasilitas Olahraga</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>

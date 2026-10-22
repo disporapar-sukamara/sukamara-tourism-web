@@ -1,0 +1,318 @@
+---
+import { X, ArrowRight, ArrowLeft, Users, Trophy, Calendar, Star, Activity } from 'lucide-astro';
+import { youthAndSportsCards } from '../../data/siteData';
+
+const programDetails: Record<string, { fullDesc: string; points: string[]; cta: string }> = {
+  '1': {
+    fullDesc: 'Dinas Kepemudaan, Olahraga, dan Pariwisata memfasilitasi organisasi kemasyarakatan pemuda (OKP), komunitas kreatif, dan sanggar seni budaya dalam peningkatan kapasitas wirausaha, pelatihan kepemimpinan, dan jejaring pemuda di seluruh kecamatan Kabupaten Sukamara.',
+    points: ['Pelatihan Manajemen Organisasi', 'Bantuan Sarana Komunitas Pemuda', 'Jejaring Wirausaha Muda Mandiri'],
+    cta: 'Hubungi Bidang Kepemudaan',
+  },
+  '2': {
+    fullDesc: 'Pemerintah Kabupaten Sukamara menyediakan sarana olahraga terbuka dan terpadu untuk masyarakat, meliputi Lapangan Mini Sukamara, GOR Bulutangkis, Lapangan Futsal, dan fasilitas kebugaran publik di taman kota.',
+    points: ['Jadwal Pemakaian Lapangan Olahraga', 'Fasilitas Terbuka Ramah Anak & Difabel', 'Pusat Pembinaan Atlet Daerah'],
+    cta: 'Cek Ketersediaan Lapangan',
+  },
+  '3': {
+    fullDesc: 'Portal pendaftaran resmi bagi pemuda dan atlet lokal untuk mengikuti kompetisi olahraga daerah, seleksi Paskibraka, kejuaraan antarkecamatan, serta festival kreativitas pemuda tahunan.',
+    points: ['Seleksi Calon Paskibraka Daerah', 'Turnamen Sepakbola & Futsal Bupati Cup', 'Pendaftaran Peserta Lomba Inovasi'],
+    cta: 'Informasi Pendaftaran',
+  },
+  '4': {
+    fullDesc: 'Apresiasi dan dokumentasi prestasi putra-putri daerah Kabupaten Sukamara yang telah meraih medali pada ajang Porprov Kalteng, PON, kompetisi sains pemuda, dan duta pariwisata.',
+    points: ['Daftar Atlet Berprestasi Sukamara', 'Beasiswa Pembinaan Olahragawan', 'Galeri Juara & Penghargaan'],
+    cta: 'Lihat Daftar Prestasi',
+  },
+};
+
+const badgeIcons = {
+  users: Users,
+  trophy: Trophy,
+  calendar: Calendar,
+  star: Star,
+};
+---
+
+<!-- 1. MODAL KATALOG SEMUA PROGRAM -->
+<div 
+  id="ys-all-modal" 
+  class="fixed inset-0 z-50 hidden bg-navy-900/60 backdrop-blur-md p-3 sm:p-6 overflow-y-auto"
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Katalog Semua Program Pemuda & Olahraga"
+>
+  <div class="min-h-full flex items-center justify-center py-6">
+    <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col animate-in fade-in zoom-in-95">
+      
+      <!-- Header -->
+      <div class="p-6 sm:p-8 bg-gradient-to-r from-blue-50/70 via-pink-50/50 to-white border-b border-gray-100 flex items-start justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="w-7 h-7 rounded-lg bg-pink-100 flex items-center justify-center text-[#D6197A]">
+              <Activity class="w-4 h-4" />
+            </span>
+            <span class="text-xs font-bold text-[#D6197A] uppercase tracking-wider">
+              Disporapar Kabupaten Sukamara
+            </span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-black text-[#0B2A5B] tracking-tight">
+            Katalog Program Kepemudaan & Olahraga
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1 max-w-xl">
+            Pilih program atau bidang layanan di bawah ini untuk melihat detail fokus kegiatan, fasilitas, dan narahubung resmi.
+          </p>
+        </div>
+
+        <button 
+          type="button" 
+          id="ys-all-close" 
+          class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+          aria-label="Tutup katalog"
+        >
+          <X class="w-4 h-4" />
+        </button>
+      </div>
+
+      <!-- Grid Cards -->
+      <div class="p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-5 max-h-[60vh] overflow-y-auto">
+        {youthAndSportsCards.map((card) => {
+          const IconComp = badgeIcons[card.badgeType];
+          return (
+            <div 
+              class="ys-catalog-card group bg-white rounded-2xl border border-gray-200 hover:border-blue-300 p-4 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between cursor-pointer"
+              data-card-id={card.id}
+            >
+              <div class="flex items-start gap-4">
+                <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-gray-100 shrink-0">
+                  <img 
+                    src={card.gambar} 
+                    alt={card.judul} 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                  />
+                  <div class={`absolute top-2 left-2 w-7 h-7 rounded-full ${card.badgeBg} ${card.badgeColor} flex items-center justify-center shadow-xs`}>
+                    <IconComp class="w-3.5 h-3.5" />
+                  </div>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm sm:text-base font-extrabold text-[#0B2A5B] group-hover:text-[#1E5FD8] transition-colors leading-snug line-clamp-2">
+                    {card.judul}
+                  </h4>
+                  <p class="text-xs text-gray-500 mt-1.5 line-clamp-3 leading-relaxed">
+                    {card.deskripsi}
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
+                <span class="text-[11px] font-bold text-gray-400 group-hover:text-[#1E5FD8] transition-colors">
+                  Klik untuk detail program
+                </span>
+                <span class="inline-flex items-center gap-1 text-xs font-bold text-[#1E5FD8]">
+                  <span>Buka</span>
+                  <ArrowRight class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <!-- Footer -->
+      <div class="p-4 sm:p-5 bg-gray-50 border-t border-gray-100 flex justify-end">
+        <button 
+          type="button" 
+          id="ys-all-close-btn" 
+          class="px-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-bold transition-colors cursor-pointer"
+        >
+          Tutup Katalog
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 2. MODAL DETAIL PROGRAM TUNGGAL -->
+<div 
+  id="youth-sports-modal" 
+  class="fixed inset-0 z-50 hidden bg-navy-900/60 backdrop-blur-md p-3 sm:p-6 overflow-y-auto"
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Detail Program Pemuda & Olahraga"
+>
+  <div class="min-h-full flex items-center justify-center py-4">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col animate-in fade-in zoom-in-95">
+      
+      <!-- Top Image -->
+      <div class="relative aspect-[16/9] w-full bg-gray-100 overflow-hidden">
+        <img 
+          id="ys-modal-img" 
+          src="" 
+          alt="" 
+          class="w-full h-full object-cover" 
+        />
+        <button 
+          type="button" 
+          id="ys-modal-close" 
+          class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition-colors cursor-pointer"
+          aria-label="Tutup modal"
+        >
+          <X class="w-4 h-4" />
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="p-5 sm:p-6 space-y-4">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold bg-pink-100 text-[#D6197A] uppercase tracking-wider mb-1.5">
+            Kepemudaan & Olahraga
+          </span>
+          <h3 id="ys-modal-title" class="text-xl font-black text-[#0B2A5B] leading-tight"></h3>
+        </div>
+
+        <p id="ys-modal-desc" class="text-xs sm:text-sm text-gray-600 leading-relaxed"></p>
+
+        <!-- Points list -->
+        <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-100 space-y-2">
+          <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block">Fokus Layanan & Program:</span>
+          <div id="ys-modal-points" class="space-y-1.5"></div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              id="ys-modal-back-btn" 
+              class="py-2.5 px-3 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+            >
+              <ArrowLeft class="w-3.5 h-3.5" />
+              <span>Semua Program</span>
+            </button>
+            <a 
+              href="#kontak" 
+              id="ys-modal-contact"
+              class="py-2.5 px-4 rounded-xl bg-[#1E5FD8] hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs inline-flex items-center gap-1.5"
+            >
+              <span>Hubungi Disporapar</span>
+              <ArrowRight class="w-3.5 h-3.5" />
+            </a>
+          </div>
+          <button 
+            type="button" 
+            id="ys-modal-close-btn" 
+            class="py-2.5 px-4 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold transition-colors cursor-pointer"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script id="ys-data" type="application/json" set:html={JSON.stringify({ cards: youthAndSportsCards, details: programDetails })} />
+
+<script>
+  function initYouthSportsModal() {
+    const allModal = document.getElementById('ys-all-modal');
+    const detailModal = document.getElementById('youth-sports-modal');
+    const dataTag = document.getElementById('ys-data');
+    if (!allModal || !detailModal || !dataTag) return;
+
+    let payload: { cards: any[]; details: Record<string, any> } = { cards: [], details: {} };
+    try {
+      payload = JSON.parse(dataTag.textContent || '{}');
+    } catch {
+      payload = { cards: [], details: {} };
+    }
+
+    const modalImg = document.getElementById('ys-modal-img') as HTMLImageElement | null;
+    const modalTitle = document.getElementById('ys-modal-title');
+    const modalDesc = document.getElementById('ys-modal-desc');
+    const modalPoints = document.getElementById('ys-modal-points');
+
+    function openCatalog() {
+      detailModal?.classList.add('hidden');
+      allModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCatalog() {
+      allModal?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function openProgram(id: string) {
+      const card = payload.cards.find((c) => c.id === id) || payload.cards[0];
+      const detail = payload.details[id] || payload.details['1'];
+      if (!card) return;
+
+      if (modalImg) {
+        modalImg.src = card.gambar;
+        modalImg.alt = card.judul;
+      }
+      if (modalTitle) modalTitle.textContent = card.judul;
+      if (modalDesc) modalDesc.textContent = detail?.fullDesc || card.deskripsi;
+
+      if (modalPoints && detail?.points) {
+        modalPoints.innerHTML = detail.points.map((pt: string) => `
+          <div class="flex items-center gap-2 text-xs text-gray-700">
+            <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>${pt}</span>
+          </div>
+        `).join('');
+      }
+
+      allModal?.classList.add('hidden');
+      detailModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetail() {
+      detailModal?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // Handlers Catalog
+    document.getElementById('ys-all-close')?.addEventListener('click', closeCatalog);
+    document.getElementById('ys-all-close-btn')?.addEventListener('click', closeCatalog);
+    allModal.addEventListener('click', (e) => {
+      if (e.target === allModal) closeCatalog();
+    });
+
+    document.querySelectorAll('.ys-catalog-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const id = (card as HTMLElement).dataset.cardId || '1';
+        openProgram(id);
+      });
+    });
+
+    // Handlers Detail
+    document.getElementById('ys-modal-close')?.addEventListener('click', closeDetail);
+    document.getElementById('ys-modal-close-btn')?.addEventListener('click', closeDetail);
+    document.getElementById('ys-modal-back-btn')?.addEventListener('click', () => {
+      detailModal?.classList.add('hidden');
+      openCatalog();
+    });
+
+    detailModal.addEventListener('click', (e) => {
+      if (e.target === detailModal) closeDetail();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!detailModal.classList.contains('hidden')) closeDetail();
+        else if (!allModal.classList.contains('hidden')) closeCatalog();
+      }
+    });
+
+    (window as any).openYouthAllProgramsModal = openCatalog;
+    (window as any).openYouthProgramModal = openProgram;
+  }
+
+  initYouthSportsModal();
+  document.addEventListener('astro:after-swap', initYouthSportsModal);
+</script>

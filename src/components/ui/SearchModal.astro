@@ -1,0 +1,362 @@
+---
+import { Search, X } from 'lucide-astro';
+import { getCollection } from 'astro:content';
+
+const [destinasiRaw, eventRaw, beritaRaw] = await Promise.all([
+  getCollection('destinasi'),
+  getCollection('event'),
+  getCollection('berita'),
+]);
+
+const searchIndex = [
+  ...destinasiRaw.map((d) => ({
+    id: d.id,
+    type: 'destinasi',
+    typeName: 'Destinasi',
+    title: d.data.nama,
+    badge: d.data.kategori,
+    sub: d.data.kecamatan,
+    desc: d.data.deskripsi,
+    img: d.data.gambar,
+    href: `#${d.id}`,
+  })),
+  ...eventRaw.map((e) => ({
+    id: e.id,
+    type: 'event',
+    typeName: 'Event',
+    title: e.data.judul,
+    badge: e.data.kategori.replace('EVENT ', ''),
+    sub: `${e.data.tanggal} ${e.data.bulanTahun}`,
+    desc: e.data.lokasi,
+    img: '/images/destinasi/pantai-citra.png',
+    href: `#${e.id}`,
+  })),
+  ...beritaRaw.map((b) => ({
+    id: b.id,
+    type: 'berita',
+    typeName: 'Berita',
+    title: b.data.judul,
+    badge: b.data.kategori,
+    sub: b.data.tanggal,
+    desc: b.data.ringkasan,
+    img: b.data.gambar,
+    href: `#${b.id}`,
+  })),
+];
+---
+
+<!-- Search Modal Backdrop & Dialog -->
+<div 
+  id="search-modal" 
+  class="fixed inset-0 z-50 hidden bg-navy-900/60 backdrop-blur-md p-3 sm:p-6 md:p-10 overflow-y-auto"
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Pencarian Cepat Smart Tourism Sukamara"
+>
+  <div class="min-h-full flex items-start sm:items-center justify-center">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col transition-all duration-200 animate-in fade-in zoom-in-95">
+      
+      <!-- Top Search Input Header -->
+      <div class="relative p-3.5 sm:p-4 border-b border-gray-100 flex items-center gap-3">
+        <Search class="w-5 h-5 text-[#1E5FD8] shrink-0" />
+        <input 
+          id="search-modal-input" 
+          type="text" 
+          placeholder="Ketik destinasi, festival, berita wisata..." 
+          class="flex-1 text-sm sm:text-base text-gray-800 placeholder-gray-400 outline-none bg-transparent"
+          autocomplete="off"
+        />
+        <button 
+          type="button" 
+          id="search-modal-clear" 
+          class="hidden p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+          aria-label="Hapus kata kunci"
+        >
+          <X class="w-4 h-4" />
+        </button>
+        <button 
+          type="button" 
+          id="search-modal-close" 
+          class="px-2 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 text-xs font-semibold flex items-center gap-1 transition-colors"
+        >
+          <span class="hidden sm:inline">Tutup</span>
+          <kbd class="text-[10px] bg-white border border-gray-200 px-1 rounded shadow-2xs">ESC</kbd>
+        </button>
+      </div>
+
+      <!-- Quick Filter Tags -->
+      <div class="px-4 py-2 bg-gray-50/70 border-b border-gray-100 flex items-center gap-1.5 overflow-x-auto text-xs">
+        <span class="text-gray-400 text-[11px] font-medium mr-1 shrink-0">Filter:</span>
+        <button type="button" class="search-filter-btn px-2.5 py-1 rounded-full font-bold bg-[#1E5FD8] text-white shadow-2xs" data-filter="all">Semua</button>
+        <button type="button" class="search-filter-btn px-2.5 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-filter="destinasi">🏖️ Destinasi</button>
+        <button type="button" class="search-filter-btn px-2.5 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-filter="event">📅 Event</button>
+        <button type="button" class="search-filter-btn px-2.5 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-filter="berita">📰 Berita</button>
+      </div>
+
+      <!-- Search Results Area -->
+      <div id="search-modal-results" class="max-h-[60vh] sm:max-h-[380px] overflow-y-auto p-3 sm:p-4 space-y-2 divide-y divide-gray-50">
+        <!-- Default State: Populer / Rekomendasi -->
+        <div id="search-default-hint" class="py-4 text-center">
+          <p class="text-xs font-semibold text-gray-400 mb-3">PENCARIAN POPULER</p>
+          <div class="flex flex-wrap justify-center gap-2">
+            <button type="button" class="search-suggestion text-xs bg-blue-50 text-[#1E5FD8] hover:bg-blue-100 px-3 py-1.5 rounded-xl font-medium transition-colors">Pantai Citra</button>
+            <button type="button" class="search-suggestion text-xs bg-blue-50 text-[#1E5FD8] hover:bg-blue-100 px-3 py-1.5 rounded-xl font-medium transition-colors">Ekowisata Mangrove</button>
+            <button type="button" class="search-suggestion text-xs bg-blue-50 text-[#1E5FD8] hover:bg-blue-100 px-3 py-1.5 rounded-xl font-medium transition-colors">Bukit Jalungga</button>
+            <button type="button" class="search-suggestion text-xs bg-blue-50 text-[#1E5FD8] hover:bg-blue-100 px-3 py-1.5 rounded-xl font-medium transition-colors">Festival Bahari</button>
+          </div>
+        </div>
+
+        <!-- Rendered Results Target -->
+        <div id="search-results-list" class="space-y-1.5"></div>
+
+        <!-- Not Found State -->
+        <div id="search-not-found" class="hidden py-8 text-center">
+          <p class="text-sm font-bold text-gray-700 mb-1">Hasil tidak ditemukan</p>
+          <p class="text-xs text-gray-400">Coba gunakan kata kunci lain seperti "pantai", "sungai", atau "festival".</p>
+        </div>
+      </div>
+
+      <!-- Modal Bottom Navigation Info -->
+      <div class="px-4 py-2.5 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
+        <div class="flex items-center gap-2">
+          <span>Pencarian Cepat Smart Tourism Sukamara</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-1.5">
+          <span>Tekan</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-white border border-gray-200 text-gray-600 font-mono text-[10px]">Enter</kbd>
+          <span>untuk pilih</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Embedded Search Data -->
+<script id="search-index-data" type="application/json" set:html={JSON.stringify(searchIndex)} />
+
+<script>
+  // ponytail: Lightweight in-memory fuzzy/substring search; upgrade to Pagefind if articles grow >500
+  function initSearchModal() {
+    const modal = document.getElementById('search-modal');
+    const input = document.getElementById('search-modal-input') as HTMLInputElement | null;
+    const closeBtn = document.getElementById('search-modal-close');
+    const clearBtn = document.getElementById('search-modal-clear');
+    const resultsList = document.getElementById('search-results-list');
+    const defaultHint = document.getElementById('search-default-hint');
+    const notFound = document.getElementById('search-not-found');
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.search-filter-btn');
+    const dataTag = document.getElementById('search-index-data');
+
+    if (!modal || !input || !dataTag) return;
+
+    let items: Array<{
+      id: string;
+      type: string;
+      typeName: string;
+      title: string;
+      badge: string;
+      sub: string;
+      desc: string;
+      img: string;
+      href: string;
+    }> = [];
+
+    try {
+      items = JSON.parse(dataTag.textContent || '[]');
+    } catch {
+      items = [];
+    }
+
+    let activeFilter = 'all';
+
+    function openModal(initialQuery = '') {
+      modal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      if (input) {
+        input.value = initialQuery;
+        input.focus();
+        handleSearch(initialQuery);
+      }
+    }
+
+    function closeModal() {
+      modal?.classList.add('hidden');
+      document.body.style.overflow = '';
+      if (input) input.value = '';
+      activeFilter = 'all';
+      updateFilterButtons();
+    }
+
+    function updateFilterButtons() {
+      filterBtns.forEach((btn) => {
+        if (btn.dataset.filter === activeFilter) {
+          btn.classList.add('bg-[#1E5FD8]', 'text-white', 'font-bold', 'shadow-2xs');
+          btn.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+        } else {
+          btn.classList.remove('bg-[#1E5FD8]', 'text-white', 'font-bold', 'shadow-2xs');
+          btn.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+        }
+      });
+    }
+
+    function handleSearch(query: string) {
+      const q = query.trim().toLowerCase();
+      
+      if (clearBtn) {
+        if (q) clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
+
+      if (!q) {
+        if (resultsList) resultsList.innerHTML = '';
+        defaultHint?.classList.remove('hidden');
+        notFound?.classList.add('hidden');
+        return;
+      }
+
+      defaultHint?.classList.add('hidden');
+
+      const filtered = items.filter((item) => {
+        const matchesFilter = activeFilter === 'all' || item.type === activeFilter;
+        if (!matchesFilter) return false;
+        const text = `${item.title} ${item.badge} ${item.sub} ${item.desc}`.toLowerCase();
+        return text.includes(q);
+      });
+
+      if (filtered.length === 0) {
+        if (resultsList) resultsList.innerHTML = '';
+        notFound?.classList.remove('hidden');
+        return;
+      }
+
+      notFound?.classList.add('hidden');
+
+      if (resultsList) {
+        resultsList.innerHTML = filtered.map((item) => {
+          const badgeColor = item.type === 'destinasi'
+            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+            : item.type === 'event'
+            ? 'bg-pink-50 text-pink-700 border-pink-200'
+            : 'bg-blue-50 text-[#1E5FD8] border-blue-200';
+
+          return `
+            <a 
+              href="${item.href}" 
+              class="search-result-item flex items-center justify-between gap-3 p-2.5 sm:p-3 rounded-xl hover:bg-blue-50/70 transition-all group"
+            >
+              <div class="flex items-center gap-3 min-w-0">
+                <img 
+                  src="${item.img}" 
+                  alt="${item.title}" 
+                  class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover shrink-0 border border-gray-100" 
+                  loading="lazy"
+                />
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 mb-0.5">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${badgeColor}">
+                      ${item.typeName} • ${item.badge}
+                    </span>
+                    <span class="text-[11px] text-gray-400 truncate">${item.sub}</span>
+                  </div>
+                  <h4 class="text-xs sm:text-sm font-bold text-[#0B2A5B] group-hover:text-[#1E5FD8] truncate transition-colors">
+                    ${item.title}
+                  </h4>
+                  <p class="text-[11px] text-gray-500 line-clamp-1">${item.desc}</p>
+                </div>
+              </div>
+              <div class="w-7 h-7 rounded-lg bg-gray-50 group-hover:bg-[#1E5FD8] text-gray-400 group-hover:text-white flex items-center justify-center shrink-0 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
+            </a>
+          `;
+        }).join('');
+
+        // Close modal and highlight target card on clicking result link
+        resultsList.querySelectorAll('a').forEach((a) => {
+          a.addEventListener('click', () => {
+            const href = a.getAttribute('href');
+            closeModal();
+            if (href && href.startsWith('#')) {
+              const targetEl = document.querySelector(href);
+              if (targetEl) {
+                targetEl.classList.add('ring-4', 'ring-[#1E5FD8]', 'ring-offset-2', 'transition-all', 'duration-500');
+                window.setTimeout(() => {
+                  targetEl.classList.remove('ring-4', 'ring-[#1E5FD8]', 'ring-offset-2');
+                }, 2200);
+              } else {
+                // Fallback to section if card not directly rendered on main screen
+                const section = href.includes('pantai') || href.includes('wisata') || href.includes('bukit') || href.includes('mangrove') || href.includes('sungai')
+                  ? document.getElementById('destinasi-unggulan')
+                  : null;
+                section?.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          });
+        });
+      }
+    }
+
+    input.addEventListener('input', (e) => {
+      handleSearch((e.target as HTMLInputElement).value);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const firstResult = resultsList?.querySelector<HTMLAnchorElement>('a.search-result-item');
+        if (firstResult) {
+          e.preventDefault();
+          firstResult.click();
+        }
+      }
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      input.value = '';
+      input.focus();
+      handleSearch('');
+    });
+
+    closeBtn?.addEventListener('click', closeModal);
+
+    // Click outside dialog to close
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Filter button clicks
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.filter || 'all';
+        updateFilterButtons();
+        handleSearch(input.value);
+      });
+    });
+
+    // Suggestions click
+    document.querySelectorAll('.search-suggestion').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const text = btn.textContent?.trim() || '';
+        input.value = text;
+        handleSearch(text);
+      });
+    });
+
+    // Keyboard shortcut: Ctrl+K / Cmd+K and Esc
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (modal.classList.contains('hidden')) openModal();
+        else closeModal();
+      } else if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Expose openSearchModal globally for Hero or other components
+    (window as any).openSearchModal = openModal;
+  }
+
+  initSearchModal();
+  document.addEventListener('astro:after-swap', initSearchModal);
+</script>

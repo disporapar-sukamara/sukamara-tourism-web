@@ -1,0 +1,12 @@
+{
+  "nama": "Pantai Anugerah",
+  "kategori": "Wisata Bahari",
+  "kecamatan": "Pantai Lunci",
+  "alamat": "Desa Sungai Tabuk, Kecamatan Pantai Lunci, Kabupaten Sukamara",
+  "deskripsi": "Pantai berair laut biru jernih dengan suasana alami yang tenang dan deretan pohon pinus pesisir. Menjadi salah satu destinasi bahari favorit dengan pesona matahari terbenam (sunset) yang memukau.",
+  "gambar": "/images/destinasi/pantai-anugerah.jpg",
+  "tiket": "Rp10.000 / orang",
+  "latitude": "-3.0150",
+  "longitude": "111.1820",
+  "unggulan": true
+}

@@ -1,0 +1,176 @@
+---
+import { Calendar, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-astro';
+import { getCollection } from 'astro:content';
+
+const rawEvents = await getCollection('event');
+
+const categoryStyles: Record<string, { tag: string; dateBg: string; text: string; ring: string }> = {
+  'EVENT WISATA': {
+    tag: 'bg-pink-100 text-[#D6197A] border-pink-200',
+    dateBg: 'bg-gradient-to-br from-pink-500 to-[#D6197A] text-white',
+    text: 'text-[#D6197A]',
+    ring: 'hover:border-pink-300',
+  },
+  'EVENT BUDAYA': {
+    tag: 'bg-amber-100 text-amber-800 border-amber-200',
+    dateBg: 'bg-gradient-to-br from-amber-500 to-amber-600 text-white',
+    text: 'text-amber-600',
+    ring: 'hover:border-amber-300',
+  },
+  'EVENT OLAHRAGA': {
+    tag: 'bg-blue-100 text-[#1E5FD8] border-blue-200',
+    dateBg: 'bg-gradient-to-br from-blue-500 to-[#1E5FD8] text-white',
+    text: 'text-[#1E5FD8]',
+    ring: 'hover:border-blue-300',
+  },
+  'EVENT PEMUDA': {
+    tag: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    dateBg: 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white',
+    text: 'text-emerald-600',
+    ring: 'hover:border-emerald-300',
+  },
+};
+
+const events = rawEvents.map((item) => {
+  const style = categoryStyles[item.data.kategori] || categoryStyles['EVENT WISATA'];
+  return {
+    slug: item.id,
+    judul: item.data.judul,
+    kategori: item.data.kategori,
+    tanggal: item.data.tanggal,
+    bulanTahun: item.data.bulanTahun,
+    lokasi: item.data.lokasi,
+    style,
+  };
+});
+---
+
+<section id="agenda-mendatang" class="w-full min-h-[calc(100vh-5rem)] flex flex-col justify-center py-10 lg:py-14 bg-gradient-to-b from-[#F3F6FA]/50 to-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto space-y-8">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <div class="w-8 h-8 rounded-lg bg-pink-100 flex items-center justify-center text-[#D6197A]">
+            <Calendar class="w-5 h-5" />
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0B2A5B] tracking-tight">
+            Agenda & Kalender Event Sukamara
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 max-w-2xl">
+          Ikuti kemeriahan perayaan budaya, festival bahari, kompetisi olahraga, dan agenda pemuda sepanjang tahun di Bumi Gawi Barinjam.
+        </p>
+      </div>
+
+      <!-- Controls & Action button -->
+      <div class="flex items-center gap-3 self-start md:self-auto shrink-0">
+        <div class="flex items-center gap-1.5">
+          <button 
+            type="button" 
+            id="btn-event-prev" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser event ke kiri"
+          >
+            <ChevronLeft class="w-4 h-4" />
+          </button>
+          <button 
+            type="button" 
+            id="btn-event-next" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser event ke kanan"
+          >
+            <ChevronRight class="w-4 h-4" />
+          </button>
+        </div>
+
+        <button 
+          type="button"
+          id="btn-all-events" 
+          class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#D6197A] hover:text-[#b81267] transition-colors shrink-0 cursor-pointer"
+        >
+          <span>Lihat Semua Kalender Event</span>
+          <ArrowRight class="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards Scroll Container -->
+    <div 
+      id="event-cards-container"
+      class="flex gap-5 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-4 pt-1 px-1 -mx-1"
+    >
+      {events.map((event) => (
+        <div 
+          id={event.slug} 
+          class={`w-[280px] sm:w-[310px] lg:w-[calc(25%-18px)] shrink-0 snap-start bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5 scroll-mt-24 ${event.style.ring}`}
+        >
+          <div>
+            <!-- Top Row: Date Box + Category Badge -->
+            <div class="flex items-start justify-between gap-3 mb-4">
+              <div class={`w-14 h-14 rounded-xl ${event.style.dateBg} flex flex-col items-center justify-center shadow-md shrink-0 group-hover:scale-105 transition-transform duration-300`}>
+                <span class="text-xl font-black leading-none">{event.tanggal}</span>
+                <span class="text-[9px] font-bold uppercase tracking-wider opacity-90 mt-0.5">{event.bulanTahun}</span>
+              </div>
+              <span class={`px-2.5 py-1 rounded-full text-[10px] font-bold border tracking-wide uppercase ${event.style.tag}`}>
+                {event.kategori.replace('EVENT ', '')}
+              </span>
+            </div>
+
+            <!-- Title -->
+            <h3 class="font-extrabold text-[#0B2A5B] text-base group-hover:text-[#1E5FD8] transition-colors line-clamp-2 leading-snug mb-3">
+              {event.judul}
+            </h3>
+          </div>
+
+          <!-- Footer: Location Pin & CTA -->
+          <div class="pt-4 border-t border-gray-100 mt-2 space-y-3">
+            <div class="flex items-center gap-1.5 text-xs text-gray-500 truncate">
+              <MapPin class="w-3.5 h-3.5 text-[#D6197A] shrink-0" />
+              <span class="truncate">{event.lokasi}</span>
+            </div>
+
+            <button 
+              type="button"
+              class="event-detail-btn w-full py-2 px-3 rounded-xl bg-gray-50 hover:bg-[#1E5FD8] text-gray-700 hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 group/btn cursor-pointer"
+              data-event-id={event.slug}
+            >
+              <span>Detail Kegiatan</span>
+              <ArrowRight class="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function initEventsSection() {
+    const container = document.getElementById('event-cards-container');
+    document.getElementById('btn-event-prev')?.addEventListener('click', () => {
+      container?.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+    document.getElementById('btn-event-next')?.addEventListener('click', () => {
+      container?.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+
+    document.getElementById('btn-all-events')?.addEventListener('click', () => {
+      (window as any).openAllEventsModal?.();
+    });
+
+    document.querySelectorAll('.event-detail-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const slug = btn.getAttribute('data-event-id');
+        if (slug) {
+          (window as any).openEventModal?.(slug);
+        }
+      });
+    });
+  }
+
+  initEventsSection();
+  document.addEventListener('astro:after-swap', initEventsSection);
+</script>

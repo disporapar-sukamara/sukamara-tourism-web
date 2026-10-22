@@ -1,0 +1,37 @@
+{
+  "name": "sukamara-tourism-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@12.14.0",
+  "type": "module",
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.4.1",
+    "@astrojs/node": "^11.1.9",
+    "@astrojs/react": "^7.1.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "astro": "^7.4.1",
+    "lucide-astro": "^0.556.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.11",
+    "typescript": "^5.9.3"
+  }
+}

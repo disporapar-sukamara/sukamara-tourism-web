@@ -1,0 +1,267 @@
+---
+import { Search, Compass, ArrowRight } from 'lucide-astro';
+import heroData from '../../content/hero/index.json';
+import QuickAccess from './QuickAccess.astro';
+
+interface Slide {
+  gambar: string;
+  judul?: string;
+}
+
+const slides: Slide[] = (heroData?.carousel && heroData.carousel.length > 0)
+  ? (heroData.carousel as Slide[])
+  : [{ gambar: '/images/destinasi/pantai-citra.png', judul: 'Pesona Sunset Sukamara' }];
+
+const heroGreeting = heroData?.greeting || 'Selamat Datang di';
+const heroTagline = heroData?.tagline || 'Strategi Integrasi Pemasaran Destinasi Wisata di Kabupaten Sukamara';
+const heroSlogan = heroData?.slogan || 'Sukamara Janga';
+const heroMotto = heroData?.motto || 'PESONA ALAM.\nHARMONI BUDAYA,\nMASA DEPAN BERSAMA';
+
+const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boolean);
+---
+
+<section id="hero-carousel" class="relative w-full min-h-[calc(100vh-5rem)] flex flex-col justify-between overflow-hidden bg-navy-900">
+  
+  <!-- Hero Background Carousel -->
+  <div class="absolute inset-0 z-0">
+    {slides.map((slide, idx) => (
+      <img 
+        src={slide.gambar} 
+        alt={slide.judul || `Pesona Sukamara ${idx + 1}`} 
+        class={`hero-slide absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        loading="eager"
+        decoding="async"
+        data-slide-index={idx}
+      />
+    ))}
+    <!-- Gradient Overlays for optimal readability -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0B2A5B]/90 via-[#0B2A5B]/65 to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0B2A5B]/80 via-transparent to-black/30 z-10 pointer-events-none"></div>
+  </div>
+
+  <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full my-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      
+      <!-- Left Column: Hero Content -->
+      <div class="lg:col-span-8 text-white space-y-5">
+        
+        <!-- Script greeting -->
+        <p class="font-script text-3xl sm:text-4xl text-white tracking-wide drop-shadow-md">
+          {heroGreeting}
+        </p>
+
+        <!-- Main Title -->
+        <div class="space-y-1">
+          <h1 class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase leading-none drop-shadow-md">
+            <span>SMART </span>
+            <span class="text-[#D6197A] inline-flex items-center">
+              T
+              <span class="relative inline-flex items-center justify-center">
+                O
+                <span class="absolute w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white rounded-full"></span>
+              </span>
+              URISM
+            </span>
+          </h1>
+
+          <!-- SUKAMARA with side lines -->
+          <div class="flex items-center gap-2 sm:gap-3 pt-1">
+            <span class="h-[2px] w-8 sm:w-12 bg-sky-400/80"></span>
+            <span class="text-lg sm:text-2xl lg:text-3xl font-extrabold text-sky-400 tracking-[0.2em] sm:tracking-[0.25em] uppercase">
+              SUKAMARA
+            </span>
+            <span class="h-[2px] w-12 sm:w-24 bg-sky-400/80"></span>
+          </div>
+        </div>
+
+        <!-- Tagline -->
+        <p class="text-xs sm:text-base text-white/90 max-w-xl font-medium drop-shadow leading-relaxed">
+          {heroTagline}
+        </p>
+
+        <!-- Search Bar (Pill shaped) -->
+        <div class="pt-2 max-w-xl">
+          <form id="hero-search-form" class="bg-white rounded-full p-1.5 pl-4 sm:pl-5 shadow-2xl flex items-center justify-between gap-1.5 sm:gap-2 border border-white/40">
+            <div class="flex items-center gap-2 flex-1 min-w-0">
+              <Search class="w-4 h-4 text-gray-400 shrink-0" />
+              <input 
+                id="hero-search-input"
+                type="text" 
+                placeholder="Cari destinasi, event, berita..." 
+                class="w-full text-xs sm:text-sm text-gray-800 placeholder-gray-400 outline-none bg-transparent cursor-pointer"
+              />
+            </div>
+            <div class="hidden sm:flex items-center gap-1 mr-1 text-gray-400 text-[11px] select-none">
+              <kbd class="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-gray-400 font-mono text-[10px]">Ctrl K</kbd>
+            </div>
+            <button 
+              type="submit" 
+              class="bg-[#D6197A] hover:bg-[#b81267] text-white text-xs sm:text-sm font-bold px-4 sm:px-6 py-2 sm:py-2.5 rounded-full transition-all shadow-md shrink-0 cursor-pointer"
+            >
+              Cari
+            </button>
+          </form>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="pt-2">
+          <a 
+            href="#destinasi-unggulan" 
+            class="inline-flex items-center gap-2 bg-[#0E9F8E] hover:bg-[#0b8274] text-white text-xs sm:text-sm font-bold px-7 py-3 rounded-full transition-all shadow-lg hover:shadow-teal-900/30 hover:-translate-y-0.5"
+          >
+            <Compass class="w-4 h-4" />
+            <span>Jelajahi Destinasi</span>
+            <ArrowRight class="w-4 h-4 ml-0.5" />
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Sukamara Janga Slogan Graphic -->
+      <div class="lg:col-span-4 flex flex-col items-start lg:items-end justify-center lg:justify-end text-white pt-4 sm:pt-6 lg:pt-0">
+        <div class="inline-flex flex-col items-start drop-shadow-2xl select-none max-w-full">
+          
+          <!-- Script Title: Sukamara Janga -->
+          <div class="font-handwriting text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold tracking-wide -rotate-1 origin-bottom-left leading-none mb-1 drop-shadow-md">
+            {heroSlogan}
+          </div>
+
+          <!-- Hand-drawn line under script -->
+          <svg 
+            class="w-full max-w-[190px] sm:max-w-[230px] lg:max-w-[260px] h-2.5 sm:h-3 text-white/90 fill-none stroke-current mb-2 sm:mb-2.5" 
+            viewBox="0 0 240 10" 
+            stroke-width="2.5" 
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M 4,7 C 60,3 150,8 236,4" />
+          </svg>
+
+          <!-- 3-line uppercase motto -->
+          <div class="space-y-0.5 sm:space-y-1 text-left">
+            {mottoLines.map((line: string) => (
+              <p class="text-[11px] sm:text-xs md:text-sm lg:text-base font-black tracking-widest text-white uppercase leading-tight drop-shadow-md">
+                {line}
+              </p>
+            ))}
+          </div>
+
+          <!-- Hand-drawn line under motto -->
+          <svg 
+            class="w-20 sm:w-28 lg:w-36 h-2 sm:h-2.5 text-white/90 fill-none stroke-current mt-1.5 sm:mt-2" 
+            viewBox="0 0 120 8" 
+            stroke-width="2.5" 
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M 4,4 C 40,7 80,2 116,5" />
+          </svg>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Access Dock -->
+    <div class="pt-6 sm:pt-8">
+      <QuickAccess />
+    </div>
+
+    <!-- Carousel Dots Indicators -->
+    {slides.length > 1 && (
+      <div class="flex items-center justify-center gap-2 pt-4 pb-2">
+        {slides.map((_, idx) => (
+          <button
+            type="button"
+            aria-label={`Pindah ke slide ${idx + 1}`}
+            class={`hero-dot rounded-full transition-all duration-300 cursor-pointer ${
+              idx === 0 
+                ? 'w-8 h-2.5 bg-white shadow' 
+                : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/70'
+            }`}
+            data-target-index={idx}
+          />
+        ))}
+      </div>
+    )}
+
+  </div>
+
+</section>
+
+<script>
+  // ponytail: Robust vanilla carousel; upgrade to Swiper if touch swipe gestures needed
+  function initHeroCarousel() {
+    const slides = document.querySelectorAll<HTMLElement>('.hero-slide');
+    const dots = document.querySelectorAll<HTMLElement>('.hero-dot');
+    if (slides.length <= 1) return;
+
+    let current = 0;
+    let timer: number | undefined;
+
+    function render(index: number) {
+      current = (index + slides.length) % slides.length;
+
+      slides.forEach((slide, idx) => {
+        if (idx === current) {
+          slide.classList.remove('opacity-0', 'pointer-events-none');
+          slide.classList.add('opacity-100');
+        } else {
+          slide.classList.remove('opacity-100');
+          slide.classList.add('opacity-0', 'pointer-events-none');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        if (idx === current) {
+          dot.classList.remove('w-2.5', 'bg-white/40');
+          dot.classList.add('w-8', 'bg-white', 'shadow');
+        } else {
+          dot.classList.remove('w-8', 'bg-white', 'shadow');
+          dot.classList.add('w-2.5', 'bg-white/40');
+        }
+      });
+    }
+
+    function startAuto() {
+      stopAuto();
+      timer = window.setInterval(() => render(current + 1), 5000);
+    }
+
+    function stopAuto() {
+      if (timer) clearInterval(timer);
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const target = Number(dot.dataset.targetIndex);
+        if (!isNaN(target)) {
+          render(target);
+          startAuto();
+        }
+      });
+    });
+
+    const container = document.getElementById('hero-carousel');
+    container?.addEventListener('mouseenter', stopAuto);
+    container?.addEventListener('mouseleave', startAuto);
+
+    startAuto();
+
+    // Hook search input & form to openSearchModal
+    const searchForm = document.getElementById('hero-search-form');
+    const searchInput = document.getElementById('hero-search-input') as HTMLInputElement | null;
+
+    function openModalWithQuery(e?: Event) {
+      if (e) e.preventDefault();
+      const val = searchInput?.value.trim() || '';
+      (window as any).openSearchModal?.(val);
+    }
+
+    searchForm?.addEventListener('submit', openModalWithQuery);
+    searchInput?.addEventListener('click', openModalWithQuery);
+  }
+
+  initHeroCarousel();
+  document.addEventListener('astro:after-swap', initHeroCarousel);
+</script>

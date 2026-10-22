@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import FeaturedDestinations from '../components/sections/FeaturedDestinations.astro';
+import MapSection from '../components/sections/MapSection.astro';
+import EventsSection from '../components/sections/EventsSection.astro';
+import YouthSportsAndStats from '../components/sections/YouthSportsAndStats.astro';
+import NewsSection from '../components/sections/NewsSection.astro';
+import Gallery from '../components/sections/Gallery.astro';
+import DataPotensiBanner from '../components/sections/DataPotensiBanner.astro';
+---
+
+<BaseLayout 
+  title="Smart Tourism Sukamara — Portal Resmi Pariwisata Kab. Sukamara"
+  description="Website resmi pariwisata, kepemudaan, dan olahraga Kabupaten Sukamara, Kalimantan Tengah. Jelajahi destinasi unggulan, agenda budaya, fasilitas olahraga, dan galeri wisata."
+>
+  <!-- 1. Hero Section with Carousel & Quick Access Dock -->
+  <Hero />
+
+  <!-- 2. Destinasi Unggulan SUKAMARA (4 Cards) -->
+  <FeaturedDestinations />
+
+  <!-- 3. Peta Digital Interaktif Leaflet Sukamara -->
+  <MapSection />
+
+  <!-- 4. Kalender Event & Agenda Wisata Sukamara (Dedicated Full Viewport) -->
+  <EventsSection />
+
+  <!-- 5. Kepemudaan & Olahraga -->
+  <YouthSportsAndStats />
+
+  <!-- 6. Berita & Informasi Terkini (Dedicated Full Viewport) -->
+  <NewsSection />
+
+  <!-- 7. Galeri Foto & Video (6 Media Strip) -->
+  <Gallery />
+
+  <!-- 8. Data & Potensi Wisata Sukamara Banner (Bawah Sendiri) -->
+  <DataPotensiBanner />
+</BaseLayout>

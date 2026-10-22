@@ -1,0 +1,166 @@
+---
+import { Palmtree, ArrowRight, MapPin, ChevronRight, ChevronLeft } from 'lucide-astro';
+import { getCollection } from 'astro:content';
+
+const categoryColors: Record<string, string> = {
+  'Wisata Bahari': 'bg-sky-500 text-white',
+  'Wisata Alam': 'bg-emerald-600 text-white',
+  'Wisata Budaya': 'bg-amber-600 text-white',
+  'Wisata Religi': 'bg-teal-600 text-white',
+};
+
+const entries = await getCollection('destinasi');
+// Sort featured first, then others
+const featuredDestinations = entries
+  .sort((a, b) => (b.data.unggulan ? 1 : 0) - (a.data.unggulan ? 1 : 0))
+  .map((item) => ({
+    slug: item.id,
+    nama: item.data.nama,
+    kategori: item.data.kategori,
+    kategoriColor: categoryColors[item.data.kategori] || 'bg-blue-600 text-white',
+    lokasi: item.data.kecamatan,
+    deskripsi: item.data.deskripsi,
+    gambar: item.data.gambar,
+  }));
+---
+
+<section id="destinasi-unggulan" class="w-full min-h-[calc(100vh-5rem)] flex flex-col justify-center py-10 lg:py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center text-[#2E9E4F]">
+            <Palmtree class="w-5 h-5" />
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <span class="text-[#0B2A5B]">Destinasi Unggulan </span>
+            <span class="text-[#1E5FD8]">SUKAMARA</span>
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 max-w-2xl">
+          Temukan berbagai destinasi wisata bahari, alam, budaya, dan kuliner yang mempesona di Kabupaten Sukamara.
+        </p>
+      </div>
+
+      <!-- Controls & Action button -->
+      <div class="flex items-center gap-3 self-start md:self-auto shrink-0">
+        <div class="flex items-center gap-1.5">
+          <button 
+            type="button" 
+            id="btn-dest-prev" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser destinasi ke kiri"
+          >
+            <ChevronLeft class="w-4 h-4" />
+          </button>
+          <button 
+            type="button" 
+            id="btn-dest-next" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser destinasi ke kanan"
+          >
+            <ChevronRight class="w-4 h-4" />
+          </button>
+        </div>
+
+        <button 
+          type="button"
+          id="btn-all-destinations" 
+          class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#1E5FD8] text-[#1E5FD8] text-xs font-bold hover:bg-blue-50 transition-colors shadow-xs cursor-pointer"
+        >
+          <span>Lihat Semua Destinasi</span>
+          <ArrowRight class="w-3.5 h-3.5" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards Scroll Container -->
+    <div 
+      id="dest-cards-container"
+      class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-4 pt-1 px-1 -mx-1"
+    >
+      {featuredDestinations.map((dest) => (
+        <div 
+          id={dest.slug} 
+          class="dest-featured-card w-[280px] sm:w-[310px] lg:w-[calc(25%-18px)] shrink-0 snap-start bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col group scroll-mt-24 cursor-pointer"
+          data-dest-id={dest.slug}
+        >
+          
+          <!-- Card Image with Category Chip -->
+          <div class="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
+            <img 
+              src={dest.gambar} 
+              alt={dest.nama} 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <span class={`absolute bottom-3 left-3 px-2.5 py-1 rounded text-[10px] font-extrabold tracking-wider uppercase shadow-md ${dest.kategoriColor}`}>
+              {dest.kategori}
+            </span>
+          </div>
+
+          <!-- Card Body -->
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-[#0B2A5B] text-base group-hover:text-[#1E5FD8] transition-colors mb-1.5 leading-snug">
+                {dest.nama}
+              </h3>
+              <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-4">
+                {dest.deskripsi}
+              </p>
+            </div>
+
+            <!-- Bottom Row: Location Pin + Action Button -->
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-1.5 text-xs text-gray-500">
+                <MapPin class="w-3.5 h-3.5 text-[#D6197A]" />
+                <span>{dest.lokasi}</span>
+              </div>
+
+              <div 
+                class="w-7 h-7 rounded-full border border-blue-200 text-[#1E5FD8] bg-white group-hover:bg-[#1E5FD8] group-hover:text-white transition-colors flex items-center justify-center shadow-xs"
+                aria-label={`Lihat detail ${dest.nama}`}
+              >
+                <ChevronRight class="w-4 h-4" />
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function initFeaturedDestinations() {
+    const container = document.getElementById('dest-cards-container');
+    document.getElementById('btn-dest-prev')?.addEventListener('click', () => {
+      container?.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+    document.getElementById('btn-dest-next')?.addEventListener('click', () => {
+      container?.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+
+    document.getElementById('btn-all-destinations')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      (window as any).openAllDestinationsModal?.();
+    });
+
+    document.querySelectorAll('.dest-featured-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const slug = card.getAttribute('data-dest-id');
+        if (slug) {
+          (window as any).openDestinationModal?.(slug);
+        }
+      });
+    });
+  }
+
+  initFeaturedDestinations();
+  document.addEventListener('astro:after-swap', initFeaturedDestinations);
+</script>

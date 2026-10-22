@@ -1,0 +1,16 @@
+{
+  "carousel": [
+    {
+      "gambar": "/images/destinasi/carousel/0/gambar.jpg",
+      "judul": "Pantai Tanjung Nipah"
+    },
+    {
+      "gambar": "/images/destinasi/carousel/1/gambar.jpg",
+      "judul": "Susur Sungai Jelai"
+    }
+  ],
+  "greeting": "Selamat Datang di",
+  "tagline": "Strategi Integrasi Pemasaran Destinasi Wisata di Kabupaten Sukamara",
+  "slogan": "Sukamara Janga",
+  "motto": "PESONA ALAM.\nHARMONI BUDAYA,\nMASA DEPAN BERSAMA"
+}

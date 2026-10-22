@@ -1,0 +1,303 @@
+---
+import { getCollection } from 'astro:content';
+import { X, Calendar, Newspaper, ChevronRight } from 'lucide-astro';
+
+const allNews = await getCollection('berita');
+
+const newsCategoryColors: Record<string, string> = {
+  'BERITA WISATA': 'bg-blue-100 text-[#1E5FD8] border-blue-200',
+  'INFORMASI': 'bg-teal-100 text-[#0E9F8E] border-teal-200',
+  'KEGIATAN': 'bg-pink-100 text-[#D6197A] border-pink-200',
+};
+
+const items = allNews.map((item) => ({
+  id: item.id,
+  judul: item.data.judul,
+  kategori: item.data.kategori,
+  kategoriClass: newsCategoryColors[item.data.kategori] || 'bg-gray-100 text-gray-700 border-gray-200',
+  tanggal: item.data.tanggal,
+  ringkasan: item.data.ringkasan,
+  gambar: item.data.gambar,
+}));
+---
+
+<!-- 1. Modal Baca Artikel Berita Utuh -->
+<div 
+  id="news-article-modal" 
+  class="fixed inset-0 z-50 hidden bg-navy-900/60 backdrop-blur-md p-3 sm:p-6 overflow-y-auto"
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Baca Berita Sukamara"
+>
+  <div class="min-h-full flex items-center justify-center py-4">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col animate-in fade-in zoom-in-95">
+      
+      <!-- Top Image -->
+      <div class="relative aspect-[16/9] w-full bg-gray-100 overflow-hidden">
+        <img 
+          id="news-modal-img" 
+          src="" 
+          alt="" 
+          class="w-full h-full object-cover" 
+        />
+        <button 
+          type="button" 
+          id="news-modal-close" 
+          class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition-colors cursor-pointer"
+          aria-label="Tutup berita"
+        >
+          <X class="w-4 h-4" />
+        </button>
+      </div>
+
+      <!-- Article Header & Body -->
+      <div class="p-5 sm:p-7 space-y-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span 
+              id="news-modal-category" 
+              class="px-2.5 py-0.5 rounded text-[10px] font-bold border tracking-wider uppercase bg-blue-100 text-[#1E5FD8] border-blue-200"
+            ></span>
+            <span class="text-gray-300">•</span>
+            <div class="flex items-center gap-1 text-xs text-gray-400">
+              <Calendar class="w-3.5 h-3.5" />
+              <span id="news-modal-date"></span>
+            </div>
+          </div>
+          <h2 id="news-modal-title" class="text-xl sm:text-2xl font-black text-[#0B2A5B] leading-snug"></h2>
+        </div>
+
+        <div class="border-t border-gray-100 pt-4">
+          <p id="news-modal-desc" class="text-xs sm:text-sm text-gray-700 leading-relaxed whitespace-pre-line"></p>
+        </div>
+
+        <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+          <span class="text-[11px] text-gray-400">Publikasi Resmi Disporapar Sukamara</span>
+          <button 
+            type="button" 
+            id="news-modal-close-btn" 
+            class="py-2 px-5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold transition-colors cursor-pointer"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 2. Modal Arsip Berita Lengkap -->
+<div 
+  id="news-all-modal" 
+  class="fixed inset-0 z-50 hidden bg-navy-900/60 backdrop-blur-md p-3 sm:p-6 md:p-8 overflow-y-auto"
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Arsip Berita Lengkap Sukamara"
+>
+  <div class="min-h-full flex items-center justify-center py-4">
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 max-h-[90vh]">
+      
+      <!-- Header -->
+      <div class="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between gap-4 bg-gray-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-[#1E5FD8]">
+            <Newspaper class="w-5 h-5" />
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-black text-[#0B2A5B]">Arsip Berita & Publikasi Resmi</h3>
+            <p class="text-xs text-gray-500">Rangkuman informasi pariwisata, inovasi kepemudaan, dan olahraga Kabupaten Sukamara</p>
+          </div>
+        </div>
+        <button 
+          type="button" 
+          id="news-all-close" 
+          class="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer"
+        >
+          <X class="w-5 h-5" />
+        </button>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="px-4 py-2.5 border-b border-gray-100 flex items-center gap-1.5 overflow-x-auto text-xs bg-white">
+        <span class="text-gray-400 text-[11px] font-medium mr-1 shrink-0">Kategori:</span>
+        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-bold bg-[#1E5FD8] text-white shadow-2xs" data-kategori="all">Semua</button>
+        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="BERITA WISATA">Berita Wisata</button>
+        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="INFORMASI">Informasi</button>
+        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="KEGIATAN">Kegiatan</button>
+      </div>
+
+      <!-- News List Grid -->
+      <div class="p-4 sm:p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {items.map((news) => (
+          <article 
+            class="news-catalog-card bg-white rounded-xl overflow-hidden border border-gray-100 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
+            data-news-id={news.id}
+            data-news-kategori={news.kategori}
+          >
+            <div>
+              <div class="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
+                <img src={news.gambar} alt={news.judul} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <span class={`absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-bold border tracking-wider uppercase backdrop-blur-md bg-white/90 shadow-2xs ${news.kategoriClass}`}>
+                  {news.kategori}
+                </span>
+              </div>
+              <div class="p-3.5">
+                <div class="flex items-center gap-1 text-[11px] text-gray-400 mb-1">
+                  <Calendar class="w-3 h-3" />
+                  <span>{news.tanggal}</span>
+                </div>
+                <h4 class="font-extrabold text-sm text-[#0B2A5B] group-hover:text-[#1E5FD8] transition-colors leading-snug line-clamp-2 mb-1.5">
+                  {news.judul}
+                </h4>
+                <p class="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
+                  {news.ringkasan}
+                </p>
+              </div>
+            </div>
+            <div class="p-3.5 pt-0">
+              <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#1E5FD8]">
+                <span>Baca Selengkapnya</span>
+                <ChevronRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script id="news-data" type="application/json" set:html={JSON.stringify(items)} />
+
+<script>
+  function initNewsModals() {
+    const articleModal = document.getElementById('news-article-modal');
+    const allModal = document.getElementById('news-all-modal');
+    const dataTag = document.getElementById('news-data');
+
+    if (!articleModal || !allModal || !dataTag) return;
+
+    let newsItems: Array<{
+      id: string;
+      judul: string;
+      kategori: string;
+      kategoriClass: string;
+      tanggal: string;
+      ringkasan: string;
+      gambar: string;
+    }> = [];
+
+    try {
+      newsItems = JSON.parse(dataTag.textContent || '[]');
+    } catch {
+      newsItems = [];
+    }
+
+    const modalImg = document.getElementById('news-modal-img') as HTMLImageElement | null;
+    const modalCategory = document.getElementById('news-modal-category');
+    const modalDate = document.getElementById('news-modal-date');
+    const modalTitle = document.getElementById('news-modal-title');
+    const modalDesc = document.getElementById('news-modal-desc');
+
+    function openArticle(id: string) {
+      const item = newsItems.find((n) => n.id === id);
+      if (!item) return;
+
+      if (modalImg) {
+        modalImg.src = item.gambar;
+        modalImg.alt = item.judul;
+      }
+      if (modalCategory) {
+        modalCategory.textContent = item.kategori;
+        modalCategory.className = `px-2.5 py-0.5 rounded text-[10px] font-bold border tracking-wider uppercase ${item.kategoriClass}`;
+      }
+      if (modalDate) modalDate.textContent = item.tanggal;
+      if (modalTitle) modalTitle.textContent = item.judul;
+      if (modalDesc) modalDesc.textContent = item.ringkasan;
+
+      articleModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeArticle() {
+      articleModal?.classList.add('hidden');
+      if (allModal?.classList.contains('hidden')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    function openAll() {
+      allModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAll() {
+      allModal?.classList.add('hidden');
+      if (articleModal?.classList.contains('hidden')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.getElementById('news-modal-close')?.addEventListener('click', closeArticle);
+    document.getElementById('news-modal-close-btn')?.addEventListener('click', closeArticle);
+    document.getElementById('news-all-close')?.addEventListener('click', closeAll);
+
+    articleModal.addEventListener('click', (e) => {
+      if (e.target === articleModal) closeArticle();
+    });
+    allModal.addEventListener('click', (e) => {
+      if (e.target === allModal) closeAll();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!articleModal.classList.contains('hidden')) closeArticle();
+        else if (!allModal.classList.contains('hidden')) closeAll();
+      }
+    });
+
+    // Filter tags in archive modal
+    const filterBtns = allModal.querySelectorAll<HTMLButtonElement>('.news-filter-btn');
+    const cards = allModal.querySelectorAll<HTMLElement>('.news-catalog-card');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const kat = btn.dataset.kategori;
+        filterBtns.forEach((b) => {
+          if (b === btn) {
+            b.classList.add('bg-[#1E5FD8]', 'text-white', 'font-bold', 'shadow-2xs');
+            b.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+          } else {
+            b.classList.remove('bg-[#1E5FD8]', 'text-white', 'font-bold', 'shadow-2xs');
+            b.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+          }
+        });
+
+        cards.forEach((card) => {
+          if (kat === 'all' || card.dataset.newsKategori === kat) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Click card in catalog to open article
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.newsId;
+        if (id) openArticle(id);
+      });
+    });
+
+    (window as any).openNewsArticle = openArticle;
+    (window as any).openNewsModal = openArticle;
+    (window as any).openAllNewsModal = openAll;
+  }
+
+  initNewsModals();
+  document.addEventListener('astro:after-swap', initNewsModals);
+</script>

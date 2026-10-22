@@ -1,0 +1,61 @@
+---
+import '../styles/globals.css';
+import TopBar from '../components/layout/TopBar.astro';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import SearchModal from '../components/ui/SearchModal.astro';
+import DestinationModal from '../components/ui/DestinationModal.astro';
+import EventModal from '../components/ui/EventModal.astro';
+import NewsModal from '../components/ui/NewsModal.astro';
+import GalleryLightbox from '../components/ui/GalleryLightbox.astro';
+import YouthSportsModal from '../components/ui/YouthSportsModal.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Smart Tourism Sukamara — Portal Resmi Pariwisata Kab. Sukamara",
+  description = "Portal resmi Smart Tourism Kabupaten Sukamara. Strategi integrasi pemasaran destinasi wisata, peta digital, agenda event, kepemudaan, dan olahraga."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="id" class="scroll-smooth scroll-pt-20">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/images/branding/logo-kabupaten-sukamara.png" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Meta -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/destinasi/pantai-citra.png" />
+
+    <!-- Preconnect Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body class="min-h-screen flex flex-col bg-white text-gray-700 antialiased selection:bg-brand-blue selection:text-white">
+    <TopBar />
+    <Navbar />
+    
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <Footer />
+    <SearchModal />
+    <DestinationModal />
+    <EventModal />
+    <NewsModal />
+    <GalleryLightbox />
+    <YouthSportsModal />
+  </body>
+</html>

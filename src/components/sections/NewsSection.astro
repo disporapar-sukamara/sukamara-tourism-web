@@ -1,0 +1,163 @@
+---
+import { Newspaper, Calendar, ArrowRight, ChevronRight, ChevronLeft } from 'lucide-astro';
+import { getCollection } from 'astro:content';
+
+const rawNews = await getCollection('berita');
+
+const newsCategoryColors: Record<string, string> = {
+  'BERITA WISATA': 'bg-blue-100 text-[#1E5FD8] border-blue-200',
+  'INFORMASI': 'bg-teal-100 text-[#0E9F8E] border-teal-200',
+  'KEGIATAN': 'bg-pink-100 text-[#D6197A] border-pink-200',
+};
+
+const newsList = rawNews.map((item) => ({
+  slug: item.id,
+  judul: item.data.judul,
+  kategori: item.data.kategori,
+  kategoriClass: newsCategoryColors[item.data.kategori] || 'bg-gray-100 text-gray-700 border-gray-200',
+  tanggal: item.data.tanggal,
+  ringkasan: item.data.ringkasan,
+  gambar: item.data.gambar,
+}));
+---
+
+<section id="berita-terbaru" class="w-full min-h-[calc(100vh-5rem)] flex flex-col justify-center py-10 lg:py-14 bg-[#F8FAFC]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto space-y-8">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-[#1E5FD8]">
+            <Newspaper class="w-5 h-5" />
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0B2A5B] tracking-tight">
+            Berita & Informasi Terkini
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 max-w-2xl">
+          Informasi resmi, perkembangan pariwisata, inovasi kepemudaan, dan capaian olahraga di Kabupaten Sukamara.
+        </p>
+      </div>
+
+      <!-- Controls & Action button -->
+      <div class="flex items-center gap-3 self-start md:self-auto shrink-0">
+        <div class="flex items-center gap-1.5">
+          <button 
+            type="button" 
+            id="btn-news-prev" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser berita ke kiri"
+          >
+            <ChevronLeft class="w-4 h-4" />
+          </button>
+          <button 
+            type="button" 
+            id="btn-news-next" 
+            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            aria-label="Geser berita ke kanan"
+          >
+            <ChevronRight class="w-4 h-4" />
+          </button>
+        </div>
+
+        <button 
+          type="button"
+          id="btn-all-news" 
+          class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#1E5FD8] hover:text-blue-800 transition-colors shrink-0 cursor-pointer"
+        >
+          <span>Lihat Arsip Berita Lengkap</span>
+          <ArrowRight class="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards Scroll Container -->
+    <div 
+      id="news-cards-container"
+      class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-4 pt-1 px-1 -mx-1"
+    >
+      {newsList.map((news) => (
+        <article 
+          id={news.slug} 
+          class="news-card w-[290px] sm:w-[340px] lg:w-[calc(33.333%-16px)] shrink-0 snap-start bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5 scroll-mt-24 cursor-pointer"
+          data-news-id={news.slug}
+        >
+          <div>
+            <!-- Image Thumbnail -->
+            <div class="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
+              <img 
+                src={news.gambar} 
+                alt={news.judul} 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute top-3 left-3">
+                <span class={`px-2.5 py-1 rounded-md text-[10px] font-bold border tracking-wider uppercase backdrop-blur-md bg-white/90 shadow-xs ${news.kategoriClass}`}>
+                  {news.kategori}
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-5">
+              <div class="flex items-center gap-1.5 text-[11px] text-gray-400 font-medium mb-2.5">
+                <Calendar class="w-3.5 h-3.5 text-gray-400" />
+                <span>{news.tanggal}</span>
+              </div>
+
+              <h3 class="font-extrabold text-[#0B2A5B] text-base group-hover:text-[#1E5FD8] transition-colors line-clamp-2 leading-snug mb-2.5">
+                {news.judul}
+              </h3>
+
+              <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed">
+                {news.ringkasan}
+              </p>
+            </div>
+          </div>
+
+          <!-- Card Bottom Action -->
+          <div class="p-5 pt-0">
+            <div 
+              class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#1E5FD8] group-hover:text-blue-700 transition-colors"
+            >
+              <span>Baca Selengkapnya</span>
+              <div class="w-6 h-6 rounded-full bg-blue-50 group-hover:bg-[#1E5FD8] text-[#1E5FD8] group-hover:text-white transition-all flex items-center justify-center">
+                <ChevronRight class="w-3.5 h-3.5" />
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function initNewsSection() {
+    const container = document.getElementById('news-cards-container');
+    document.getElementById('btn-news-prev')?.addEventListener('click', () => {
+      container?.scrollBy({ left: -340, behavior: 'smooth' });
+    });
+    document.getElementById('btn-news-next')?.addEventListener('click', () => {
+      container?.scrollBy({ left: 340, behavior: 'smooth' });
+    });
+
+    document.getElementById('btn-all-news')?.addEventListener('click', () => {
+      (window as any).openAllNewsModal?.();
+    });
+
+    document.querySelectorAll('.news-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-news-id');
+        if (id) {
+          (window as any).openNewsModal?.(id);
+        }
+      });
+    });
+  }
+
+  initNewsSection();
+  document.addEventListener('astro:after-swap', initNewsSection);
+</script>
