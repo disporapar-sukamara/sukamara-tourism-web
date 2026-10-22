@@ -70,12 +70,25 @@ Akses dashboard konten dapat dilakukan melalui:
 - **URL Admin:** `http://localhost:4321/admin` *(otomatis dialihkan ke `/keystatic`)*
 - **Proteksi:** HTTP Basic Auth
 
-### Kredensial Default
+### Kredensial Default (Lokal & Production Basic Auth)
 Buat atau sesuaikan berkas `.env` di direktori utama:
 ```env
 ADMIN_USER=admin
 ADMIN_PASSWORD=adminsukamara
 ```
+
+### Konfigurasi Produksi (Cloudflare Workers / Pages)
+Di lingkungan produksi (Cloudflare), Keystatic secara otomatis berjalan dalam **GitHub Mode** (`storage: { kind: 'github' }`) sehingga perubahan konten langsung membuat commit ke repositori GitHub.
+
+Tambahkan variabel environment berikut di Cloudflare Dashboard (*Settings > Variables and Secrets*):
+- `ADMIN_USER`: Username untuk basic auth (default: `admin`)
+- `ADMIN_PASSWORD`: Password untuk basic auth (default: `adminsukamara`)
+- `KEYSTATIC_SECRET`: String rahasia acak minimal 32 karakter untuk enkripsi cookie sesi
+- `KEYSTATIC_GITHUB_CLIENT_ID`: GitHub OAuth Client ID
+- `KEYSTATIC_GITHUB_CLIENT_SECRET`: GitHub OAuth Client Secret
+- `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`: Slug GitHub App (opsional jika menggunakan GitHub App)
+
+> **Catatan:** Panduan cepat membuat GitHub App Keystatic dapat diikuti di [Dokumentasi Resmi Keystatic GitHub Mode](https://keystatic.com/docs/github-mode).
 
 ---
 

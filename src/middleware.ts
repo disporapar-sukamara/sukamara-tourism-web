@@ -4,10 +4,11 @@ export const onRequest = defineMiddleware((context, next) => {
   const { pathname } = context.url;
 
   const isProtected =
-    pathname === '/admin' ||
-    pathname.startsWith('/admin/') ||
-    pathname.startsWith('/keystatic') ||
-    pathname.startsWith('/api/keystatic');
+    (pathname === '/admin' ||
+      pathname.startsWith('/admin/') ||
+      pathname.startsWith('/keystatic') ||
+      pathname.startsWith('/api/keystatic')) &&
+    !pathname.startsWith('/api/keystatic/github');
 
   if (!isProtected) {
     return next();
