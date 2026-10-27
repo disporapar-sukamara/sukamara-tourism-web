@@ -37,18 +37,18 @@ const badgeIcons = {
           <button 
             type="button" 
             id="btn-ys-prev" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser program ke kiri"
           >
-            <ChevronLeft class="w-4 h-4" />
+            <ChevronLeft class="w-5 h-5" />
           </button>
           <button 
             type="button" 
             id="btn-ys-next" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser program ke kanan"
           >
-            <ChevronRight class="w-4 h-4" />
+            <ChevronRight class="w-5 h-5" />
           </button>
         </div>
 
@@ -82,8 +82,11 @@ const badgeIcons = {
                 <img 
                   src={card.gambar} 
                   alt={card.judul} 
+                  width="400"
+                  height="250"
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div class={`absolute -bottom-4 left-4 w-9 h-9 rounded-full ${card.badgeBg} ${card.badgeColor} flex items-center justify-center shadow-md border-2 border-white z-10`}>
@@ -106,7 +109,7 @@ const badgeIcons = {
               <div class="flex justify-end pt-2 border-t border-gray-50">
                 <div 
                   class="w-7 h-7 rounded-full border border-blue-200 text-[#1E5FD8] bg-white group-hover:bg-[#1E5FD8] group-hover:text-white transition-colors flex items-center justify-center shadow-xs"
-                  aria-label={`Lihat ${card.judul}`}
+                  aria-hidden="true"
                 >
                   <ChevronRight class="w-4 h-4" />
                 </div>

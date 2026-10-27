@@ -3,10 +3,10 @@ import { Palmtree, ArrowRight, MapPin, ChevronRight, ChevronLeft } from 'lucide-
 import { getCollection } from 'astro:content';
 
 const categoryColors: Record<string, string> = {
-  'Wisata Bahari': 'bg-sky-500 text-white',
-  'Wisata Alam': 'bg-emerald-600 text-white',
-  'Wisata Budaya': 'bg-amber-600 text-white',
-  'Wisata Religi': 'bg-teal-600 text-white',
+  'Wisata Bahari': 'bg-sky-700 text-white',
+  'Wisata Alam': 'bg-emerald-700 text-white',
+  'Wisata Budaya': 'bg-amber-800 text-white',
+  'Wisata Religi': 'bg-teal-700 text-white',
 };
 
 const entries = await getCollection('destinasi');
@@ -50,18 +50,18 @@ const featuredDestinations = entries
           <button 
             type="button" 
             id="btn-dest-prev" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser destinasi ke kiri"
           >
-            <ChevronLeft class="w-4 h-4" />
+            <ChevronLeft class="w-5 h-5" />
           </button>
           <button 
             type="button" 
             id="btn-dest-next" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser destinasi ke kanan"
           >
-            <ChevronRight class="w-4 h-4" />
+            <ChevronRight class="w-5 h-5" />
           </button>
         </div>
 
@@ -93,8 +93,11 @@ const featuredDestinations = entries
             <img 
               src={dest.gambar} 
               alt={dest.nama} 
+              width="400"
+              height="300"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
+              decoding="async"
             />
             <span class={`absolute bottom-3 left-3 px-2.5 py-1 rounded text-[10px] font-extrabold tracking-wider uppercase shadow-md ${dest.kategoriColor}`}>
               {dest.kategori}
@@ -121,7 +124,7 @@ const featuredDestinations = entries
 
               <div 
                 class="w-7 h-7 rounded-full border border-blue-200 text-[#1E5FD8] bg-white group-hover:bg-[#1E5FD8] group-hover:text-white transition-colors flex items-center justify-center shadow-xs"
-                aria-label={`Lihat detail ${dest.nama}`}
+                aria-hidden="true"
               >
                 <ChevronRight class="w-4 h-4" />
               </div>

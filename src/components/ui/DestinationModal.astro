@@ -50,10 +50,10 @@ const items = allDestinations.map((d) => ({
         <button 
           type="button" 
           id="dest-modal-close" 
-          class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition-colors cursor-pointer"
+          class="absolute top-3 right-3 w-11 h-11 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-colors cursor-pointer"
           aria-label="Tutup detail destinasi"
         >
-          <X class="w-4 h-4" />
+          <X class="w-5 h-5" />
         </button>
 
         <!-- Category Badge -->
@@ -68,10 +68,10 @@ const items = allDestinations.map((d) => ({
       <div class="p-5 sm:p-6 space-y-4">
         <div>
           <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
-            <MapPin class="w-3.5 h-3.5 text-[#D6197A] shrink-0" />
+            <MapPin class="w-3.5 h-3.5 text-[#B81267] shrink-0" />
             <span id="dest-modal-kecamatan" class="font-medium"></span>
           </div>
-          <h3 id="dest-modal-title" class="text-xl sm:text-2xl font-black text-[#0B2A5B] leading-tight"></h3>
+          <h2 id="dest-modal-title" class="text-xl sm:text-2xl font-black text-[#0B2A5B] leading-tight"></h2>
         </div>
 
         <!-- Meta info pill: Tiket & Alamat -->
@@ -79,14 +79,14 @@ const items = allDestinations.map((d) => ({
           <div class="flex items-center gap-2 p-2.5 rounded-xl bg-gray-50 border border-gray-100">
             <Ticket class="w-4 h-4 text-emerald-600 shrink-0" />
             <div>
-              <span class="text-gray-400 block text-[10px]">Tiket Masuk:</span>
+              <span class="text-gray-500 block text-[10px]">Tiket Masuk:</span>
               <span id="dest-modal-tiket" class="font-bold text-gray-700"></span>
             </div>
           </div>
           <div class="flex items-center gap-2 p-2.5 rounded-xl bg-gray-50 border border-gray-100">
             <MapPin class="w-4 h-4 text-blue-600 shrink-0" />
             <div class="min-w-0">
-              <span class="text-gray-400 block text-[10px]">Alamat:</span>
+              <span class="text-gray-500 block text-[10px]">Alamat:</span>
               <span id="dest-modal-alamat" class="font-bold text-gray-700 truncate block"></span>
             </div>
           </div>
@@ -94,7 +94,7 @@ const items = allDestinations.map((d) => ({
 
         <!-- Deskripsi Lengkap -->
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Deskripsi Destinasi</h4>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Deskripsi Destinasi</h3>
           <p id="dest-modal-desc" class="text-xs sm:text-sm text-gray-600 leading-relaxed"></p>
         </div>
 
@@ -140,13 +140,14 @@ const items = allDestinations.map((d) => ({
       <!-- Header -->
       <div class="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between gap-4 bg-gray-50/50">
         <div>
-          <h3 class="text-lg sm:text-xl font-black text-[#0B2A5B]">Katalog Seluruh Destinasi Wisata</h3>
+          <h2 class="text-lg sm:text-xl font-black text-[#0B2A5B]">Katalog Seluruh Destinasi Wisata</h2>
           <p class="text-xs text-gray-500">Jelajahi 9 destinasi wisata alam, bahari, religi, dan budaya di Kabupaten Sukamara</p>
         </div>
         <button 
           type="button" 
           id="dest-all-close" 
-          class="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer"
+          class="p-2 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer w-11 h-11 flex items-center justify-center"
+          aria-label="Tutup katalog destinasi"
         >
           <X class="w-5 h-5" />
         </button>
@@ -154,12 +155,12 @@ const items = allDestinations.map((d) => ({
 
       <!-- Filter Buttons -->
       <div class="px-4 py-2.5 border-b border-gray-100 flex items-center gap-1.5 overflow-x-auto text-xs bg-white">
-        <span class="text-gray-400 text-[11px] font-medium mr-1 shrink-0">Filter:</span>
+        <span class="text-gray-600 text-[11px] font-medium mr-1 shrink-0">Filter:</span>
         <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-bold bg-[#1E5FD8] text-white shadow-2xs" data-kategori="all">Semua (9)</button>
-        <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="Wisata Bahari">Wisata Bahari</button>
-        <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="Wisata Alam">Wisata Alam</button>
-        <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="Wisata Budaya">Wisata Budaya</button>
-        <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="Wisata Religi">Wisata Religi</button>
+        <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-kategori="Wisata Bahari">Wisata Bahari</button>
+        <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-kategori="Wisata Alam">Wisata Alam</button>
+        <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-kategori="Wisata Budaya">Wisata Budaya</button>
+        <button type="button" class="dest-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-kategori="Wisata Religi">Wisata Religi</button>
       </div>
 
       <!-- Grid Cards -->
@@ -172,16 +173,19 @@ const items = allDestinations.map((d) => ({
           >
             <div>
               <div class="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
-                <img src={item.gambar} alt={item.nama} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={item.gambar} alt={item.nama} width="300" height="190" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
                 <span class={`absolute bottom-2 left-2 px-2 py-0.5 rounded text-[9px] font-bold tracking-wider uppercase shadow-xs ${item.kategoriColor}`}>
                   {item.kategori}
                 </span>
               </div>
               <div class="p-3.5">
-                <div class="flex items-center gap-1 text-[11px] text-gray-400 mb-1">
-                  <MapPin class="w-3 h-3 text-[#D6197A]" />
+                <div class="flex items-center gap-1 text-[11px] text-gray-600 mb-1">
+                  <MapPin class="w-3 h-3 text-[#B81267]" />
                   <span>{item.kecamatan}</span>
                 </div>
+                <h3 class="font-bold text-[#0B2A5B] text-sm group-hover:text-[#1E5FD8] transition-colors leading-snug line-clamp-1">
+                  {item.nama}
+                </h3>
                 <h4 class="font-bold text-sm text-[#0B2A5B] group-hover:text-[#1E5FD8] transition-colors leading-snug mb-1">
                   {item.nama}
                 </h4>

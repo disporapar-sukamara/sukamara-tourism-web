@@ -24,6 +24,8 @@ const copyright = footerData?.copyright || '© 2026 Pemerintah Kabupaten Sukamar
             <img 
               src="/images/branding/logo-kabupaten-sukamara.png" 
               alt="Pemkab Sukamara" 
+              width="31"
+              height="40"
               class="h-10 w-auto object-contain brightness-105"
             />
             <div class="flex flex-col">
@@ -64,9 +66,9 @@ const copyright = footerData?.copyright || '© 2026 Pemerintah Kabupaten Sukamar
 
       <!-- Col 2: Tautan Cepat 1 (2 cols) -->
       <div class="lg:col-span-2">
-        <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-[#1E5FD8] pl-2.5">
+        <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-[#1E5FD8] pl-2.5">
           Tautan Cepat
-        </h4>
+        </h3>
         <ul class="space-y-2 text-xs text-white/75">
           <li>
             <a href="/" class="flex items-center gap-1.5 hover:text-white hover:translate-x-1 transition-all">
@@ -125,49 +127,49 @@ const copyright = footerData?.copyright || '© 2026 Pemerintah Kabupaten Sukamar
       <!-- Col 4: Ikuti Kami & Map Silhouette (4 cols) -->
       <div class="lg:col-span-4 space-y-4">
         <div>
-          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">
             Ikuti Kami
-          </h4>
-          <div class="flex items-center gap-2.5">
+          </h3>
+          <div class="flex items-center gap-3">
             <!-- Facebook -->
             <a 
               href={facebookUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="w-8 h-8 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:opacity-90 transition-opacity" 
+              class="w-11 h-11 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:opacity-90 transition-opacity" 
               aria-label="Facebook"
             >
-              <Facebook class="w-4 h-4" />
+              <Facebook class="w-5 h-5" />
             </a>
             <!-- Instagram -->
             <a 
               href={instagramUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#FD1D1D] to-[#833AB4] text-white flex items-center justify-center hover:opacity-90 transition-opacity" 
+              class="w-11 h-11 rounded-full bg-gradient-to-tr from-[#FD1D1D] to-[#833AB4] text-white flex items-center justify-center hover:opacity-90 transition-opacity" 
               aria-label="Instagram"
             >
-              <Instagram class="w-4 h-4" />
+              <Instagram class="w-5 h-5" />
             </a>
             <!-- YouTube -->
             <a 
               href={youtubeUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="w-8 h-8 rounded-full bg-[#FF0000] text-white flex items-center justify-center hover:opacity-90 transition-opacity" 
+              class="w-11 h-11 rounded-full bg-[#FF0000] text-white flex items-center justify-center hover:opacity-90 transition-opacity" 
               aria-label="YouTube"
             >
-              <Youtube class="w-4 h-4" />
+              <Youtube class="w-5 h-5" />
             </a>
             <!-- TikTok -->
             <a 
               href={tiktokUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="w-8 h-8 rounded-full bg-black border border-white/30 text-white flex items-center justify-center font-bold text-xs hover:opacity-90 transition-opacity" 
+              class="w-11 h-11 rounded-full bg-black border border-white/30 text-white flex items-center justify-center font-bold text-xs hover:opacity-90 transition-opacity" 
               aria-label="TikTok"
             >
-              <span class="text-cyan-400 font-extrabold text-[11px]">d</span>
+              <span class="text-cyan-400 font-extrabold text-xs">d</span>
             </a>
           </div>
 
@@ -192,7 +194,7 @@ const copyright = footerData?.copyright || '© 2026 Pemerintah Kabupaten Sukamar
         <div class="bg-white/5 rounded-xl p-3 border border-white/10 flex items-center justify-between">
           <div class="text-[11px] text-white/70">
             <div class="flex items-center gap-1.5 font-bold text-white">
-              <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              <span class="w-2 h-2 rounded-full bg-red-500"></span>
               SUKAMARA
             </div>
             <div class="text-[10px] text-white/60">Kalimantan Tengah</div>
@@ -201,8 +203,7 @@ const copyright = footerData?.copyright || '© 2026 Pemerintah Kabupaten Sukamar
           <svg viewBox="0 0 100 80" class="w-24 h-16 text-white/20 fill-current">
             <path d="M25,15 Q35,5 55,10 Q75,12 85,25 Q95,45 80,65 Q65,75 40,75 Q20,75 15,55 Q10,35 25,15 Z" />
             <!-- Pin location on lower west -->
-            <circle cx="22" cy="58" r="4" class="fill-red-500 animate-ping" />
-            <circle cx="22" cy="58" r="3" class="fill-red-500" />
+            <circle cx="22" cy="58" r="3.5" class="fill-red-500" />
           </svg>
         </div>
 

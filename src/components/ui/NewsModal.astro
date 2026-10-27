@@ -43,10 +43,10 @@ const items = allNews.map((item) => ({
         <button 
           type="button" 
           id="news-modal-close" 
-          class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition-colors cursor-pointer"
+          class="absolute top-3 right-3 w-11 h-11 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-colors cursor-pointer"
           aria-label="Tutup berita"
         >
-          <X class="w-4 h-4" />
+          <X class="w-5 h-5" />
         </button>
       </div>
 
@@ -59,7 +59,7 @@ const items = allNews.map((item) => ({
               class="px-2.5 py-0.5 rounded text-[10px] font-bold border tracking-wider uppercase bg-blue-100 text-[#1E5FD8] border-blue-200"
             ></span>
             <span class="text-gray-300">•</span>
-            <div class="flex items-center gap-1 text-xs text-gray-400">
+            <div class="flex items-center gap-1 text-xs text-gray-600">
               <Calendar class="w-3.5 h-3.5" />
               <span id="news-modal-date"></span>
             </div>
@@ -72,11 +72,11 @@ const items = allNews.map((item) => ({
         </div>
 
         <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
-          <span class="text-[11px] text-gray-400">Publikasi Resmi Disporapar Sukamara</span>
+          <span class="text-[11px] text-gray-600">Publikasi Resmi Disporapar Sukamara</span>
           <button 
             type="button" 
             id="news-modal-close-btn" 
-            class="py-2 px-5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold transition-colors cursor-pointer"
+            class="py-2 px-5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold transition-colors cursor-pointer min-h-[36px]"
           >
             Tutup
           </button>
@@ -105,14 +105,15 @@ const items = allNews.map((item) => ({
             <Newspaper class="w-5 h-5" />
           </div>
           <div>
-            <h3 class="text-base sm:text-lg font-black text-[#0B2A5B]">Arsip Berita & Publikasi Resmi</h3>
+            <h2 class="text-base sm:text-lg font-black text-[#0B2A5B]">Arsip Berita & Publikasi Resmi</h2>
             <p class="text-xs text-gray-500">Rangkuman informasi pariwisata, inovasi kepemudaan, dan olahraga Kabupaten Sukamara</p>
           </div>
         </div>
         <button 
           type="button" 
           id="news-all-close" 
-          class="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer"
+          class="p-2 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer w-11 h-11 flex items-center justify-center"
+          aria-label="Tutup arsip berita"
         >
           <X class="w-5 h-5" />
         </button>
@@ -120,11 +121,11 @@ const items = allNews.map((item) => ({
 
       <!-- Filter Buttons -->
       <div class="px-4 py-2.5 border-b border-gray-100 flex items-center gap-1.5 overflow-x-auto text-xs bg-white">
-        <span class="text-gray-400 text-[11px] font-medium mr-1 shrink-0">Kategori:</span>
+        <span class="text-gray-600 text-[11px] font-medium mr-1 shrink-0">Kategori:</span>
         <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-bold bg-[#1E5FD8] text-white shadow-2xs" data-kategori="all">Semua</button>
-        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="BERITA WISATA">Berita Wisata</button>
-        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="INFORMASI">Informasi</button>
-        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-kategori="KEGIATAN">Kegiatan</button>
+        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-kategori="BERITA WISATA">Berita Wisata</button>
+        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-kategori="INFORMASI">Informasi</button>
+        <button type="button" class="news-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-kategori="KEGIATAN">Kegiatan</button>
       </div>
 
       <!-- News List Grid -->
@@ -137,19 +138,19 @@ const items = allNews.map((item) => ({
           >
             <div>
               <div class="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
-                <img src={news.gambar} alt={news.judul} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={news.gambar} alt={news.judul} width="300" height="190" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
                 <span class={`absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-bold border tracking-wider uppercase backdrop-blur-md bg-white/90 shadow-2xs ${news.kategoriClass}`}>
                   {news.kategori}
                 </span>
               </div>
               <div class="p-3.5">
-                <div class="flex items-center gap-1 text-[11px] text-gray-400 mb-1">
+                <div class="flex items-center gap-1 text-[11px] text-gray-600 mb-1">
                   <Calendar class="w-3 h-3" />
                   <span>{news.tanggal}</span>
                 </div>
-                <h4 class="font-extrabold text-sm text-[#0B2A5B] group-hover:text-[#1E5FD8] transition-colors leading-snug line-clamp-2 mb-1.5">
+                <h3 class="font-extrabold text-sm text-[#0B2A5B] group-hover:text-[#1E5FD8] transition-colors leading-snug line-clamp-2 mb-1.5">
                   {news.judul}
-                </h4>
+                </h3>
                 <p class="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
                   {news.ringkasan}
                 </p>

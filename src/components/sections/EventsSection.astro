@@ -6,15 +6,15 @@ const rawEvents = await getCollection('event');
 
 const categoryStyles: Record<string, { tag: string; dateBg: string; text: string; ring: string }> = {
   'EVENT WISATA': {
-    tag: 'bg-pink-100 text-[#D6197A] border-pink-200',
-    dateBg: 'bg-gradient-to-br from-pink-500 to-[#D6197A] text-white',
-    text: 'text-[#D6197A]',
+    tag: 'bg-pink-100 text-[#B81267] border-pink-200',
+    dateBg: 'bg-gradient-to-br from-pink-500 to-[#B81267] text-white',
+    text: 'text-[#B81267]',
     ring: 'hover:border-pink-300',
   },
   'EVENT BUDAYA': {
     tag: 'bg-amber-100 text-amber-800 border-amber-200',
-    dateBg: 'bg-gradient-to-br from-amber-500 to-amber-600 text-white',
-    text: 'text-amber-600',
+    dateBg: 'bg-gradient-to-br from-amber-600 to-amber-700 text-white',
+    text: 'text-amber-800',
     ring: 'hover:border-amber-300',
   },
   'EVENT OLAHRAGA': {
@@ -25,8 +25,8 @@ const categoryStyles: Record<string, { tag: string; dateBg: string; text: string
   },
   'EVENT PEMUDA': {
     tag: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-    dateBg: 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white',
-    text: 'text-emerald-600',
+    dateBg: 'bg-gradient-to-br from-emerald-600 to-emerald-700 text-white',
+    text: 'text-emerald-800',
     ring: 'hover:border-emerald-300',
   },
 };
@@ -70,18 +70,18 @@ const events = rawEvents.map((item) => {
           <button 
             type="button" 
             id="btn-event-prev" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser event ke kiri"
           >
-            <ChevronLeft class="w-4 h-4" />
+            <ChevronLeft class="w-5 h-5" />
           </button>
           <button 
             type="button" 
             id="btn-event-next" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser event ke kanan"
           >
-            <ChevronRight class="w-4 h-4" />
+            <ChevronRight class="w-5 h-5" />
           </button>
         </div>
 

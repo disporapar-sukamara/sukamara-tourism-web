@@ -1,11 +1,11 @@
 {
   "carousel": [
     {
-      "gambar": "/images/destinasi/carousel/0/gambar.jpg",
+      "gambar": "/images/destinasi/carousel/0/gambar.webp",
       "judul": "Pantai Tanjung Nipah"
     },
     {
-      "gambar": "/images/destinasi/carousel/1/gambar.jpg",
+      "gambar": "/images/destinasi/carousel/1/gambar.webp",
       "judul": "Susur Sungai Jelai"
     }
   ],

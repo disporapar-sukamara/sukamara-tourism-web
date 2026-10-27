@@ -36,11 +36,15 @@ const {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/images/destinasi/pantai-citra.png" />
+    <meta property="og:image" content="/images/destinasi/pantai-citra.webp" />
 
-    <!-- Preconnect Google Fonts -->
+    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" />
+
+    <!-- Preload Hero LCP Image -->
+    <link rel="preload" as="image" href="/images/destinasi/carousel/0/gambar.webp" type="image/webp" fetchpriority="high" />
   </head>
   <body class="min-h-screen flex flex-col bg-white text-gray-700 antialiased selection:bg-brand-blue selection:text-white">
     <TopBar />

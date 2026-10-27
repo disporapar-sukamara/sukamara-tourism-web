@@ -36,18 +36,18 @@ const galleryItems = rawGallery.map((item) => ({
           <button 
             type="button" 
             id="btn-gallery-prev" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser galeri ke kiri"
           >
-            <ChevronLeft class="w-4 h-4" />
+            <ChevronLeft class="w-5 h-5" />
           </button>
           <button 
             type="button" 
             id="btn-gallery-next" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser galeri ke kanan"
           >
-            <ChevronRight class="w-4 h-4" />
+            <ChevronRight class="w-5 h-5" />
           </button>
         </div>
 
@@ -75,8 +75,11 @@ const galleryItems = rawGallery.map((item) => ({
           <img 
             src={item.gambar} 
             alt={item.judul} 
+            width="300"
+            height="225"
             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             loading="lazy"
+            decoding="async"
           />
           
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">

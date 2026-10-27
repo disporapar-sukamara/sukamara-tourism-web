@@ -61,7 +61,7 @@ export const featuredDestinations: Destination[] = [
     kecamatan: 'Kec. Sukamara',
     lokasi: 'Kec. Sukamara',
     deskripsi: 'Hamparan pasir putih dan panorama senja yang memukau.',
-    gambar: '/images/destinasi/pantai-citra.png',
+    gambar: '/images/destinasi/pantai-citra.webp',
     tiket: 'Rp5.000 / orang',
     unggulan: true
   },
@@ -74,7 +74,7 @@ export const featuredDestinations: Destination[] = [
     kecamatan: 'Kec. Sukamara',
     lokasi: 'Kec. Sukamara',
     deskripsi: 'Keindahan pantai dengan suasana tenang dan alami.',
-    gambar: '/images/destinasi/pantai-anugerah.jpg',
+    gambar: '/images/destinasi/pantai-anugerah.webp',
     tiket: 'Rp10.000 / orang',
     unggulan: true
   },
@@ -87,7 +87,7 @@ export const featuredDestinations: Destination[] = [
     kecamatan: 'Kec. Sukamara',
     lokasi: 'Kec. Sukamara',
     deskripsi: 'Hutan mangrove dengan ekosistem alami yang mempesona.',
-    gambar: '/images/destinasi/ekowisata-mangrove.png',
+    gambar: '/images/destinasi/ekowisata-mangrove.webp',
     tiket: 'Rp5.000 / orang',
     unggulan: true
   },
@@ -100,7 +100,7 @@ export const featuredDestinations: Destination[] = [
     kecamatan: 'Kec. Sukamara',
     lokasi: 'Kec. Sukamara',
     deskripsi: 'Warisan budaya dan kearifan lokal masyarakat Sukamara.',
-    gambar: '/images/destinasi/makam-datuk-nakhoda.jpg',
+    gambar: '/images/destinasi/makam-datuk-nakhoda.webp',
     tiket: 'Gratis',
     unggulan: true
   }
@@ -114,27 +114,27 @@ export const latestNews: NewsItem[] = [
     kategoriColor: 'bg-[#E6F0FF] text-[#1E5FD8]',
     tanggal: '15 Okt 2026',
     ringkasan: 'Pantai Citra menawarkan panorama senja yang memukau dengan suasana tenang dan alami.',
-    gambar: '/images/destinasi/pantai-citra.png',
+    gambar: '/images/destinasi/pantai-citra.webp',
     slug: 'pesona-pantai-citra-sukamara'
   },
   {
     id: '2',
     judul: 'Pengembangan Ekowisata Mangrove di Sukamara Terus Berlanjut',
     kategori: 'INFORMASI',
-    kategoriColor: 'bg-[#E0F7F4] text-[#0E9F8E]',
+    kategoriColor: 'bg-[#E0F7F4] text-[#0F766E]',
     tanggal: '12 Okt 2026',
     ringkasan: 'Pemerintah Kabupaten Sukamara terus mendorong pengembangan ekowisata mangrove sebagai destinasi unggulan.',
-    gambar: '/images/destinasi/ekowisata-mangrove.png',
+    gambar: '/images/destinasi/ekowisata-mangrove.webp',
     slug: 'pengembangan-ekowisata-mangrove'
   },
   {
     id: '3',
     judul: 'Disporapar Sukamara Dorong Kolaborasi Pemuda dalam Promosi Wisata',
     kategori: 'KEGIATAN',
-    kategoriColor: 'bg-[#FDE8F1] text-[#D6197A]',
+    kategoriColor: 'bg-[#FDE8F1] text-[#B81267]',
     tanggal: '10 Okt 2026',
     ringkasan: 'Generasi muda berperan penting dalam mempromosikan potensi wisata Sukamara melalui kreativitas dan inovasi digital.',
-    gambar: '/images/destinasi/bukit-jalungga.jpg',
+    gambar: '/images/destinasi/bukit-jalungga.webp',
     slug: 'disporapar-kolaborasi-pemuda'
   }
 ];
@@ -187,7 +187,7 @@ export const youthAndSportsCards: YouthSportsItem[] = [
     id: '1',
     judul: 'Organisasi Kepemudaan',
     deskripsi: 'Informasi organisasi, komunitas, dan program kepemudaan.',
-    gambar: '/images/destinasi/pantai-anugerah.jpg',
+    gambar: '/images/destinasi/pantai-anugerah.webp',
     badgeType: 'users',
     badgeBg: 'bg-[#1E5FD8]',
     badgeColor: 'text-white'
@@ -196,16 +196,16 @@ export const youthAndSportsCards: YouthSportsItem[] = [
     id: '2',
     judul: 'Fasilitas Olahraga',
     deskripsi: 'Temukan fasilitas olahraga yang tersedia di Sukamara.',
-    gambar: '/images/destinasi/bundaran-tugu-sukamara.jpg',
+    gambar: '/images/destinasi/bundaran-tugu-sukamara.webp',
     badgeType: 'trophy',
-    badgeBg: 'bg-[#F59E0B]',
+    badgeBg: 'bg-[#B45309]',
     badgeColor: 'text-white'
   },
   {
     id: '3',
     judul: 'Pendaftaran Kegiatan',
     deskripsi: 'Daftar dan ikuti berbagai kegiatan pemuda dan olahraga.',
-    gambar: '/images/destinasi/bukit-jalungga.jpg',
+    gambar: '/images/destinasi/bukit-jalungga.webp',
     badgeType: 'calendar',
     badgeBg: 'bg-[#1E5FD8]',
     badgeColor: 'text-white'
@@ -214,9 +214,9 @@ export const youthAndSportsCards: YouthSportsItem[] = [
     id: '4',
     judul: 'Prestasi dan Inspirasi',
     deskripsi: 'Profil, prestasi, dan cerita inspiratif dari pemuda dan atlet Sukamara.',
-    gambar: '/images/destinasi/bundaran-burung-balai-riam.jpg',
+    gambar: '/images/destinasi/bundaran-burung-balai-riam.webp',
     badgeType: 'star',
-    badgeBg: 'bg-[#D6197A]',
+    badgeBg: 'bg-[#B81267]',
     badgeColor: 'text-white'
   }
 ];
@@ -225,32 +225,32 @@ export const galleryItems: GalleryItem[] = [
   {
     id: '1',
     judul: 'Pesisir Pantai Sukamara',
-    gambar: '/images/destinasi/pantai-anugerah.jpg'
+    gambar: '/images/destinasi/pantai-anugerah.webp'
   },
   {
     id: '2',
     judul: 'Gazebo Senja Pantai Citra',
-    gambar: '/images/destinasi/pantai-citra.png'
+    gambar: '/images/destinasi/pantai-citra.webp'
   },
   {
     id: '3',
     judul: 'Perahu Nelayan Tradisional',
-    gambar: '/images/destinasi/sungai-jelai.jpg'
+    gambar: '/images/destinasi/sungai-jelai.webp'
   },
   {
     id: '4',
     judul: 'Jembatan Kayu Hutan Mangrove',
-    gambar: '/images/destinasi/ekowisata-mangrove.png'
+    gambar: '/images/destinasi/ekowisata-mangrove.webp'
   },
   {
     id: '5',
     judul: 'Cagar Budaya Makam Datuk Nakhoda',
-    gambar: '/images/destinasi/makam-datuk-nakhoda.jpg'
+    gambar: '/images/destinasi/makam-datuk-nakhoda.webp'
   },
   {
     id: '6',
     judul: 'Wisata Susur Sungai Jelai',
-    gambar: '/images/destinasi/tepian-jelai.jpg',
+    gambar: '/images/destinasi/tepian-jelai.webp',
     isVideo: true
   }
 ];

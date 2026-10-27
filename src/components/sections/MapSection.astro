@@ -64,7 +64,7 @@ const mapDestinations = destinasiList
           <MapPin class="w-4 h-4 text-[#D6197A]" />
           <span>Menampilkan <strong>{mapDestinations.length}</strong> titik destinasi wisata terverifikasi. Klik pin untuk info rute.</span>
         </div>
-        <div class="text-gray-400">
+        <div class="text-gray-600">
           Didukung OpenStreetMap & Leaflet Digital Map
         </div>
       </div>
@@ -73,74 +73,113 @@ const mapDestinations = destinasiList
   </div>
 </section>
 
-<!-- Leaflet Stylesheet & Script -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-<script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
-<!-- Pass data safely to client script -->
+<!-- Pass data safely to client script & lazy load Leaflet on intersection -->
 <script is:inline define:vars={{ mapDestinations }}>
-  // ponytail: Lightweight Leaflet initialization with OpenStreetMap tiles; upgrade to Mapbox when custom satellite 3D terrain is needed
-  function initMap() {
-    if (typeof L === 'undefined') {
-      setTimeout(initMap, 200);
-      return;
+  // ponytail: Lightweight lazy Leaflet initialization; upgrade to Mapbox when custom satellite 3D terrain is needed
+  function setupMapLoader() {
+    const mapElement = document.getElementById('sukamara-map');
+    if (!mapElement) return;
+
+    let loaded = false;
+    function loadAndInit() {
+      if (loaded) return;
+      loaded = true;
+
+      // Lazy load CSS
+      if (!document.querySelector('link[href*="leaflet.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+        link.crossOrigin = '';
+        document.head.appendChild(link);
+      }
+
+      // Lazy load JS
+      function startMap() {
+        if (typeof L === 'undefined') {
+          setTimeout(startMap, 100);
+          return;
+        }
+        if (mapElement._leaflet_id) return;
+
+        // Center of Sukamara Regency (-2.85, 111.20)
+        const map = L.map('sukamara-map', {
+          center: [-2.85, 111.20],
+          zoom: 9,
+          scrollWheelZoom: false,
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '&copy; OpenStreetMap contributors',
+        }).addTo(map);
+
+        const bounds = L.latLngBounds();
+
+        mapDestinations.forEach((item) => {
+          if (!item.lat || !item.lng) return;
+
+          const marker = L.marker([item.lat, item.lng]).addTo(map);
+          bounds.extend([item.lat, item.lng]);
+
+          const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`;
+
+          const popupContent = `
+            <div style="font-family: inherit; min-width: 200px; max-width: 240px; padding: 2px;">
+              <img src="${item.gambar}" alt="${item.nama}" width="240" height="110" style="width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
+              <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #1E5FD8; background: #E6F0FF; padding: 2px 6px; border-radius: 4px;">
+                ${item.kategori}
+              </span>
+              <h3 style="margin: 6px 0 2px 0; font-size: 14px; font-weight: 800; color: #0B2A5B; line-height: 1.2;">
+                ${item.nama}
+              </h3>
+              <p style="margin: 0 0 8px 0; font-size: 11px; color: #525D6D;">
+                ${item.kecamatan} • Tiket: ${item.tiket}
+              </p>
+              <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" style="display: block; background: #0F766E; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; text-align: center;">
+                📍 Buka Rute di Google Maps
+              </a>
+            </div>
+          `;
+
+          marker.bindPopup(popupContent);
+        });
+
+        if (mapDestinations.length > 0) {
+          map.fitBounds(bounds, { padding: [40, 40], maxZoom: 11 });
+        }
+      }
+
+      if (typeof L === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+        script.crossOrigin = '';
+        script.onload = startMap;
+        document.body.appendChild(script);
+      } else {
+        startMap();
+      }
     }
 
-    const mapElement = document.getElementById('sukamara-map');
-    if (!mapElement || mapElement._leaflet_id) return;
-
-    // Center of Sukamara Regency (-2.80, 111.20)
-    const map = L.map('sukamara-map', {
-      center: [-2.85, 111.20],
-      zoom: 9,
-      scrollWheelZoom: false,
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(map);
-
-    const bounds = L.latLngBounds();
-
-    mapDestinations.forEach((item) => {
-      if (!item.lat || !item.lng) return;
-
-      const marker = L.marker([item.lat, item.lng]).addTo(map);
-      bounds.extend([item.lat, item.lng]);
-
-      const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`;
-
-      const popupContent = `
-        <div style="font-family: inherit; min-width: 200px; max-width: 240px; padding: 2px;">
-          <img src="${item.gambar}" alt="${item.nama}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
-          <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #1E5FD8; background: #E6F0FF; padding: 2px 6px; border-radius: 4px;">
-            ${item.kategori}
-          </span>
-          <h4 style="margin: 6px 0 2px 0; font-size: 14px; font-weight: 800; color: #0B2A5B; line-height: 1.2;">
-            ${item.nama}
-          </h4>
-          <p style="margin: 0 0 8px 0; font-size: 11px; color: #6B7280;">
-            ${item.kecamatan} • Tiket: ${item.tiket}
-          </p>
-          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" style="display: block; background: #0E9F8E; color: white; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; text-align: center;">
-            📍 Buka Rute di Google Maps
-          </a>
-        </div>
-      `;
-
-      marker.bindPopup(popupContent);
-    });
-
-    if (mapDestinations.length > 0) {
-      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 11 });
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          observer.disconnect();
+          loadAndInit();
+        }
+      }, { rootMargin: '300px' });
+      observer.observe(mapElement);
+    } else {
+      loadAndInit();
     }
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMap);
+    document.addEventListener('DOMContentLoaded', setupMapLoader);
   } else {
-    initMap();
+    setupMapLoader();
   }
-  document.addEventListener('astro:after-swap', initMap);
+  document.addEventListener('astro:after-swap', setupMapLoader);
 </script>

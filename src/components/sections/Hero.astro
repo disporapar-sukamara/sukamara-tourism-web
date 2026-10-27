@@ -10,7 +10,7 @@ interface Slide {
 
 const slides: Slide[] = (heroData?.carousel && heroData.carousel.length > 0)
   ? (heroData.carousel as Slide[])
-  : [{ gambar: '/images/destinasi/pantai-citra.png', judul: 'Pesona Sunset Sukamara' }];
+  : [{ gambar: '/images/destinasi/pantai-citra.webp', judul: 'Pesona Sunset Sukamara' }];
 
 const heroGreeting = heroData?.greeting || 'Selamat Datang di';
 const heroTagline = heroData?.tagline || 'Strategi Integrasi Pemasaran Destinasi Wisata di Kabupaten Sukamara';
@@ -28,9 +28,12 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
       <img 
         src={slide.gambar} 
         alt={slide.judul || `Pesona Sukamara ${idx + 1}`} 
+        width="1920"
+        height="1080"
         class={`hero-slide absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        loading="eager"
-        decoding="async"
+        loading={idx === 0 ? 'eager' : 'lazy'}
+        fetchpriority={idx === 0 ? 'high' : 'low'}
+        decoding={idx === 0 ? 'sync' : 'async'}
         data-slide-index={idx}
       />
     ))}
@@ -169,18 +172,22 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
 
     <!-- Carousel Dots Indicators -->
     {slides.length > 1 && (
-      <div class="flex items-center justify-center gap-2 pt-4 pb-2">
+      <div class="flex items-center justify-center gap-1 pt-3 pb-1">
         {slides.map((_, idx) => (
           <button
             type="button"
             aria-label={`Pindah ke slide ${idx + 1}`}
-            class={`hero-dot rounded-full transition-all duration-300 cursor-pointer ${
-              idx === 0 
-                ? 'w-8 h-2.5 bg-white shadow' 
-                : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/70'
-            }`}
+            class="hero-dot w-11 h-11 inline-flex items-center justify-center p-2 cursor-pointer focus:outline-none"
             data-target-index={idx}
-          />
+          >
+            <span
+              class={`hero-dot-pill rounded-full transition-all duration-300 ${
+                idx === 0 
+                  ? 'w-8 h-2.5 bg-white shadow' 
+                  : 'w-2.5 h-2.5 bg-white/50 hover:bg-white/80'
+              }`}
+            />
+          </button>
         ))}
       </div>
     )}
@@ -213,12 +220,14 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
       });
 
       dots.forEach((dot, idx) => {
+        const pill = dot.querySelector('.hero-dot-pill');
+        if (!pill) return;
         if (idx === current) {
-          dot.classList.remove('w-2.5', 'bg-white/40');
-          dot.classList.add('w-8', 'bg-white', 'shadow');
+          pill.classList.remove('w-2.5', 'bg-white/50');
+          pill.classList.add('w-8', 'bg-white', 'shadow');
         } else {
-          dot.classList.remove('w-8', 'bg-white', 'shadow');
-          dot.classList.add('w-2.5', 'bg-white/40');
+          pill.classList.remove('w-8', 'bg-white', 'shadow');
+          pill.classList.add('w-2.5', 'bg-white/50');
         }
       });
     }

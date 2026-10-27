@@ -28,7 +28,7 @@ const items = allGallery.map((item, idx) => ({
         <Camera class="w-4 h-4" />
       </div>
       <div>
-        <h4 id="lightbox-title" class="text-sm sm:text-base font-bold text-white leading-tight"></h4>
+        <h2 id="lightbox-title" class="text-sm sm:text-base font-bold text-white leading-tight"></h2>
         <span id="lightbox-counter" class="text-xs text-white/60"></span>
       </div>
     </div>
@@ -36,7 +36,7 @@ const items = allGallery.map((item, idx) => ({
     <button 
       type="button" 
       id="lightbox-close" 
-      class="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+      class="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer w-11 h-11 flex items-center justify-center"
       aria-label="Tutup preview galeri"
     >
       <X class="w-6 h-6" />
@@ -49,7 +49,7 @@ const items = allGallery.map((item, idx) => ({
     <button 
       type="button" 
       id="lightbox-prev" 
-      class="absolute left-2 sm:left-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20"
+      class="absolute left-2 sm:left-4 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20"
       aria-label="Foto sebelumnya"
     >
       <ChevronLeft class="w-6 h-6" />
@@ -69,7 +69,7 @@ const items = allGallery.map((item, idx) => ({
     <button 
       type="button" 
       id="lightbox-next" 
-      class="absolute right-2 sm:right-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20"
+      class="absolute right-2 sm:right-4 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20"
       aria-label="Foto selanjutnya"
     >
       <ChevronRight class="w-6 h-6" />
@@ -100,14 +100,15 @@ const items = allGallery.map((item, idx) => ({
             <Camera class="w-5 h-5" />
           </div>
           <div>
-            <h3 class="text-base sm:text-lg font-black text-[#0B2A5B]">Koleksi Foto & Video Sukamara</h3>
+            <h2 class="text-base sm:text-lg font-black text-[#0B2A5B]">Koleksi Foto & Video Sukamara</h2>
             <p class="text-xs text-gray-500">Kumpulan dokumentasi panorama alam, kearifan lokal, dan agenda daerah</p>
           </div>
         </div>
         <button 
           type="button" 
           id="gallery-all-close" 
-          class="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer"
+          class="p-2 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer w-11 h-11 flex items-center justify-center"
+          aria-label="Tutup koleksi galeri"
         >
           <X class="w-5 h-5" />
         </button>
@@ -115,10 +116,10 @@ const items = allGallery.map((item, idx) => ({
 
       <!-- Filter Buttons -->
       <div class="px-4 py-2.5 border-b border-gray-100 flex items-center gap-1.5 overflow-x-auto text-xs bg-white">
-        <span class="text-gray-400 text-[11px] font-medium mr-1 shrink-0">Tampilkan:</span>
+        <span class="text-gray-600 text-[11px] font-medium mr-1 shrink-0">Tampilkan:</span>
         <button type="button" class="gallery-filter-btn px-3 py-1 rounded-full font-bold bg-[#1E5FD8] text-white shadow-2xs" data-type="all">Semua</button>
-        <button type="button" class="gallery-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-type="photo">Foto</button>
-        <button type="button" class="gallery-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" data-type="video">Video</button>
+        <button type="button" class="gallery-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-type="photo">Foto</button>
+        <button type="button" class="gallery-filter-btn px-3 py-1 rounded-full font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50" data-type="video">Video</button>
       </div>
 
       <!-- Gallery Grid -->
@@ -129,7 +130,7 @@ const items = allGallery.map((item, idx) => ({
             data-gallery-idx={idx}
             data-is-video={item.isVideo ? 'true' : 'false'}
           >
-            <img src={item.gambar} alt={item.judul} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+            <img src={item.gambar} alt={item.judul} width="300" height="300" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
               <span class="text-[11px] font-bold text-white line-clamp-1">{item.judul}</span>
             </div>

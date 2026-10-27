@@ -6,8 +6,8 @@ const rawNews = await getCollection('berita');
 
 const newsCategoryColors: Record<string, string> = {
   'BERITA WISATA': 'bg-blue-100 text-[#1E5FD8] border-blue-200',
-  'INFORMASI': 'bg-teal-100 text-[#0E9F8E] border-teal-200',
-  'KEGIATAN': 'bg-pink-100 text-[#D6197A] border-pink-200',
+  'INFORMASI': 'bg-teal-100 text-[#0F766E] border-teal-200',
+  'KEGIATAN': 'bg-pink-100 text-[#B81267] border-pink-200',
 };
 
 const newsList = rawNews.map((item) => ({
@@ -46,18 +46,18 @@ const newsList = rawNews.map((item) => ({
           <button 
             type="button" 
             id="btn-news-prev" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser berita ke kiri"
           >
-            <ChevronLeft class="w-4 h-4" />
+            <ChevronLeft class="w-5 h-5" />
           </button>
           <button 
             type="button" 
             id="btn-news-next" 
-            class="w-8 h-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+            class="w-11 h-11 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
             aria-label="Geser berita ke kanan"
           >
-            <ChevronRight class="w-4 h-4" />
+            <ChevronRight class="w-5 h-5" />
           </button>
         </div>
 
@@ -89,8 +89,11 @@ const newsList = rawNews.map((item) => ({
               <img 
                 src={news.gambar} 
                 alt={news.judul} 
+                width="400"
+                height="250"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
+                decoding="async"
               />
               <div class="absolute top-3 left-3">
                 <span class={`px-2.5 py-1 rounded-md text-[10px] font-bold border tracking-wider uppercase backdrop-blur-md bg-white/90 shadow-xs ${news.kategoriClass}`}>
@@ -101,8 +104,8 @@ const newsList = rawNews.map((item) => ({
 
             <!-- Content Area -->
             <div class="p-5">
-              <div class="flex items-center gap-1.5 text-[11px] text-gray-400 font-medium mb-2.5">
-                <Calendar class="w-3.5 h-3.5 text-gray-400" />
+              <div class="flex items-center gap-1.5 text-[11px] text-gray-600 font-medium mb-2.5">
+                <Calendar class="w-3.5 h-3.5 text-gray-600" />
                 <span>{news.tanggal}</span>
               </div>
 
