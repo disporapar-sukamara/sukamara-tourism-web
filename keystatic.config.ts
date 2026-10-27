@@ -12,7 +12,7 @@ export default config({
         kind: 'local',
       },
   cloud: {
-    project: (import.meta.env.PUBLIC_KEYSTATIC_PROJECT as string | undefined) || 'andywijaya15/sukamara-tourism-web',
+    project: (import.meta.env.PUBLIC_KEYSTATIC_PROJECT as string | undefined) || 'sukamara-tourism-web/sukamara-tourism-web',
   },
   ui: {
     brand: {
