@@ -1,0 +1,284 @@
+---
+import { Landmark, FileText, Download, Users, CheckCircle2, Layers } from 'lucide-astro';
+import { departmentData } from '../../data/departmentData';
+
+const { dasarHukum, tugasPokok, fungsi, struktur } = departmentData;
+---
+
+<section id="profil-dinas" class="w-full py-12 lg:py-16 bg-slate-50 border-b border-gray-100 scroll-mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 text-[#1E5FD8] flex items-center justify-center">
+            <Landmark class="w-5 h-5" />
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider text-[#1E5FD8]">Profil Resmi Instansi</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0B2A5B] tracking-tight">
+          Profil Dinas Kepemudaan, Olahraga dan Pariwisata
+        </h2>
+        <p class="text-sm text-gray-600 mt-1 max-w-3xl">
+          Pemerintah Kabupaten Sukamara — Tugas Pokok, Fungsi, dan Struktur Organisasi SOTK Disporapar.
+        </p>
+      </div>
+
+      <!-- Quick Action: Unduh Perbup -->
+      <a 
+        href={dasarHukum.filePdf}
+        download="Perbup-No-55-Tahun-2022-SOTK-DISPORAPAR.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B2A5B] hover:bg-blue-900 text-white text-xs sm:text-sm font-semibold transition-all shadow-sm hover:shadow shrink-0"
+      >
+        <Download class="w-4 h-4 text-sky-300" />
+        <span>Unduh Perbup No. 55/2022 (PDF)</span>
+      </a>
+    </div>
+
+    <!-- Banner Info Dasar Hukum -->
+    <div class="bg-white border border-blue-100 rounded-2xl p-5 sm:p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="flex items-start gap-3 sm:gap-4">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#1E5FD8] flex items-center justify-center shrink-0 mt-0.5">
+          <FileText class="w-5 h-5" />
+        </div>
+        <div>
+          <span class="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-100 text-[#1E5FD8] mb-1">
+            Dasar Hukum & Tata Kerja
+          </span>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900">
+            {dasarHukum.nomor}
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-600 mt-0.5">
+            {dasarHukum.tentang}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segmented Tab Switcher -->
+    <div class="flex border-b border-gray-200" role="tablist" aria-label="Tab Profil Dinas">
+      <button 
+        type="button" 
+        id="tab-btn-struktur"
+        role="tab"
+        aria-selected="true"
+        aria-controls="panel-struktur"
+        class="tab-btn px-5 py-3 text-sm font-bold border-b-2 border-[#1E5FD8] text-[#1E5FD8] transition-colors flex items-center gap-2 cursor-pointer"
+      >
+        <Layers class="w-4 h-4" />
+        <span>Bagan Struktur Organisasi</span>
+      </button>
+
+      <button 
+        type="button" 
+        id="tab-btn-tupoksi"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-tupoksi"
+        class="tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-800 transition-colors flex items-center gap-2 cursor-pointer"
+      >
+        <Users class="w-4 h-4" />
+        <span>Tugas Pokok & 16 Fungsi</span>
+      </button>
+    </div>
+
+    <!-- Tab Panels Container -->
+    <div>
+      <!-- PANEL 1: Struktur Organisasi (Bagan Visual) -->
+      <div id="panel-struktur" role="tabpanel" aria-labelledby="tab-btn-struktur" class="space-y-6">
+        
+        <div class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-8 shadow-xs overflow-x-auto">
+          <div class="min-w-[680px] max-w-4xl mx-auto py-4">
+            
+            <!-- LEVEL 1: Kepala Dinas -->
+            <div class="flex justify-center mb-6">
+              <div class="w-72 bg-gradient-to-br from-[#0B2A5B] to-[#1E5FD8] text-white rounded-xl p-4 shadow-md text-center border border-blue-900 relative">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-sky-200 block mb-1">
+                  {struktur.kepalaDinas.jabatan}
+                </span>
+                <p class="text-base font-extrabold tracking-wide">
+                  {struktur.kepalaDinas.nama}
+                </p>
+                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-0.5 h-6 bg-gray-400"></div>
+              </div>
+            </div>
+
+            <!-- LEVEL 2: Middle Row (Jabatan Fungsional di Kiri, Garis Vertikal, Sekretariat di Kanan) -->
+            <div class="grid grid-cols-12 gap-4 items-start mb-8 relative pt-2">
+              
+              <!-- Left: Kelompok Jabatan Fungsional (Staff/Koordinasi) -->
+              <div class="col-span-4 flex flex-col items-center">
+                <div class="w-full bg-slate-50 border-2 border-dashed border-gray-300 rounded-xl p-3.5 text-center shadow-xs">
+                  <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500 block mb-1">
+                    {struktur.fungsional.jabatan}
+                  </span>
+                  <p class="text-xs font-semibold text-gray-700">
+                    {struktur.fungsional.keterangan}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Center: Penghubung & Jalur Vertikal Utama -->
+              <div class="col-span-1 flex justify-center h-full">
+                <div class="w-0.5 h-24 bg-gray-400"></div>
+              </div>
+
+              <!-- Right: Sekretariat Dinas & 2 Subbagian -->
+              <div class="col-span-7 space-y-3">
+                <div class="w-full bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-center shadow-xs">
+                  <span class="text-[10px] uppercase font-bold tracking-wider text-[#1E5FD8] block mb-0.5">
+                    {struktur.sekretariat.jabatan}
+                  </span>
+                  <p class="text-sm font-bold text-gray-900">
+                    {struktur.sekretariat.nama}
+                  </p>
+                </div>
+
+                <!-- 2 Subbagian -->
+                <div class="grid grid-cols-2 gap-2.5 pt-1 pl-4 border-l-2 border-blue-200">
+                  {struktur.sekretariat.subbagian.map((sub) => (
+                    <div class="bg-white border border-gray-200 rounded-lg p-2.5 shadow-2xs text-center">
+                      <span class="text-[9px] uppercase font-bold tracking-tight text-gray-500 block leading-tight mb-1">
+                        {sub.jabatan}
+                      </span>
+                      <p class="text-xs font-extrabold text-[#0B2A5B]">
+                        {sub.nama}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+            <!-- LEVEL 3: Bidang-Bidang Pelaksana Teknis -->
+            <div class="pt-4 border-t-2 border-gray-300 mb-6 relative">
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-white px-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                Bidang Teknis
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 mt-2">
+                {struktur.bidang.map((b) => (
+                  <div class={`bg-white border border-gray-200 rounded-xl p-4 shadow-xs text-center ${b.warna}`}>
+                    <span class="text-[11px] uppercase font-bold tracking-wider text-gray-600 block mb-1">
+                      {b.jabatan}
+                    </span>
+                    <p class="text-sm font-extrabold text-gray-900">
+                      {b.nama}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- LEVEL 4: UPT (Unit Pelaksana Teknis) -->
+            <div class="flex flex-col items-center pt-2">
+              <div class="w-0.5 h-6 bg-gray-400 mb-0"></div>
+              <div class="w-56 bg-slate-100 border border-gray-300 rounded-xl p-3 text-center shadow-2xs">
+                <span class="text-xs uppercase font-extrabold text-[#0B2A5B] block">
+                  {struktur.upt.jabatan}
+                </span>
+                <p class="text-[11px] font-medium text-gray-500">
+                  {struktur.upt.keterangan}
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom caption note -->
+          <div class="mt-6 pt-4 border-t border-gray-100 text-center">
+            <p class="text-xs text-gray-500">
+              * Bagan Struktur Organisasi disusun berdasarkan <strong>Lampiran Peraturan Bupati Sukamara Nomor 55 Tahun 2022</strong>.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PANEL 2: Tugas Pokok & 16 Fungsi (Hidden by default) -->
+      <div id="panel-tupoksi" role="tabpanel" aria-labelledby="tab-btn-tupoksi" class="hidden space-y-6">
+        
+        <!-- Tugas Pokok Highlight -->
+        <div class="bg-gradient-to-r from-blue-900 to-[#0B2A5B] text-white rounded-2xl p-6 sm:p-7 shadow-sm">
+          <div class="flex items-center gap-2 mb-2 text-sky-300">
+            <CheckCircle2 class="w-5 h-5" />
+            <h3 class="text-xs font-bold uppercase tracking-wider">Tugas Pokok Dinas</h3>
+          </div>
+          <p class="text-sm sm:text-base leading-relaxed font-medium text-blue-50">
+            {tugasPokok}
+          </p>
+        </div>
+
+        <!-- 16 Fungsi Grid -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xs space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+            <div>
+              <h3 class="text-lg font-bold text-gray-900">16 Fungsi Dinas</h3>
+              <p class="text-xs text-gray-500">
+                Penyelenggaraan fungsi teknis dan administratif Disporapar Kabupaten Sukamara.
+              </p>
+            </div>
+            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-50 text-[#1E5FD8]">
+              Pasal 4 Ayat (2)
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-2">
+            {fungsi.map((item, idx) => (
+              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50/50 transition-colors border border-slate-100">
+                <span class="w-6 h-6 rounded-full bg-white text-[#1E5FD8] font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs border border-gray-100 mt-0.5">
+                  {idx + 1}
+                </span>
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // ponytail: Lightweight tab switcher with ARIA tab semantics, zero library dependency
+  function initProfileTabs() {
+    const btnStruktur = document.getElementById('tab-btn-struktur');
+    const btnTupoksi = document.getElementById('tab-btn-tupoksi');
+    const panelStruktur = document.getElementById('panel-struktur');
+    const panelTupoksi = document.getElementById('panel-tupoksi');
+
+    if (!btnStruktur || !btnTupoksi || !panelStruktur || !panelTupoksi) return;
+
+    function switchTab(activeBtn: HTMLElement, inactiveBtn: HTMLElement, activePanel: HTMLElement, inactivePanel: HTMLElement) {
+      activeBtn.setAttribute('aria-selected', 'true');
+      activeBtn.classList.add('border-[#1E5FD8]', 'text-[#1E5FD8]', 'font-bold');
+      activeBtn.classList.remove('border-transparent', 'text-gray-500');
+
+      inactiveBtn.setAttribute('aria-selected', 'false');
+      inactiveBtn.classList.remove('border-[#1E5FD8]', 'text-[#1E5FD8]', 'font-bold');
+      inactiveBtn.classList.add('border-transparent', 'text-gray-500');
+
+      activePanel.classList.remove('hidden');
+      inactivePanel.classList.add('hidden');
+    }
+
+    btnStruktur.addEventListener('click', () => {
+      switchTab(btnStruktur, btnTupoksi, panelStruktur, panelTupoksi);
+    });
+
+    btnTupoksi.addEventListener('click', () => {
+      switchTab(btnTupoksi, btnStruktur, panelTupoksi, panelStruktur);
+    });
+  }
+
+  initProfileTabs();
+  document.addEventListener('astro:page-load', initProfileTabs);
+</script>

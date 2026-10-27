@@ -12,7 +12,8 @@ const slides: Slide[] = (heroData?.carousel && heroData.carousel.length > 0)
   ? (heroData.carousel as Slide[])
   : [{ gambar: '/images/destinasi/pantai-citra.webp', judul: 'Pesona Sunset Sukamara' }];
 
-const heroGreeting = heroData?.greeting || 'Selamat Datang di';
+const heroGreeting = heroData?.greeting || 'Selamat Datang di Portal';
+const heroTitle = (heroData as any)?.title || 'DINAS KEPEMUDAAN, OLAHRAGA DAN PARIWISATA';
 const heroTagline = heroData?.tagline || 'Strategi Integrasi Pemasaran Destinasi Wisata di Kabupaten Sukamara';
 const heroSlogan = heroData?.slogan || 'Sukamara Janga';
 const heroMotto = heroData?.motto || 'PESONA ALAM.\nHARMONI BUDAYA,\nMASA DEPAN BERSAMA';
@@ -49,29 +50,21 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
       <div class="lg:col-span-8 text-white space-y-5">
         
         <!-- Script greeting -->
-        <p class="font-script text-3xl sm:text-4xl text-white tracking-wide drop-shadow-md">
+        <p class="font-script text-3xl sm:text-4xl text-amber-300 drop-shadow-md">
           {heroGreeting}
         </p>
 
         <!-- Main Title -->
-        <div class="space-y-1">
-          <h1 class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase leading-none drop-shadow-md">
-            <span>SMART </span>
-            <span class="text-[#D6197A] inline-flex items-center">
-              T
-              <span class="relative inline-flex items-center justify-center">
-                O
-                <span class="absolute w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white rounded-full"></span>
-              </span>
-              URISM
-            </span>
+        <div class="space-y-2">
+          <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight uppercase leading-tight drop-shadow-lg text-white">
+            {heroTitle}
           </h1>
 
           <!-- SUKAMARA with side lines -->
           <div class="flex items-center gap-2 sm:gap-3 pt-1">
             <span class="h-[2px] w-8 sm:w-12 bg-sky-400/80"></span>
-            <span class="text-lg sm:text-2xl lg:text-3xl font-extrabold text-sky-400 tracking-[0.2em] sm:tracking-[0.25em] uppercase">
-              SUKAMARA
+            <span class="text-base sm:text-xl lg:text-2xl font-extrabold text-sky-400 tracking-[0.2em] sm:tracking-[0.25em] uppercase">
+              KABUPATEN SUKAMARA
             </span>
             <span class="h-[2px] w-12 sm:w-24 bg-sky-400/80"></span>
           </div>

@@ -38,7 +38,8 @@ export default config({
             itemLabel: (props) => props.fields.judul.value || 'Slide Foto',
           }
         ),
-        greeting: fields.text({ label: 'Teks Sapaan', defaultValue: 'Selamat Datang di' }),
+        greeting: fields.text({ label: 'Teks Sapaan', defaultValue: 'Selamat Datang di Portal' }),
+        title: fields.text({ label: 'Judul Utama', defaultValue: 'DINAS KEPEMUDAAN, OLAHRAGA DAN PARIWISATA' }),
         tagline: fields.text({
           label: 'Tagline',
           defaultValue: 'Strategi Integrasi Pemasaran Destinasi Wisata di Kabupaten Sukamara',

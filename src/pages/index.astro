@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
+import DepartmentProfile from '../components/sections/DepartmentProfile.astro';
 import FeaturedDestinations from '../components/sections/FeaturedDestinations.astro';
 import MapSection from '../components/sections/MapSection.astro';
 import EventsSection from '../components/sections/EventsSection.astro';
@@ -11,13 +12,16 @@ import DataPotensiBanner from '../components/sections/DataPotensiBanner.astro';
 ---
 
 <BaseLayout 
-  title="Smart Tourism Sukamara — Portal Resmi Pariwisata Kab. Sukamara"
-  description="Website resmi pariwisata, kepemudaan, dan olahraga Kabupaten Sukamara, Kalimantan Tengah. Jelajahi destinasi unggulan, agenda budaya, fasilitas olahraga, dan galeri wisata."
+  title="Dinas Kepemudaan, Olahraga dan Pariwisata — Kabupaten Sukamara"
+  description="Portal resmi Dinas Kepemudaan, Olahraga dan Pariwisata Kabupaten Sukamara, Kalimantan Tengah. Jelajahi profil dinas, destinasi unggulan, agenda budaya, fasilitas olahraga, dan berita terkini."
 >
   <!-- 1. Hero Section with Carousel & Quick Access Dock -->
   <Hero />
 
-  <!-- 2. Destinasi Unggulan SUKAMARA (4 Cards) -->
+  <!-- 2. Profil Dinas Disporapar (SOTK & Tupoksi) -->
+  <DepartmentProfile />
+
+  <!-- 3. Destinasi Unggulan SUKAMARA (4 Cards) -->
   <FeaturedDestinations />
 
   <!-- 3. Peta Digital Interaktif Leaflet Sukamara -->
