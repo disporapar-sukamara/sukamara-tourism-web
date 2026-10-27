@@ -15,7 +15,7 @@ Portal web resmi pariwisata, kebudayaan, kepemudaan, dan olahraga Kabupaten Suka
 - **Galeri Foto & Video:** Koleksi lanskap alam Sukamara dengan penampil media Lightbox.
 - **Banner Data & Potensi Wisata:** Statistik capaian dan potensi daerah di bagian penutup halaman.
 - **Footer Dinamis Terintegrasi CMS:** Informasi kontak dinamis, alamat instansi, jam pelayanan, tautan sosial media resmi, dan hak cipta.
-- **CMS Keystatic Terproteksi:** Dashboard admin di rute `/admin` (redirect ke `/keystatic`) dengan proteksi HTTP Basic Auth.
+- **CMS Keystatic:** Dashboard konten langsung di `/keystatic` dengan dukungan Keystatic Cloud untuk staf tanpa akun GitHub.
 
 ---
 
@@ -55,8 +55,7 @@ sukamara-tourism-web/
 │   ├── data/                 # Data statis & tipe TypeScript
 │   ├── layouts/              # BaseLayout.astro
 │   ├── pages/                # index.astro
-│   ├── styles/               # globals.css
-│   └── middleware.ts         # Proteksi HTTP Basic Auth rute admin
+│   └── styles/               # globals.css
 ├── astro.config.mjs
 ├── keystatic.config.ts       # Definisi schema koleksi & singleton CMS
 └── package.json
@@ -64,31 +63,21 @@ sukamara-tourism-web/
 
 ---
 
-## 🔐 Akses CMS Admin
+## 🔐 Akses CMS (Keystatic)
 
-Akses dashboard konten dapat dilakukan melalui:
-- **URL Admin:** `http://localhost:4321/admin` *(otomatis dialihkan ke `/keystatic`)*
-- **Proteksi:** HTTP Basic Auth
+Akses dashboard konten dapat dilakukan langsung melalui:
+- **URL CMS:** `/keystatic` (misal: `http://localhost:4321/keystatic` saat pengembangan)
 
-### Kredensial Default (Lokal & Production Basic Auth)
-Buat atau sesuaikan berkas `.env` di direktori utama:
-```env
-ADMIN_USER=admin
-ADMIN_PASSWORD=adminsukamara
-```
+### Lingkungan Lokal (Pengembangan)
+Di lingkungan lokal, Keystatic otomatis berjalan dalam mode lokal (`kind: 'local'`). Anda dapat langsung mengedit dan menyimpan konten tanpa login akun apa pun.
 
-### Konfigurasi Produksi (Cloudflare Workers / Pages)
-Di lingkungan produksi (Cloudflare), Keystatic secara otomatis berjalan dalam **GitHub Mode** (`storage: { kind: 'github' }`) sehingga perubahan konten langsung membuat commit ke repositori GitHub.
-
-Tambahkan variabel environment berikut di Cloudflare Dashboard (*Settings > Variables and Secrets*):
-- `ADMIN_USER`: Username untuk basic auth (default: `admin`)
-- `ADMIN_PASSWORD`: Password untuk basic auth (default: `adminsukamara`)
-- `KEYSTATIC_SECRET`: String rahasia acak minimal 32 karakter untuk enkripsi cookie sesi
-- `KEYSTATIC_GITHUB_CLIENT_ID`: GitHub OAuth Client ID
-- `KEYSTATIC_GITHUB_CLIENT_SECRET`: GitHub OAuth Client Secret
-- `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`: Slug GitHub App (opsional jika menggunakan GitHub App)
-
-> **Catatan:** Panduan cepat membuat GitHub App Keystatic dapat diikuti di [Dokumentasi Resmi Keystatic GitHub Mode](https://keystatic.com/docs/github-mode).
+### Lingkungan Produksi (Keystatic Cloud)
+Di lingkungan produksi, Keystatic menggunakan **Keystatic Cloud** (`kind: 'cloud'`). Admin dan staf dinas dapat login menggunakan **email biasa** tanpa perlu memiliki akun GitHub:
+1. Daftarkan proyek di [keystatic.cloud](https://keystatic.cloud) dan hubungkan repositori GitHub `andywijaya15/sukamara-tourism-web`.
+2. Di dashboard Keystatic Cloud, undang email staf/admin yang bertugas mengelola konten.
+3. Tambahkan environment variable di Cloudflare Dashboard (*Settings > Variables and Secrets*):
+   - `PUBLIC_KEYSTATIC_PROJECT`: `andywijaya15/sukamara-tourism-web` (atau nama team/project Anda di Keystatic Cloud).
+4. Setiap perubahan yang disimpan staf di `/keystatic` akan otomatis dibuatkan commit ke GitHub dan men-trigger build/deploy Cloudflare secara otomatis.
 
 ---
 

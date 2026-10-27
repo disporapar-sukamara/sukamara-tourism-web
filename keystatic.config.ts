@@ -1,20 +1,19 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
 
-// Di lokal (dev) gunakan 'local', di production (Cloudflare) gunakan mode 'github'
+// Di lokal (dev) gunakan 'local', di production (Cloudflare) gunakan mode 'cloud' (Keystatic Cloud)
 const isProd = import.meta.env.PROD;
 
 export default config({
   storage: isProd
     ? {
-        kind: 'github',
-        repo: {
-          owner: 'andywijaya15',
-          name: 'sukamara-tourism-web',
-        },
+        kind: 'cloud',
       }
     : {
         kind: 'local',
       },
+  cloud: {
+    project: (import.meta.env.PUBLIC_KEYSTATIC_PROJECT as string | undefined) || 'andywijaya15/sukamara-tourism-web',
+  },
   ui: {
     brand: {
       name: 'Smart Tourism Sukamara CMS',
