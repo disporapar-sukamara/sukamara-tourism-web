@@ -1,18 +1,11 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
 
-// Di lokal (dev) gunakan 'local', di production (Cloudflare) gunakan mode 'cloud' (Keystatic Cloud)
-const isProd = import.meta.env.PROD;
-
 export default config({
-  storage: isProd
-    ? {
-        kind: 'cloud',
-      }
-    : {
-        kind: 'local',
-      },
+  storage: {
+    kind: 'cloud',
+  },
   cloud: {
-    project: (import.meta.env.PUBLIC_KEYSTATIC_PROJECT as string | undefined) || 'sukamara-tourism-web/sukamara-tourism-web',
+    project: 'sukamara/sukamara-tourism-web',
   },
   ui: {
     brand: {

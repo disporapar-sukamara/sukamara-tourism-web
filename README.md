@@ -76,7 +76,7 @@ Di lingkungan produksi, Keystatic menggunakan **Keystatic Cloud** (`kind: 'cloud
 1. Daftarkan proyek di [keystatic.cloud](https://keystatic.cloud) dan hubungkan repositori GitHub `andywijaya15/sukamara-tourism-web`.
 2. Di dashboard Keystatic Cloud, undang email staf/admin yang bertugas mengelola konten.
 3. Tambahkan environment variable di Cloudflare Dashboard (*Settings > Variables and Secrets*):
-   - `PUBLIC_KEYSTATIC_PROJECT`: `sukamara-tourism-web/sukamara-tourism-web` (atau nama team/project Anda di Keystatic Cloud).
+   - `PUBLIC_KEYSTATIC_PROJECT`: `sukamara/sukamara-tourism-web`
 4. Setiap perubahan yang disimpan staf di `/keystatic` akan otomatis dibuatkan commit ke GitHub dan men-trigger build/deploy Cloudflare secara otomatis.
 
 ---
