@@ -61,7 +61,6 @@ export default config({
           defaultValue: 'Jl. Tjilik Riwut No. 01 Sukamara\nKabupaten Sukamara, Kalimantan Tengah 74772',
           multiline: true,
         }),
-        telepon: fields.text({ label: 'Nomor Telepon', defaultValue: '(0532) 26710' }),
         email: fields.text({ label: 'Alamat Email', defaultValue: 'info@sukamarakab.go.id' }),
         facebookUrl: fields.text({ label: 'Link Facebook', defaultValue: 'https://facebook.com' }),
         instagramUrl: fields.text({ label: 'Link Instagram', defaultValue: 'https://instagram.com' }),

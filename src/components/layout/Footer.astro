@@ -1,9 +1,8 @@
 ---
-import { MapPin, Phone, Mail, ChevronRight, Facebook, Instagram, Youtube, Leaf } from 'lucide-astro';
+import { MapPin, Mail, ChevronRight, Facebook, Instagram, Youtube, Leaf } from 'lucide-astro';
 import footerData from '../../content/footer/index.json';
 
 const alamat = footerData?.alamat || 'Jl. Tjilik Riwut No. 01 Sukamara\nKabupaten Sukamara, Kalimantan Tengah 74772';
-const telepon = footerData?.telepon || '(0532) 26710';
 const email = footerData?.email || 'info@sukamarakab.go.id';
 const facebookUrl = footerData?.facebookUrl || 'https://facebook.com';
 const instagramUrl = footerData?.instagramUrl || 'https://instagram.com';
@@ -55,10 +54,6 @@ const copyright = footerData?.copyright || '© 2026 Pemerintah Kabupaten Sukamar
                 </Fragment>
               ))}
             </span>
-          </div>
-          <div class="flex items-center gap-2.5">
-            <Phone class="w-4 h-4 text-teal-400 shrink-0" />
-            <a href={`tel:${telepon.replace(/[^0-9+]/g, '')}`} class="hover:text-white transition-colors">{telepon}</a>
           </div>
           <div class="flex items-center gap-2.5">
             <Mail class="w-4 h-4 text-blue-400 shrink-0" />
