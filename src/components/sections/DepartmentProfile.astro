@@ -87,114 +87,231 @@ const { dasarHukum, tugasPokok, fungsi, struktur } = departmentData;
 
     <!-- Tab Panels Container -->
     <div>
-      <!-- PANEL 1: Struktur Organisasi (Bagan Visual) -->
+      <!-- PANEL 1: Struktur Organisasi (Bagan Visual Presisi Resmi SOTK) -->
       <div id="panel-struktur" role="tabpanel" aria-labelledby="tab-btn-struktur" class="space-y-6">
         
-        <div class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-8 shadow-xs overflow-x-auto">
-          <div class="min-w-[680px] max-w-4xl mx-auto py-4">
-            
-            <!-- LEVEL 1: Kepala Dinas -->
-            <div class="flex justify-center mb-6">
-              <div class="w-72 bg-gradient-to-br from-[#0B2A5B] to-[#1E5FD8] text-white rounded-xl p-4 shadow-md text-center border border-blue-900 relative">
-                <span class="text-[10px] uppercase font-bold tracking-widest text-sky-200 block mb-1">
-                  {struktur.kepalaDinas.jabatan}
-                </span>
-                <p class="text-base font-extrabold tracking-wide">
-                  {struktur.kepalaDinas.nama}
-                </p>
-                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-0.5 h-6 bg-gray-400"></div>
-              </div>
+        <div class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 lg:p-8 shadow-xs">
+          
+          <!-- Bagan Header & Legend -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-gray-100 gap-3">
+            <div>
+              <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#1E5FD8] block mb-0.5">
+                Struktur Organisasi Resmi
+              </span>
+              <h3 class="text-base sm:text-lg font-bold text-[#0B2A5B]">
+                Bagan Susunan Organisasi Disporapar Kabupaten Sukamara
+              </h3>
+              <p class="text-xs text-gray-500">
+                Sesuai Lampiran Peraturan Bupati Sukamara Nomor 55 Tahun 2022
+              </p>
             </div>
 
-            <!-- LEVEL 2: Middle Row (Jabatan Fungsional di Kiri, Garis Vertikal, Sekretariat di Kanan) -->
-            <div class="grid grid-cols-12 gap-4 items-start mb-8 relative pt-2">
-              
-              <!-- Left: Kelompok Jabatan Fungsional (Staff/Koordinasi) -->
-              <div class="col-span-4 flex flex-col items-center">
-                <div class="w-full bg-slate-50 border-2 border-dashed border-gray-300 rounded-xl p-3.5 text-center shadow-xs">
-                  <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500 block mb-1">
-                    {struktur.fungsional.jabatan}
-                  </span>
-                  <p class="text-xs font-semibold text-gray-700">
-                    {struktur.fungsional.keterangan}
-                  </p>
-                </div>
+            <!-- Legend: Garis Komando & Koordinasi -->
+            <div class="inline-flex items-center gap-4 text-xs text-gray-600 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 shrink-0 self-start sm:self-auto">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-0.5 bg-slate-900 inline-block rounded-full"></span>
+                <span class="font-semibold text-slate-800">Garis Lini / Komando</span>
               </div>
-
-              <!-- Center: Penghubung & Jalur Vertikal Utama -->
-              <div class="col-span-1 flex justify-center h-full">
-                <div class="w-0.5 h-24 bg-gray-400"></div>
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-0.5 border-b-2 border-dashed border-slate-500 inline-block"></span>
+                <span class="font-semibold text-slate-800">Garis Koordinasi</span>
               </div>
+            </div>
+          </div>
 
-              <!-- Right: Sekretariat Dinas & 2 Subbagian -->
-              <div class="col-span-7 space-y-3">
-                <div class="w-full bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-center shadow-xs">
-                  <span class="text-[10px] uppercase font-bold tracking-wider text-[#1E5FD8] block mb-0.5">
+          <!-- Petunjuk geser di HP -->
+          <div class="sm:hidden mb-2 text-center">
+            <span class="inline-block text-[11px] text-gray-400 bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
+              👉 Geser ke samping untuk melihat bagan lengkap
+            </span>
+          </div>
+
+          <!-- SVG Bagan SOTK 100% Persis Dokumen Resmi -->
+          <div class="overflow-x-auto -mx-2 sm:mx-0 px-2 sm:px-0 py-2">
+            <div class="min-w-[860px] max-w-5xl mx-auto">
+              <svg 
+                viewBox="0 0 1200 820" 
+                class="w-full h-auto block select-none font-sans"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-label="Bagan Struktur Organisasi Dinas Kepemudaan, Olahraga dan Pariwisata Kabupaten Sukamara"
+              >
+                <defs>
+                  <filter id="boxShadow" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+                    <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0F172A" flood-opacity="0.08" />
+                  </filter>
+                </defs>
+
+                <!-- ================= GARIS-GARIS KONEKTOR ================= -->
+
+                <!-- 1. Garis Komando Pusat Vertikal (Kepala Dinas -> UPT) -->
+                <path d="M 600,105 L 600,710" stroke="#0F172A" stroke-width="2" stroke-linecap="round" />
+
+                <!-- 2. Cabang Kanan Atas: Kepala Dinas -> Sekretariat Dinas -->
+                <path d="M 600,135 L 890,135 L 890,165" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+                <!-- 3. Cabang Kiri Atas: Garis Komando -> Kelompok Jabatan Fungsional -->
+                <path d="M 600,210 L 180,210 L 180,235" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+                <!-- 4. Cabang Komando Sekretariat -> 2 Subbagian -->
+                <path d="M 890,235 L 890,260" stroke="#0F172A" stroke-width="2" stroke-linecap="round" />
+                <path d="M 750,285 L 750,260 L 1030,260 L 1030,285" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+                <!-- 5. Cabang Komando ke 2 Bidang (Kepemudaan & Pariwisata) -->
+                <path d="M 350,470 L 350,440 L 850,440 L 850,470" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+                <!-- 6. Garis Lini/Solid Luar: Sekretariat -> Putar Luar -> Bawah Bidang -> Fungsional -->
+                <path d="M 1030,235 L 1170,235 L 1170,660 L 154,660 L 154,320" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <!-- Cabang Lini Tegak ke Bawah Bidang Kepemudaan & Pariwisata -->
+                <path d="M 380,660 L 380,550" stroke="#0F172A" stroke-width="2" stroke-linecap="round" />
+                <path d="M 880,660 L 880,550" stroke="#0F172A" stroke-width="2" stroke-linecap="round" />
+
+                <!-- 7. Garis Koordinasi Putus-Putus: Sekretariat -> Bawah Subbag Umum -> Bawah Bidang -> Fungsional -->
+                <path d="M 970,235 L 970,255 L 1140,255 L 1140,620 L 180,620 L 180,320" stroke="#475569" stroke-width="2" stroke-dasharray="6,4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <!-- Cabang Koordinasi Tegak ke Bawah Bidang Kepemudaan & Pariwisata -->
+                <path d="M 320,620 L 320,550" stroke="#475569" stroke-width="2" stroke-dasharray="6,4" stroke-linecap="round" />
+                <path d="M 820,620 L 820,550" stroke="#475569" stroke-width="2" stroke-dasharray="6,4" stroke-linecap="round" />
+
+
+                <!-- ================= KOTAK-KOTAK PEJABAT & UNIT ================= -->
+
+                <!-- KOTAK 1: KEPALA DINAS (Paling Atas) -->
+                <g filter="url(#boxShadow)">
+                  <rect x="430" y="45" width="340" height="60" rx="4" ry="4" fill="#FFFFFF" stroke="#0B2A5B" stroke-width="2" />
+                  <rect x="430" y="45" width="340" height="26" rx="4" ry="4" fill="#0B2A5B" />
+                  <rect x="430" y="67" width="340" height="4" fill="#0B2A5B" />
+                  <text x="600" y="62" text-anchor="middle" fill="#FFFFFF" font-size="11.5" font-weight="700" letter-spacing="1.5">
+                    {struktur.kepalaDinas.jabatan}
+                  </text>
+                  <text x="600" y="90" text-anchor="middle" fill="#0F172A" font-size="13.5" font-weight="800">
+                    {struktur.kepalaDinas.nama}
+                  </text>
+                </g>
+
+                <!-- KOTAK 2: SEKRETARIAT DINAS (Kanan Atas) -->
+                <g filter="url(#boxShadow)">
+                  <rect x="750" y="165" width="280" height="70" rx="4" ry="4" fill="#FFFFFF" stroke="#0B2A5B" stroke-width="2" />
+                  <rect x="750" y="165" width="280" height="26" rx="4" ry="4" fill="#1E5FD8" />
+                  <rect x="750" y="187" width="280" height="4" fill="#1E5FD8" />
+                  <text x="890" y="182" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="700" letter-spacing="1">
                     {struktur.sekretariat.jabatan}
-                  </span>
-                  <p class="text-sm font-bold text-gray-900">
+                  </text>
+                  <text x="890" y="214" text-anchor="middle" fill="#0F172A" font-size="13" font-weight="800">
                     {struktur.sekretariat.nama}
-                  </p>
-                </div>
+                  </text>
+                </g>
 
-                <!-- 2 Subbagian -->
-                <div class="grid grid-cols-2 gap-2.5 pt-1 pl-4 border-l-2 border-blue-200">
-                  {struktur.sekretariat.subbagian.map((sub) => (
-                    <div class="bg-white border border-gray-200 rounded-lg p-2.5 shadow-2xs text-center">
-                      <span class="text-[9px] uppercase font-bold tracking-tight text-gray-500 block leading-tight mb-1">
-                        {sub.jabatan}
-                      </span>
-                      <p class="text-xs font-extrabold text-[#0B2A5B]">
-                        {sub.nama}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                <!-- KOTAK 3: SUBBAGIAN PERENCANAAN, KEUANGAN DAN PELAPORAN -->
+                <g filter="url(#boxShadow)">
+                  <rect x="635" y="285" width="230" height="75" rx="4" ry="4" fill="#FFFFFF" stroke="#0B2A5B" stroke-width="1.8" />
+                  <text x="750" y="306" text-anchor="middle" fill="#475569" font-size="9.5" font-weight="700">
+                    SUBBAGIAN PERENCANAAN,
+                  </text>
+                  <text x="750" y="320" text-anchor="middle" fill="#475569" font-size="9.5" font-weight="700">
+                    KEUANGAN DAN PELAPORAN
+                  </text>
+                  <text x="750" y="343" text-anchor="middle" fill="#0B2A5B" font-size="11.5" font-weight="800">
+                    {struktur.sekretariat.subbagian[0].nama}
+                  </text>
+                </g>
 
+                <!-- KOTAK 4: SUBBAGIAN UMUM DAN KEPEGAWAIAN -->
+                <g filter="url(#boxShadow)">
+                  <rect x="915" y="285" width="230" height="75" rx="4" ry="4" fill="#FFFFFF" stroke="#0B2A5B" stroke-width="1.8" />
+                  <text x="1030" y="306" text-anchor="middle" fill="#475569" font-size="9.5" font-weight="700">
+                    SUBBAGIAN UMUM DAN
+                  </text>
+                  <text x="1030" y="320" text-anchor="middle" fill="#475569" font-size="9.5" font-weight="700">
+                    KEPEGAWAIAN
+                  </text>
+                  <text x="1030" y="343" text-anchor="middle" fill="#0B2A5B" font-size="10.5" font-weight="800">
+                    {struktur.sekretariat.subbagian[1].nama}
+                  </text>
+                </g>
+
+                <!-- KOTAK 5: KELOMPOK JABATAN FUNGSIONAL (Kiri Atas dengan 10 Slot Grid di Bawah) -->
+                <g filter="url(#boxShadow)">
+                  <!-- Kotak Induk Judul -->
+                  <rect x="50" y="235" width="260" height="50" rx="3" ry="3" fill="#FFFFFF" stroke="#0B2A5B" stroke-width="1.8" />
+                  <text x="180" y="256" text-anchor="middle" fill="#0B2A5B" font-size="11.5" font-weight="800" letter-spacing="0.5">
+                    KELOMPOK
+                  </text>
+                  <text x="180" y="272" text-anchor="middle" fill="#0B2A5B" font-size="11.5" font-weight="800" letter-spacing="0.5">
+                    JABATAN FUNGSIONAL
+                  </text>
+
+                  <!-- Kotak Grid 10 Kolom Slot di Bawah (Sesuai Lampiran Perbup) -->
+                  <rect x="50" y="285" width="260" height="35" fill="#F8FAFC" stroke="#0B2A5B" stroke-width="1.8" />
+                  <line x1="76" y1="285" x2="76" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                  <line x1="102" y1="285" x2="102" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                  <line x1="128" y1="285" x2="128" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                  <line x1="154" y1="285" x2="154" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                  <line x1="180" y1="285" x2="180" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                  <line x1="206" y1="285" x2="206" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                  <line x1="232" y1="285" x2="232" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                  <line x1="258" y1="285" x2="258" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                  <line x1="284" y1="285" x2="284" y2="320" stroke="#0B2A5B" stroke-width="1" />
+                </g>
+
+                <!-- KOTAK 6: BIDANG KEPEMUDAAN DAN OLAH RAGA (Kiri Tengah) -->
+                <g filter="url(#boxShadow)">
+                  <rect x="210" y="470" width="280" height="80" rx="4" ry="4" fill="#FFFFFF" stroke="#0B2A5B" stroke-width="2" />
+                  <rect x="210" y="470" width="280" height="4" fill="#B81267" />
+                  <text x="350" y="497" text-anchor="middle" fill="#B81267" font-size="11" font-weight="800" letter-spacing="0.5">
+                    BIDANG KEPEMUDAAN DAN
+                  </text>
+                  <text x="350" y="513" text-anchor="middle" fill="#B81267" font-size="11" font-weight="800" letter-spacing="0.5">
+                    OLAH RAGA
+                  </text>
+                  <text x="350" y="536" text-anchor="middle" fill="#0F172A" font-size="13" font-weight="800">
+                    {struktur.bidang[0].nama}
+                  </text>
+                </g>
+
+                <!-- KOTAK 7: BIDANG PARIWISATA (Kanan Tengah) -->
+                <g filter="url(#boxShadow)">
+                  <rect x="710" y="470" width="280" height="80" rx="4" ry="4" fill="#FFFFFF" stroke="#0B2A5B" stroke-width="2" />
+                  <rect x="710" y="470" width="280" height="4" fill="#0F766E" />
+                  <text x="850" y="505" text-anchor="middle" fill="#0F766E" font-size="11.5" font-weight="800" letter-spacing="0.5">
+                    {struktur.bidang[1].jabatan}
+                  </text>
+                  <text x="850" y="532" text-anchor="middle" fill="#0F172A" font-size="13" font-weight="800">
+                    {struktur.bidang[1].nama}
+                  </text>
+                </g>
+
+                <!-- KOTAK 8: UPT (3 Kotak Bertumpuk Sesuai Lampiran Perbup) -->
+                <g>
+                  <!-- Kartu Belakang 3 -->
+                  <rect x="546" y="726" width="140" height="50" rx="3" ry="3" fill="#E2E8F0" stroke="#0B2A5B" stroke-width="1.2" />
+                  <!-- Kartu Tengah 2 -->
+                  <rect x="538" y="718" width="140" height="50" rx="3" ry="3" fill="#F1F5F9" stroke="#0B2A5B" stroke-width="1.5" />
+                  <!-- Kartu Depan 1 -->
+                  <g filter="url(#boxShadow)">
+                    <rect x="530" y="710" width="140" height="50" rx="3" ry="3" fill="#FFFFFF" stroke="#0B2A5B" stroke-width="2" />
+                    <text x="600" y="733" text-anchor="middle" fill="#0B2A5B" font-size="13.5" font-weight="800" letter-spacing="1">
+                      {struktur.upt.jabatan}
+                    </text>
+                    <text x="600" y="749" text-anchor="middle" fill="#64748B" font-size="9" font-weight="600">
+                      (Unit Pelaksana Teknis)
+                    </text>
+                  </g>
+                </g>
+
+              </svg>
             </div>
-
-            <!-- LEVEL 3: Bidang-Bidang Pelaksana Teknis -->
-            <div class="pt-4 border-t-2 border-gray-300 mb-6 relative">
-              <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-white px-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                Bidang Teknis
-              </div>
-
-              <div class="grid grid-cols-2 gap-4 mt-2">
-                {struktur.bidang.map((b) => (
-                  <div class={`bg-white border border-gray-200 rounded-xl p-4 shadow-xs text-center ${b.warna}`}>
-                    <span class="text-[11px] uppercase font-bold tracking-wider text-gray-600 block mb-1">
-                      {b.jabatan}
-                    </span>
-                    <p class="text-sm font-extrabold text-gray-900">
-                      {b.nama}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <!-- LEVEL 4: UPT (Unit Pelaksana Teknis) -->
-            <div class="flex flex-col items-center pt-2">
-              <div class="w-0.5 h-6 bg-gray-400 mb-0"></div>
-              <div class="w-56 bg-slate-100 border border-gray-300 rounded-xl p-3 text-center shadow-2xs">
-                <span class="text-xs uppercase font-extrabold text-[#0B2A5B] block">
-                  {struktur.upt.jabatan}
-                </span>
-                <p class="text-[11px] font-medium text-gray-500">
-                  {struktur.upt.keterangan}
-                </p>
-              </div>
-            </div>
-
           </div>
 
           <!-- Bottom caption note -->
-          <div class="mt-6 pt-4 border-t border-gray-100 text-center">
-            <p class="text-xs text-gray-500">
-              * Bagan Struktur Organisasi disusun berdasarkan <strong>Lampiran Peraturan Bupati Sukamara Nomor 55 Tahun 2022</strong>.
+          <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+            <p>
+              * Bagan Struktur Organisasi disusun 100% presisi berdasarkan <strong>Lampiran Peraturan Bupati Sukamara Nomor 55 Tahun 2022</strong>.
             </p>
+            <span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md">
+              SOTK Disporapar Sukamara
+            </span>
           </div>
+
         </div>
 
       </div>
