@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "node ./index.js",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check"
@@ -16,7 +16,6 @@
   "packageManager": "pnpm@12.14.0",
   "type": "module",
   "dependencies": {
-    "@astrojs/cloudflare": "^14.4.1",
     "@astrojs/node": "^11.1.9",
     "@astrojs/react": "^7.1.0",
     "@astrojs/tailwind": "^6.0.2",
