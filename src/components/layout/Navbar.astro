@@ -21,13 +21,18 @@ const navItems = [
       <div class="flex items-center gap-3 sm:gap-4">
         <!-- Logo 1: Pemkab Sukamara -->
         <a href="#hero-carousel" class="flex items-center gap-2.5 group">
-          <img 
-            src="/images/branding/logo-kabupaten-sukamara.png" 
-            alt="Lambang Kabupaten Sukamara" 
-            width="34"
-            height="44"
-            class="h-11 w-auto object-contain"
-          />
+          <picture>
+            <source srcset="/images/branding/logo-kabupaten-sukamara.webp" type="image/webp" />
+            <img 
+              src="/images/branding/logo-kabupaten-sukamara.png" 
+              alt="Lambang Kabupaten Sukamara" 
+              width="34"
+              height="44"
+              class="h-11 w-auto object-contain"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
           <div class="flex flex-col">
             <span class="text-[9px] sm:text-[10px] font-bold tracking-wider text-gray-500 uppercase leading-none">
               Pemerintah Kabupaten
@@ -157,17 +162,6 @@ const navItems = [
       mobileMenu?.classList.toggle('hidden');
     });
 
-    const sectionTargets: { id: string; el: HTMLElement }[] = [];
-    navLinks.forEach((link) => {
-      const targetId = link.getAttribute('data-target');
-      if (targetId) {
-        const el = document.getElementById(targetId);
-        if (el) {
-          sectionTargets.push({ id: targetId, el });
-        }
-      }
-    });
-
     function setActive(activeId: string) {
       navLinks.forEach((link, idx) => {
         const targetId = link.getAttribute('data-target');
@@ -228,29 +222,34 @@ const navItems = [
     navLinks.forEach(setupClick);
     mobileLinks.forEach(setupClick);
 
-    function onScroll() {
-      if (isManualClick || !sectionTargets.length) return;
-      const scrollPos = window.scrollY + 100;
-
-      if (window.scrollY < 180) {
-        setActive(sectionTargets[0].id);
-        return;
+    // ponytail: IntersectionObserver replaces synchronous offsetTop scroll polling to eliminate forced reflows
+    const sectionIds: string[] = [];
+    navLinks.forEach((link) => {
+      const targetId = link.getAttribute('data-target');
+      if (targetId && !sectionIds.includes(targetId)) {
+        sectionIds.push(targetId);
       }
+    });
 
-      let currentActiveId = sectionTargets[0].id;
-      for (const { id, el } of sectionTargets) {
-        if (scrollPos >= el.offsetTop) {
-          currentActiveId = id;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isManualClick) return;
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          setActive(visible[0].target.id);
         }
+      },
+      {
+        rootMargin: '-80px 0px -50% 0px',
+        threshold: [0.1, 0.3],
       }
+    );
 
-      if (currentActiveId) {
-        setActive(currentActiveId);
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
     // Hook search button to modal
     const searchBtn = document.getElementById('navbar-search-btn');

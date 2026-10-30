@@ -38,10 +38,23 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:image" content="/images/destinasi/pantai-citra.webp" />
 
-    <!-- Preconnect & Fonts -->
+    <!-- Preconnect & Fonts (Non-blocking async pattern to avoid render-blocking CSS) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" />
+    <link id="gfonts-css" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" media="print" />
+    <script is:inline>
+      (() => {
+        const gf = document.getElementById('gfonts-css');
+        if (gf) {
+          if (gf.sheet) gf.media = 'all';
+          else gf.addEventListener('load', () => { gf.media = 'all'; });
+        }
+      })();
+    </script>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" />
+    </noscript>
 
     <!-- Preload Hero LCP Image -->
     <link rel="preload" as="image" href="/images/destinasi/carousel/0/gambar.webp" type="image/webp" fetchpriority="high" />

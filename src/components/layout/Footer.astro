@@ -21,13 +21,18 @@ const copyright = footerData?.copyright || '© 2026 Pemerintah Kabupaten Sukamar
         <div class="flex items-center gap-3">
           <!-- Logo Pemkab -->
           <div class="flex items-center gap-2">
-            <img 
-              src="/images/branding/logo-kabupaten-sukamara.png" 
-              alt="Pemkab Sukamara" 
-              width="31"
-              height="40"
-              class="h-10 w-auto object-contain brightness-105"
-            />
+            <picture>
+              <source srcset="/images/branding/logo-kabupaten-sukamara.webp" type="image/webp" />
+              <img 
+                src="/images/branding/logo-kabupaten-sukamara.png" 
+                alt="Pemkab Sukamara" 
+                width="31"
+                height="40"
+                class="h-10 w-auto object-contain brightness-105"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
             <div class="flex flex-col">
               <span class="text-[9px] font-bold tracking-wider text-white/70 uppercase leading-none">
                 Pemerintah Kabupaten

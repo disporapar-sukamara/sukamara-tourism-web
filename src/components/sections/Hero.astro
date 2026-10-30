@@ -29,8 +29,8 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
       <img 
         src={slide.gambar} 
         alt={slide.judul || `Pesona Sukamara ${idx + 1}`} 
-        width="1920"
-        height="1080"
+        width="1440"
+        height="960"
         class={`hero-slide absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         loading={idx === 0 ? 'eager' : 'lazy'}
         fetchpriority={idx === 0 ? 'high' : 'low'}
