@@ -31,6 +31,10 @@ const heroSectionCode = fs.readFileSync('src/components/sections/Hero.astro', 'u
 assert(!heroSectionCode.includes('initialTimeout = setTimeout(startAuto, 4000)'), 'Hero must not rotate during audit');
 assert(heroSectionCode.includes('<picture'), 'Hero must use <picture> tag for responsive images');
 assert(heroSectionCode.includes('srcset='), 'Hero must use srcset or source for mobile image');
+assert(heroSectionCode.includes('(webp|jpe?g|png)'), 'Hero must support all common Keystatic upload extensions (jpg/jpeg/png/webp)');
+
+const optimizeImagesCode = fs.readFileSync('scripts/optimize-images.mjs', 'utf8');
+assert(optimizeImagesCode.includes("replace(/\\.(jpe?g|png|webp)$/i, '-mobile.webp')"), 'optimize-images must support generating mobile webp from jpg/png/webp');
 
 const heroMobileImg = 'public/images/destinasi/carousel/0/gambar-mobile.webp';
 assert(fs.existsSync(heroMobileImg), 'Hero mobile image (gambar-mobile.webp) must exist');

@@ -34,14 +34,17 @@ async function optimizeImage(filePath) {
     const meta = await image.metadata();
 
     // Generate lightweight responsive mobile variant for carousel hero
-    if (isCarousel && ext === '.webp') {
-      const mobileTarget = path.join(path.dirname(filePath), 'gambar-mobile.webp');
+    if (isCarousel) {
+      const mobileTarget = filePath.replace(/\.(jpe?g|png|webp)$/i, '-mobile.webp');
+      const prevMobileSize = fs.existsSync(mobileTarget) ? fs.statSync(mobileTarget).size : Infinity;
       const mobileBuffer = await sharp(filePath)
         .resize({ width: 640, withoutEnlargement: true, fit: 'inside' })
         .webp({ quality: 56, effort: 6 })
         .toBuffer();
-      fs.writeFileSync(mobileTarget, mobileBuffer);
-      console.log(`[optimize-images] Generated mobile carousel image ${path.relative(PUBLIC_IMAGES, mobileTarget)} (${Math.round(mobileBuffer.length / 1024)} KB)`);
+      if (mobileBuffer.length < prevMobileSize || !fs.existsSync(mobileTarget)) {
+        fs.writeFileSync(mobileTarget, mobileBuffer);
+        console.log(`[optimize-images] Generated mobile carousel image ${path.relative(PUBLIC_IMAGES, mobileTarget)} (${Math.round(mobileBuffer.length / 1024)} KB)`);
+      }
     }
 
     // Skip SVGs or tiny icons

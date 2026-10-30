@@ -26,7 +26,7 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
   <!-- Hero Background Carousel -->
   <div class="absolute inset-0 z-0">
     {slides.map((slide, idx) => {
-      const mobileImg = slide.gambar.replace(/\.webp$/i, '-mobile.webp');
+      const mobileImg = slide.gambar.replace(/\.(webp|jpe?g|png)$/i, '-mobile.webp');
       return (
         <picture 
           class={`hero-slide absolute inset-0 w-full h-full ${idx === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none transition-opacity duration-700 ease-in-out'}`}
