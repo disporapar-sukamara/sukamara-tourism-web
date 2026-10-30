@@ -44,7 +44,14 @@ assert(heroMobileSize < 50 * 1024, `Hero mobile image (${heroMobileSize} bytes) 
 const baseLayoutCode = fs.readFileSync('src/layouts/BaseLayout.astro', 'utf8');
 assert(baseLayoutCode.includes('gambar-mobile.webp'), 'BaseLayout must preload mobile hero image');
 assert(baseLayoutCode.includes('media="(max-width: 768px)"'), 'BaseLayout must have mobile media query for hero preload');
-assert(!baseLayoutCode.includes('media="print"'), 'BaseLayout must avoid media="print" font swap that causes forced reflow');
+assert(!baseLayoutCode.includes('fonts.googleapis.com'), 'BaseLayout must eliminate external Google Fonts to remove render-blocking resources');
+assert(baseLayoutCode.includes('/fonts/plus-jakarta-sans-latin.woff2'), 'BaseLayout must preload local primary font');
+
+const fontFiles = ['plus-jakarta-sans-latin.woff2', 'sacramento-latin.woff2', 'caveat-latin.woff2'];
+for (const font of fontFiles) {
+  const p = `public/fonts/${font}`;
+  assert(fs.existsSync(p), `Local font ${p} must exist`);
+}
 
 const navbarCode = fs.readFileSync('src/components/layout/Navbar.astro', 'utf8');
 assert(!navbarCode.includes('handleScrollSpy();\n  window.addEventListener(\'scroll\''), 'Navbar must not run synchronous scrollspy on load');
