@@ -29,5 +29,23 @@ assert(mapSectionCode.includes('script.onload = startMap'), 'MapSection must use
 
 const heroSectionCode = fs.readFileSync('src/components/sections/Hero.astro', 'utf8');
 assert(!heroSectionCode.includes('initialTimeout = setTimeout(startAuto, 4000)'), 'Hero must not rotate during audit');
+assert(heroSectionCode.includes('<picture'), 'Hero must use <picture> tag for responsive images');
+assert(heroSectionCode.includes('srcset='), 'Hero must use srcset or source for mobile image');
+
+const heroMobileImg = 'public/images/destinasi/carousel/0/gambar-mobile.webp';
+assert(fs.existsSync(heroMobileImg), 'Hero mobile image (gambar-mobile.webp) must exist');
+const heroMobileSize = fs.statSync(heroMobileImg).size;
+assert(heroMobileSize < 50 * 1024, `Hero mobile image (${heroMobileSize} bytes) exceeds 50KB limit`);
+
+const baseLayoutCode = fs.readFileSync('src/layouts/BaseLayout.astro', 'utf8');
+assert(baseLayoutCode.includes('gambar-mobile.webp'), 'BaseLayout must preload mobile hero image');
+assert(baseLayoutCode.includes('media="(max-width: 768px)"'), 'BaseLayout must have mobile media query for hero preload');
+assert(!baseLayoutCode.includes('media="print"'), 'BaseLayout must avoid media="print" font swap that causes forced reflow');
+
+const navbarCode = fs.readFileSync('src/components/layout/Navbar.astro', 'utf8');
+assert(!navbarCode.includes('handleScrollSpy();\n  window.addEventListener(\'scroll\''), 'Navbar must not run synchronous scrollspy on load');
+
+const indexJsCode = fs.readFileSync('index.js', 'utf8');
+assert(indexJsCode.includes('s-maxage=3600'), 'index.js must set edge caching for HTML document requests');
 
 console.log('All performance self-checks passed successfully!');

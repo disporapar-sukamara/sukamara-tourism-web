@@ -22,6 +22,7 @@ async function processDirectory(dir) {
 async function optimizeImage(filePath) {
   const ext = path.extname(filePath).toLowerCase();
   if (!['.webp', '.jpg', '.jpeg', '.png'].includes(ext)) return;
+  if (filePath.includes('-mobile.')) return;
 
   const isCarousel = filePath.includes('/carousel/');
   const isBranding = filePath.includes('/branding/');
@@ -31,6 +32,17 @@ async function optimizeImage(filePath) {
   try {
     const image = sharp(filePath);
     const meta = await image.metadata();
+
+    // Generate lightweight responsive mobile variant for carousel hero
+    if (isCarousel && ext === '.webp') {
+      const mobileTarget = path.join(path.dirname(filePath), 'gambar-mobile.webp');
+      const mobileBuffer = await sharp(filePath)
+        .resize({ width: 640, withoutEnlargement: true, fit: 'inside' })
+        .webp({ quality: 56, effort: 6 })
+        .toBuffer();
+      fs.writeFileSync(mobileTarget, mobileBuffer);
+      console.log(`[optimize-images] Generated mobile carousel image ${path.relative(PUBLIC_IMAGES, mobileTarget)} (${Math.round(mobileBuffer.length / 1024)} KB)`);
+    }
 
     // Skip SVGs or tiny icons
     if (!meta.width || meta.width <= maxWidth && ext === '.webp' && fs.statSync(filePath).size < 80 * 1024) {

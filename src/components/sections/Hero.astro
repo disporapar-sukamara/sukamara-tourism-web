@@ -25,19 +25,27 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
   
   <!-- Hero Background Carousel -->
   <div class="absolute inset-0 z-0">
-    {slides.map((slide, idx) => (
-      <img 
-        src={slide.gambar} 
-        alt={slide.judul || `Pesona Sukamara ${idx + 1}`} 
-        width="1440"
-        height="960"
-        class={`hero-slide absolute inset-0 w-full h-full object-cover object-center ${idx === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none transition-opacity duration-700 ease-in-out'}`}
-        loading={idx === 0 ? 'eager' : 'lazy'}
-        fetchpriority={idx === 0 ? 'high' : 'low'}
-        decoding={idx === 0 ? 'sync' : 'async'}
-        data-slide-index={idx}
-      />
-    ))}
+    {slides.map((slide, idx) => {
+      const mobileImg = slide.gambar.replace(/\.webp$/i, '-mobile.webp');
+      return (
+        <picture 
+          class={`hero-slide absolute inset-0 w-full h-full ${idx === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none transition-opacity duration-700 ease-in-out'}`}
+          data-slide-index={idx}
+        >
+          <source media="(max-width: 768px)" srcset={mobileImg} type="image/webp" />
+          <img 
+            src={slide.gambar} 
+            alt={slide.judul || `Pesona Sukamara ${idx + 1}`} 
+            width="1440"
+            height="960"
+            class="w-full h-full object-cover object-center"
+            loading={idx === 0 ? 'eager' : 'lazy'}
+            fetchpriority={idx === 0 ? 'high' : 'low'}
+            decoding={idx === 0 ? 'sync' : 'async'}
+          />
+        </picture>
+      );
+    })}
     <!-- Gradient Overlays for optimal readability -->
     <div class="absolute inset-0 bg-gradient-to-r from-[#0B2A5B]/90 via-[#0B2A5B]/65 to-transparent z-10 pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-[#0B2A5B]/80 via-transparent to-black/30 z-10 pointer-events-none"></div>

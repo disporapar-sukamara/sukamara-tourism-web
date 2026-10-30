@@ -16,6 +16,9 @@ http.createServer = function (...args) {
       /\.(webp|png|jpg|jpeg|svg|woff2|woff|ttf|css|js|ico|pdf)$/i.test(url)
     ) {
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (!url.startsWith('/keystatic') && !url.startsWith('/api/')) {
+      // ponytail: Cache static HTML pages on CDN edge with quick revalidation, eliminating Document Request Latency
+      res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400');
     }
   });
   return server;

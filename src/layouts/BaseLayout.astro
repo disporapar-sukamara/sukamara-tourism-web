@@ -38,16 +38,14 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:image" content="/images/destinasi/pantai-citra.webp" />
 
-    <!-- Preconnect & Fonts (Non-blocking async pattern) -->
+    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" media="print" onload="this.setAttribute('media', 'all')" />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" />
-    </noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" />
 
-    <!-- Preload Hero LCP Image -->
-    <link rel="preload" as="image" href="/images/destinasi/carousel/0/gambar.webp" type="image/webp" fetchpriority="high" />
+    <!-- Responsive Preload Hero LCP Image -->
+    <link rel="preload" as="image" href="/images/destinasi/carousel/0/gambar-mobile.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/destinasi/carousel/0/gambar.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high" />
   </head>
   <body class="min-h-screen flex flex-col bg-white text-gray-700 antialiased selection:bg-brand-blue selection:text-white">
     <TopBar />
