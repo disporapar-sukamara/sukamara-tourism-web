@@ -225,13 +225,15 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
       });
     }
 
-    function startAuto() {
-      stopAuto();
-      timer = window.setInterval(() => render(current + 1), 5000);
-    }
-
     function stopAuto() {
       if (timer) clearInterval(timer);
+      if (initialTimeout) clearTimeout(initialTimeout);
+    }
+
+    let initialTimeout: number | undefined;
+    function startAuto() {
+      stopAuto();
+      timer = window.setInterval(() => render(current + 1), 6000);
     }
 
     dots.forEach((dot) => {
@@ -248,7 +250,14 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
     container?.addEventListener('mouseenter', stopAuto);
     container?.addEventListener('mouseleave', startAuto);
 
-    startAuto();
+    // ponytail: Defer auto-rotation so Lighthouse settles LCP metric on the initial hero slide
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => {
+        initialTimeout = setTimeout(startAuto, 4000) as unknown as number;
+      });
+    } else {
+      initialTimeout = setTimeout(startAuto, 4000) as unknown as number;
+    }
 
     // Hook search input & form to openSearchModal
     const searchForm = document.getElementById('hero-search-form');

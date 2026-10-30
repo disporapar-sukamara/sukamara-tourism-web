@@ -38,20 +38,11 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:image" content="/images/destinasi/pantai-citra.webp" />
 
-    <!-- Preconnect & Fonts (Non-blocking async pattern to avoid render-blocking CSS) -->
+    <!-- Preconnect & Fonts (Non-blocking async pattern) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" />
-    <link id="gfonts-css" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" media="print" />
-    <script is:inline>
-      (() => {
-        const gf = document.getElementById('gfonts-css');
-        if (gf) {
-          if (gf.sheet) gf.media = 'all';
-          else gf.addEventListener('load', () => { gf.media = 'all'; });
-        }
-      })();
-    </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" media="print" onload="this.setAttribute('media', 'all')" />
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sacramento&family=Caveat:wght@600;700&display=swap" />
     </noscript>

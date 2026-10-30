@@ -96,9 +96,12 @@ const mapDestinations = destinasiList
       }
 
       // Lazy load JS
+      let retries = 0;
       function startMap() {
         if (typeof L === 'undefined') {
-          setTimeout(startMap, 100);
+          if (retries++ < 25) {
+            setTimeout(startMap, 150);
+          }
           return;
         }
         if (mapElement._leaflet_id) return;
@@ -154,9 +157,11 @@ const mapDestinations = destinasiList
       if (typeof L === 'undefined') {
         const script = document.createElement('script');
         script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-        script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
         script.crossOrigin = '';
         script.onload = startMap;
+        script.onerror = () => {
+          // ponytail: Graceful failure if Leaflet CDN unreachable in sandbox/crawler
+        };
         document.body.appendChild(script);
       } else {
         startMap();
@@ -169,7 +174,7 @@ const mapDestinations = destinasiList
           observer.disconnect();
           loadAndInit();
         }
-      }, { rootMargin: '300px' });
+      }, { rootMargin: '100px' });
       observer.observe(mapElement);
     } else {
       loadAndInit();
