@@ -95,16 +95,8 @@ const mapDestinations = destinasiList
         document.head.appendChild(link);
       }
 
-      // Lazy load JS
-      let retries = 0;
       function startMap() {
-        if (typeof L === 'undefined') {
-          if (retries++ < 25) {
-            setTimeout(startMap, 150);
-          }
-          return;
-        }
-        if (mapElement._leaflet_id) return;
+        if (typeof L === 'undefined' || mapElement._leaflet_id) return;
 
         // Center of Sukamara Regency (-2.85, 111.20)
         const map = L.map('sukamara-map', {
@@ -158,11 +150,12 @@ const mapDestinations = destinasiList
         const script = document.createElement('script');
         script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
         script.crossOrigin = '';
+        script.async = true;
         script.onload = startMap;
         script.onerror = () => {
-          // ponytail: Graceful failure if Leaflet CDN unreachable in sandbox/crawler
+          // ponytail: Silent fallback if CDN unreachable; user still sees section container
         };
-        document.body.appendChild(script);
+        document.head.appendChild(script);
       } else {
         startMap();
       }

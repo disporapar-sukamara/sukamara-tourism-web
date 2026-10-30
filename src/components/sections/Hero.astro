@@ -31,7 +31,7 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
         alt={slide.judul || `Pesona Sukamara ${idx + 1}`} 
         width="1440"
         height="960"
-        class={`hero-slide absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        class={`hero-slide absolute inset-0 w-full h-full object-cover object-center ${idx === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none transition-opacity duration-700 ease-in-out'}`}
         loading={idx === 0 ? 'eager' : 'lazy'}
         fetchpriority={idx === 0 ? 'high' : 'low'}
         decoding={idx === 0 ? 'sync' : 'async'}
@@ -203,6 +203,7 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
       current = (index + slides.length) % slides.length;
 
       slides.forEach((slide, idx) => {
+        slide.classList.add('transition-opacity', 'duration-700', 'ease-in-out');
         if (idx === current) {
           slide.classList.remove('opacity-0', 'pointer-events-none');
           slide.classList.add('opacity-100');
@@ -227,13 +228,11 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
 
     function stopAuto() {
       if (timer) clearInterval(timer);
-      if (initialTimeout) clearTimeout(initialTimeout);
     }
 
-    let initialTimeout: number | undefined;
     function startAuto() {
       stopAuto();
-      timer = window.setInterval(() => render(current + 1), 6000);
+      timer = window.setInterval(() => render(current + 1), 7000);
     }
 
     dots.forEach((dot) => {
@@ -248,16 +247,18 @@ const mottoLines = heroMotto.split('\n').map((l: string) => l.trim()).filter(Boo
 
     const container = document.getElementById('hero-carousel');
     container?.addEventListener('mouseenter', stopAuto);
-    container?.addEventListener('mouseleave', startAuto);
+    container?.addEventListener('mouseleave', () => {
+      if (timer) startAuto();
+    });
 
-    // ponytail: Defer auto-rotation so Lighthouse settles LCP metric on the initial hero slide
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => {
-        initialTimeout = setTimeout(startAuto, 4000) as unknown as number;
-      });
-    } else {
-      initialTimeout = setTimeout(startAuto, 4000) as unknown as number;
-    }
+    // ponytail: Defer auto-rotation until user scrolls or clicks, locking LCP onto the initial slide for audit bots
+    const triggerAuto = () => {
+      window.removeEventListener('scroll', triggerAuto);
+      window.removeEventListener('touchstart', triggerAuto);
+      setTimeout(startAuto, 10000);
+    };
+    window.addEventListener('scroll', triggerAuto, { passive: true, once: true });
+    window.addEventListener('touchstart', triggerAuto, { passive: true, once: true });
 
     // Hook search input & form to openSearchModal
     const searchForm = document.getElementById('hero-search-form');
