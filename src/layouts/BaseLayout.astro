@@ -19,6 +19,9 @@ const {
   title = "Smart Tourism Sukamara — Portal Resmi Pariwisata Kab. Sukamara",
   description = "Portal resmi Smart Tourism Kabupaten Sukamara. Strategi integrasi pemasaran destinasi wisata, peta digital, agenda event, kepemudaan, dan olahraga."
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://disporapar.sukamarakab.go.id');
+const ogImageUrl = new URL('/images/destinasi/pantai-citra.webp', Astro.site ?? 'https://disporapar.sukamarakab.go.id');
 ---
 
 <!doctype html>
@@ -31,12 +34,14 @@ const {
     
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/images/destinasi/pantai-citra.webp" />
+    <meta property="og:image" content={ogImageUrl} />
 
     <!-- Preload Primary Font for zero-FOIT First Paint -->
     <link rel="preload" href="/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
