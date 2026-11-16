@@ -1,6 +1,19 @@
 ---
 import { Activity, ArrowRight, ChevronRight, ChevronLeft, Users, Trophy, Calendar, Star } from 'lucide-astro';
-import { youthAndSportsCards } from '../../data/siteData';
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('kepemudaan');
+const youthAndSportsCards = entries
+  .sort((a, b) => (a.data.urutan ?? 99) - (b.data.urutan ?? 99))
+  .map((item) => ({
+    id: item.id,
+    judul: item.data.judul,
+    deskripsi: item.data.deskripsi,
+    gambar: item.data.gambar,
+    badgeType: item.data.badgeType,
+    badgeBg: item.data.badgeBg,
+    badgeColor: 'text-white',
+  }));
 
 const badgeIcons = {
   users: Users,

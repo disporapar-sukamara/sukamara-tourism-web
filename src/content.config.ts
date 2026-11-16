@@ -49,9 +49,24 @@ const galeri = defineCollection({
   }),
 });
 
+const kepemudaan = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: 'src/content/kepemudaan' }),
+  schema: z.object({
+    judul: z.string(),
+    urutan: z.number().default(1),
+    deskripsi: z.string(),
+    deskripsiLengkap: z.string().optional(),
+    poinLayanan: z.array(z.string()).default([]),
+    gambar: z.string(),
+    badgeType: z.enum(['users', 'trophy', 'calendar', 'star']).default('users'),
+    badgeBg: z.string().default('bg-[#1E5FD8]'),
+  }),
+});
+
 export const collections = {
   destinasi,
   berita,
   event,
   galeri,
+  kepemudaan,
 };

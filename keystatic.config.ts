@@ -14,6 +14,7 @@ export default config({
     navigation: {
       'Tampilan Beranda': ['hero'],
       'Pariwisata': ['destinasi', 'galeri'],
+      'Kepemudaan & Olahraga': ['kepemudaan'],
       'Informasi & Publikasi': ['berita', 'event'],
       'Pengaturan Website': ['footer'],
     },
@@ -170,6 +171,57 @@ export default config({
           publicPath: '/images/destinasi/',
         }),
         isVideo: fields.checkbox({ label: 'Video (Susur Sungai / Dokumentasi)', defaultValue: false }),
+      },
+    }),
+
+    kepemudaan: collection({
+      label: 'Program Kepemudaan & Olahraga',
+      slugField: 'judul',
+      path: 'src/content/kepemudaan/*',
+      format: { data: 'json' },
+      schema: {
+        judul: fields.slug({ name: { label: 'Nama Program / Layanan' } }),
+        urutan: fields.integer({ label: 'Urutan Tampil', defaultValue: 1 }),
+        deskripsi: fields.text({
+          label: 'Deskripsi Singkat (Kartu)',
+          multiline: true,
+        }),
+        deskripsiLengkap: fields.text({
+          label: 'Deskripsi Lengkap (Popup Detail)',
+          multiline: true,
+        }),
+        poinLayanan: fields.array(
+          fields.text({ label: 'Poin Fokus Layanan' }),
+          {
+            label: 'Fokus Layanan & Program',
+            itemLabel: (props) => props.value || 'Poin Layanan',
+          }
+        ),
+        gambar: fields.image({
+          label: 'Foto Program',
+          directory: 'public/images/destinasi',
+          publicPath: '/images/destinasi/',
+        }),
+        badgeType: fields.select({
+          label: 'Ikon Badge',
+          options: [
+            { label: 'Organisasi / Komunitas (Users)', value: 'users' },
+            { label: 'Olahraga / Prestasi (Trophy)', value: 'trophy' },
+            { label: 'Kegiatan / Jadwal (Calendar)', value: 'calendar' },
+            { label: 'Inspirasi / Bintang (Star)', value: 'star' },
+          ],
+          defaultValue: 'users',
+        }),
+        badgeBg: fields.select({
+          label: 'Warna Badge',
+          options: [
+            { label: 'Biru (#1E5FD8)', value: 'bg-[#1E5FD8]' },
+            { label: 'Oranye/Coklat (#B45309)', value: 'bg-[#B45309]' },
+            { label: 'Magenta (#B81267)', value: 'bg-[#B81267]' },
+            { label: 'Hijau (#2E9E4F)', value: 'bg-[#2E9E4F]' },
+          ],
+          defaultValue: 'bg-[#1E5FD8]',
+        }),
       },
     }),
   },

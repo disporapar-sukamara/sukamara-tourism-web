@@ -1,0 +1,14 @@
+{
+  "judul": "Fasilitas Olahraga",
+  "urutan": 2,
+  "deskripsi": "Temukan fasilitas olahraga yang tersedia di Sukamara.",
+  "deskripsiLengkap": "Pemerintah Kabupaten Sukamara menyediakan sarana olahraga terbuka dan terpadu untuk masyarakat, meliputi Lapangan Mini Sukamara, GOR Bulutangkis, Lapangan Futsal, dan fasilitas kebugaran publik di taman kota.",
+  "poinLayanan": [
+    "Jadwal Pemakaian Lapangan Olahraga",
+    "Fasilitas Terbuka Ramah Anak & Difabel",
+    "Pusat Pembinaan Atlet Daerah"
+  ],
+  "gambar": "/images/destinasi/bundaran-tugu-sukamara.webp",
+  "badgeType": "trophy",
+  "badgeBg": "bg-[#B45309]"
+}

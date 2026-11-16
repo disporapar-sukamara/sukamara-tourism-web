@@ -1,29 +1,29 @@
 ---
 import { X, ArrowRight, ArrowLeft, Users, Trophy, Calendar, Star, Activity } from 'lucide-astro';
-import { youthAndSportsCards } from '../../data/siteData';
+import { getCollection } from 'astro:content';
 
-const programDetails: Record<string, { fullDesc: string; points: string[]; cta: string }> = {
-  '1': {
-    fullDesc: 'Dinas Kepemudaan, Olahraga, dan Pariwisata memfasilitasi organisasi kemasyarakatan pemuda (OKP), komunitas kreatif, dan sanggar seni budaya dalam peningkatan kapasitas wirausaha, pelatihan kepemimpinan, dan jejaring pemuda di seluruh kecamatan Kabupaten Sukamara.',
-    points: ['Pelatihan Manajemen Organisasi', 'Bantuan Sarana Komunitas Pemuda', 'Jejaring Wirausaha Muda Mandiri'],
-    cta: 'Hubungi Bidang Kepemudaan',
-  },
-  '2': {
-    fullDesc: 'Pemerintah Kabupaten Sukamara menyediakan sarana olahraga terbuka dan terpadu untuk masyarakat, meliputi Lapangan Mini Sukamara, GOR Bulutangkis, Lapangan Futsal, dan fasilitas kebugaran publik di taman kota.',
-    points: ['Jadwal Pemakaian Lapangan Olahraga', 'Fasilitas Terbuka Ramah Anak & Difabel', 'Pusat Pembinaan Atlet Daerah'],
-    cta: 'Cek Ketersediaan Lapangan',
-  },
-  '3': {
-    fullDesc: 'Portal pendaftaran resmi bagi pemuda dan atlet lokal untuk mengikuti kompetisi olahraga daerah, seleksi Paskibraka, kejuaraan antarkecamatan, serta festival kreativitas pemuda tahunan.',
-    points: ['Seleksi Calon Paskibraka Daerah', 'Turnamen Sepakbola & Futsal Bupati Cup', 'Pendaftaran Peserta Lomba Inovasi'],
-    cta: 'Informasi Pendaftaran',
-  },
-  '4': {
-    fullDesc: 'Apresiasi dan dokumentasi prestasi putra-putri daerah Kabupaten Sukamara yang telah meraih medali pada ajang Porprov Kalteng, PON, kompetisi sains pemuda, dan duta pariwisata.',
-    points: ['Daftar Atlet Berprestasi Sukamara', 'Beasiswa Pembinaan Olahragawan', 'Galeri Juara & Penghargaan'],
-    cta: 'Lihat Daftar Prestasi',
-  },
-};
+const entries = await getCollection('kepemudaan');
+const sortedEntries = entries.sort((a, b) => (a.data.urutan ?? 99) - (b.data.urutan ?? 99));
+
+const youthAndSportsCards = sortedEntries.map((item) => ({
+  id: item.id,
+  judul: item.data.judul,
+  deskripsi: item.data.deskripsi,
+  gambar: item.data.gambar,
+  badgeType: item.data.badgeType,
+  badgeBg: item.data.badgeBg,
+  badgeColor: 'text-white',
+}));
+
+const programDetails: Record<string, { fullDesc: string; points: string[] }> = Object.fromEntries(
+  sortedEntries.map((item) => [
+    item.id,
+    {
+      fullDesc: item.data.deskripsiLengkap || item.data.deskripsi,
+      points: item.data.poinLayanan || [],
+    },
+  ])
+);
 
 const badgeIcons = {
   users: Users,
@@ -255,7 +255,7 @@ const badgeIcons = {
 
     function openProgram(id: string) {
       const card = payload.cards.find((c) => c.id === id) || payload.cards[0];
-      const detail = payload.details[id] || payload.details['1'];
+      const detail = payload.details[card?.id] || payload.details[id];
       if (!card) return;
 
       if (modalImg) {
