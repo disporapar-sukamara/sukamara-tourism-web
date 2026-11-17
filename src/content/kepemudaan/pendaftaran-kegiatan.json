@@ -1,6 +1,6 @@
 {
   "judul": "Pendaftaran Kegiatan",
-  "urutan": 3,
+  "urutan": 2,
   "deskripsi": "Daftar dan ikuti berbagai kegiatan pemuda dan olahraga.",
   "deskripsiLengkap": "Portal pendaftaran resmi bagi pemuda dan atlet lokal untuk mengikuti kompetisi olahraga daerah, seleksi Paskibraka, kejuaraan antarkecamatan, serta festival kreativitas pemuda tahunan.",
   "poinLayanan": [
@@ -8,7 +8,6 @@
     "Turnamen Sepakbola & Futsal Bupati Cup",
     "Pendaftaran Peserta Lomba Inovasi"
   ],
-  "gambar": "/images/destinasi/bukit-jalungga.webp",
   "badgeType": "calendar",
   "badgeBg": "bg-[#1E5FD8]"
 }
