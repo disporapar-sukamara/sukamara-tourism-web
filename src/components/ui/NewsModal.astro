@@ -17,7 +17,7 @@ const items = allNews.map((item) => ({
   kategoriClass: newsCategoryColors[item.data.kategori] || 'bg-gray-100 text-gray-700 border-gray-200',
   tanggal: item.data.tanggal,
   ringkasan: item.data.ringkasan,
-  gambar: item.data.gambar,
+  gambar: item.data.gambar || '/images/destinasi/bundaran-burung-balai-riam.webp',
 }));
 ---
 

@@ -25,7 +25,7 @@ const berita = defineCollection({
     kategori: z.enum(['BERITA WISATA', 'INFORMASI', 'KEGIATAN']),
     tanggal: z.string(),
     ringkasan: z.string(),
-    gambar: z.string(),
+    gambar: z.string().optional(),
   }),
 });
 
@@ -57,7 +57,7 @@ const kepemudaan = defineCollection({
     deskripsi: z.string(),
     deskripsiLengkap: z.string().optional(),
     poinLayanan: z.array(z.string()).default([]),
-    gambar: z.string(),
+    gambar: z.string().optional(),
     badgeType: z.enum(['users', 'trophy', 'calendar', 'star']).default('users'),
     badgeBg: z.string().default('bg-[#1E5FD8]'),
   }),
