@@ -7,6 +7,10 @@
     {
       "gambar": "/images/destinasi/carousel/1/gambar.webp",
       "judul": "Susur Sungai Jelai"
+    },
+    {
+      "gambar": "/images/destinasi/carousel/2/gambar.jpeg",
+      "judul": "Pantai Citra"
     }
   ],
   "greeting": "Selamat Datang di Portal",
